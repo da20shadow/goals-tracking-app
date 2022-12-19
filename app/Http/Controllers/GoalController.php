@@ -21,23 +21,7 @@ class GoalController extends Controller
 
             $goals = [];
             foreach ($goalsList as $goal){
-                $targetInfo = DB::table('targets')
-                    ->leftJoin('tasks','targets.id','=','tasks.target_id')
-                    ->select(DB::raw("count(targets.id) as total_targets,
-                    count(tasks.id) as total_target_tasks,
-                    sum(case when tasks.status = 'Completed' then 1 else 0 end) as completed_target_tasks"))
-                    ->where('targets.id','=',$goal['id'])
-                    ->groupBy('targets.id')
-                    ->get();
-
-                $goal['totalTargets'] = $targetInfo['total_targets'];
-                $progress = 0;
-
-                if ($targetInfo['total_target_tasks'] > 0){
-                    $progress = ($targetInfo['completed_target_tasks'] / $targetInfo['total_targets']) * 100;
-                }
-                $goal['progress'] = $progress;
-
+                $goal = self::setTargetInfoForGoal($goal);
                 array_push($goals,$goal);
             }
 
@@ -112,10 +96,16 @@ class GoalController extends Controller
 
         $result = self::chekIfExist($user_id, $id);
         if ($result['error'] === true){
-            return response()->json(['message' => $result['message']], 400);
+            return response()->json([
+                'message' => $result['message']
+            ], 400);
         }
 
-        $goal = (array)$result['goal'];
+        $goal = self::setTargetInfoForGoal($result['goal']);
+
+        if ($goal === null){
+            return response()->json(['message' => 'An Error Occur!'],400);
+        }
 
         return response()->json($goal);
     }
@@ -222,6 +212,31 @@ class GoalController extends Controller
             'goal_id' => $id,
             'message' => 'Successfully deleted goal!'
         ]);
+    }
+
+    private static function setTargetInfoForGoal($goal){
+        try {
+            $targetInfo = DB::table('targets')
+                ->leftJoin('tasks','targets.id','=','tasks.target_id')
+                ->select(DB::raw("count(targets.id) as total_targets,
+                    count(tasks.id) as total_target_tasks,
+                    sum(case when tasks.status = 'Completed' then 1 else 0 end) as completed_target_tasks"))
+                ->where('targets.id','=',$goal['id'])
+                ->groupBy('targets.id')
+                ->get();
+
+            $goal['totalTargets'] = $targetInfo['total_targets'];
+            $progress = 0;
+
+            if ($targetInfo['total_target_tasks'] > 0){
+                $progress = ($targetInfo['completed_target_tasks'] / $targetInfo['total_targets']) * 100;
+            }
+            $goal['progress'] = $progress;
+        }catch (QueryException $exception){
+            response()->json(['message' => 'Error! Can Not Set Goal target Info!']);
+            return null;
+        }
+        return $goal;
     }
 
     private static function chekIfExist(mixed $user_id, int $goal_id): array
