@@ -49,6 +49,8 @@
                   "maximumError": "4kb"
                 }
               ],
+              "outputPath": "../../public/angular",
+              "baseHref": "/angular",
               "outputHashing": "all"
             },
             "development": {
@@ -57,7 +59,9 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "outputPath": "dist/angular",
+              "baseHref": "/angular/"
             }
           },
           "defaultConfiguration": "production"
