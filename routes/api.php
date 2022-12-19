@@ -29,7 +29,10 @@ Route::group(['middleware' => ['auth:sanctum']],function () {
     Route::delete('goals/delete/{id}', [GoalController::class, 'destroy']);
 
     /** --------TARGETS-------- */
-
+    Route::get('targets/{id}', [GoalController::class, 'show']);
+    Route::post('targets/add', [GoalController::class, 'store']);
+    Route::patch('targets/update', [GoalController::class, 'update']);
+    Route::patch('targets/delete/{id}', [GoalController::class, 'destroy']);
 
     /** ---------TASKS--------- */
 
