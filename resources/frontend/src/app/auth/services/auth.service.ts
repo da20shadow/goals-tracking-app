@@ -4,6 +4,7 @@ import {BehaviorSubject, tap} from "rxjs";
 import {Store} from "@ngrx/store";
 import {User, UserApiResponse} from "../../core/models";
 import {ApiUrls} from "../../shared/constants/ApiUrls";
+import {UserAPIActions} from "../../Store/user-store/user-api.actions";
 
 interface UserRegistration {
   username:string;
