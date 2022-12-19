@@ -11,6 +11,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {JWTInterceptorService} from "./auth/interceptors/jwt-interceptor";
 import {APP_BASE_HREF} from "@angular/common";
+import {AppStateModule} from "./Store/app.state";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {APP_BASE_HREF} from "@angular/common";
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    AppStateModule,
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot(),
