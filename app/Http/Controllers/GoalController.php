@@ -110,6 +110,35 @@ class GoalController extends Controller
         return response()->json($goal);
     }
 
+    public function goalTargets($id): JsonResponse
+    {
+        $user_id = auth()->user()->getAuthIdentifier();
+        $result = self::chekIfExist($user_id, $id);
+        if ($result['error'] === true){
+            return response()->json(['message' => $result['message']], 400);
+        }
+
+        try {
+            $goalTargets = DB::table('targets')
+                ->select(DB::raw("targets.id,targets.title
+            count(tasks.id) as total_tasks
+            sum(case when tasks.status = 'Completed' then 1 else 0 end) as total_completed_tasks"))
+                ->leftJoin('tasks','targets.id','tasks.target_id')
+                ->where('target.id','=',$id)
+                ->get();
+        }catch (QueryException $exception){
+            return response()->json([
+                'message' => 'Error! Cannot get goal targets!',
+                'error' => $exception->getMessage()
+            ], 400);
+        }
+
+        //Target contains
+        //id, title, total_tasks, total_completed_tasks
+        return response()->json($goalTargets);
+
+    }
+
     public function update(Request $request, $id): JsonResponse
     {
         $user_id = auth()->user()->getAuthIdentifier();

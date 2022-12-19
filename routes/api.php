@@ -22,6 +22,7 @@ Route::group(['middleware' => ['auth:sanctum']],function () {
 
     /** ---------GOALS--------- */
     Route::get('goals', [GoalController::class, 'goals']);
+    Route::get('goal/targets/{id}', [GoalController::class, 'goalTargets']);
     Route::get('goals/{id}', [GoalController::class, 'show']);
     Route::post('goals/add', [GoalController::class, 'store']);
     Route::patch('goals/update/{id}', [GoalController::class, 'update']);
