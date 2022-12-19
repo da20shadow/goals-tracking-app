@@ -6,6 +6,7 @@ use App\Models\Goal;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class GoalController extends Controller
@@ -260,26 +261,34 @@ class GoalController extends Controller
     private static function setTargetInfoForGoal($goal){
         try {
 
-            $goalTargets = (new GoalController)->goalTargets($goal['id']);
+            $goalTargets = self::getGoalTargets($goal->id);
 
             $totalTargets = 0;
             $totalCompletedTargets = 0;
-            foreach ($goalTargets as $target) {
-                $totalTargets++;
-                $isTargetCompleted = self::isTargetCompleted($target);
-                if ($isTargetCompleted){
-                    $totalCompletedTargets++;
+
+            if ($goalTargets === null){
+
+                $goal->totalTargets = 0;
+                $goal->progress = 0;
+
+            }else {
+                foreach ($goalTargets as $target) {
+                    $totalTargets++;
+                    $target_id = $target->id;
+                    $isTargetCompleted = self::isTargetCompleted($target_id);
+                    if ($isTargetCompleted){
+                        $totalCompletedTargets++;
+                    }
                 }
+
+                $goalProgress = 0;
+                if ($totalTargets > 0){
+                    $goalProgress = ($totalCompletedTargets / $totalTargets) * 100;
+                }
+
+                $goal->totalTargets = $totalTargets;
+                $goal->progress = $goalProgress;
             }
-
-            $goalProgress = 0;
-            if ($totalTargets > 0){
-                $goalProgress = ($totalCompletedTargets / $totalTargets) * 100;
-            }
-
-            $goal['totalTargets'] = $totalTargets;
-            $goal['progress'] = $goalProgress;
-
 
         }catch (QueryException $exception){
             response()->json([
@@ -290,23 +299,25 @@ class GoalController extends Controller
         return $goal;
     }
 
-    private static function isTargetCompleted($target): bool
+    private static function isTargetCompleted($target_id): bool
     {
+
         try {
             $target = DB::table('targets')
                 ->select(DB::raw("targets.id,targets.title
             count(tasks.id) as total_tasks
             sum(case when tasks.status = 'Completed' then 1 else 0 end) as total_completed_tasks"))
                 ->leftJoin('tasks','targets.id','tasks.target_id')
-                ->where('target.id','=',$target['id'])
+                ->where('target.id','=',$target_id)
                 ->get();
         }catch (QueryException $exception){
             response()->json(['error' => $exception->getMessage()],400);
         }
 
+
         $progress = 0;
 
-        if ($target['total_tasks'] > 0){
+        if (isset($target) && $target['total_tasks'] > 0){
             $progress = ($target['total_completed_tasks'] / $target['total_tasks']) * 100;
         }
         return $progress >= 100;
@@ -331,5 +342,23 @@ class GoalController extends Controller
         }
         $result['goal'] = $goalExist;
         return $result;
+    }
+
+    private static function getGoalTargets($goal_id): ?Collection
+    {
+        try {
+            $goalTargets = DB::table('targets')
+                ->select(DB::raw("targets.id,targets.title,
+            count(tasks.id) as total_tasks,
+            sum(case when tasks.status = 'Completed' then 1 else 0 end) as total_completed_tasks"))
+                ->leftJoin('tasks','targets.id','tasks.target_id')
+                ->where('targets.goal_id','=',$goal_id)
+                ->groupBy('targets.id')
+                ->groupBy('targets.title')
+                ->get();
+        }catch (QueryException $exception){
+            return null;
+        }
+        return $goalTargets;
     }
 }

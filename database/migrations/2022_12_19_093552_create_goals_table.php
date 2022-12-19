@@ -30,7 +30,7 @@ return new class extends Migration
                 'Educational',
                 'Relationship',
                 'Other'
-            ]);
+            ])->default('Other');
             $table->timestamps();
         });
     }

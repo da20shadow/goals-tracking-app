@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Goal;
 use App\Models\Target;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
@@ -16,10 +17,25 @@ class TargetController extends Controller
         $fields = $request->validate([
             'title' => ['required','string'],
             'description' => ['required','string'],
-            'goal_id' => ['required','number'],
+            'goal_id' => ['required','Integer'],
         ]);
 
         $user_id = auth()->user()->getAuthIdentifier();
+
+        try {
+            $goalExist = Goal::where('user_id',$user_id)
+                ->where('id',$fields['goal_id'])
+                ->first();
+        }catch (QueryException $exception){
+            return response()->json([
+                'message' => 'An Error Occur! Please, try again!',
+                'error' => $exception->getMessage()
+            ],400);
+        }
+
+        if ($goalExist === null) {
+            return response()->json(['message' => 'Goal Not Exist!'],400);
+        }
 
         try {
             $targetExist = Target::where('user_id',$user_id)
@@ -34,7 +50,7 @@ class TargetController extends Controller
         }
 
         if ($targetExist !== null) {
-            return response()->json(['message' => 'Goal with the same title already added!'],400);
+            return response()->json(['message' => 'Target with the same title already added!'],400);
         }
 
         try {
@@ -112,12 +128,19 @@ class TargetController extends Controller
             }
         }
 
-        $updatedTarget = Target::where('user_id',$user_id)
-        ->where('id',$id)->first();
+        $result = self::calculateTargetProgress($id);
+
+        if ($result['target'] === null){
+            return response()->json([
+                'message' => 'Error! Cannot get Target By ID!',
+                'error' => $result['error']
+            ], 400);
+        }
+        $updatedTarget = $result['target'];
 
         return response()->json([
-            "message" => "Successfully updated goal!",
-            "goal" => $updatedTarget
+            "message" => "Successfully updated target!",
+            "target" => $updatedTarget
         ]);
     }
 
@@ -159,22 +182,27 @@ class TargetController extends Controller
         try {
             $target = DB::table('targets')
                 ->select(DB::raw("targets.id,targets.title,targets.description,
-            count(tasks.id) as total_tasks
+            count(tasks.id) as total_tasks,
             sum(case when tasks.status = 'Completed' then 1 else 0 end) as total_completed_tasks"))
                 ->leftJoin('tasks','targets.id','tasks.target_id')
-                ->where('target.id','=',$targetId)
-                ->get();
+                ->where('targets.id','=',$targetId)
+                ->groupBy('targets.id')
+                ->groupBy('targets.title')
+                ->groupBy('targets.description')
+                ->first();
+            $result['target'] = $target;
         }catch (QueryException $exception){
             $result['error'] = $exception->getMessage();
             return $result['target'] = null;
         }
 
+
         $progress = 0;
 
-        if ($target['total_tasks'] > 0){
-            $progress = ($target['total_completed_tasks'] / $target['total_tasks']) * 100;
+        if ($target->total_tasks > 0){
+            $progress = ($target->total_completed_tasks / $target->total_tasks) * 100;
         }
-        $target['progress'] = $progress;
+        $target->progress = $progress;
 
         $result['target'] = $target;
 
@@ -195,7 +223,7 @@ class TargetController extends Controller
 
         if (null === $targetExist){
             $result['error'] = true;
-            $result['message'] = 'Such goal not exist!';
+            $result['message'] = 'Such target not exist!';
         }
         $result['target'] = $targetExist;
         return $result;

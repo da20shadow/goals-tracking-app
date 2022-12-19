@@ -63,7 +63,7 @@ class TaskController extends Controller
             }
 
             if (!$targetExist){
-                return response()->json(['message' => 'There is no goal with this ID!'],400);
+                return response()->json(['message' => 'There is no target with this ID!'],400);
             }
         }
 

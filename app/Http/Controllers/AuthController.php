@@ -35,14 +35,14 @@ class AuthController extends Controller
     public function register(Request $request): JsonResponse
     {
         $fields = $request->validate([
-            'username' => ['required','string','min:3','max:45','unique:users,username'],
+            'first_name' => ['string','min:2','max:45'],
+            'last_name' => ['string','min:2','max:45'],
             'email' => ['required','unique:users,email','email'],
             'password' => ['required','min:8','max:75','string','confirmed'],
         ]);
 
         try {
             $user = User::create([
-                'username' => $fields['username'],
                 'email' => $fields['email'],
                 'password' => bcrypt($fields['password']),
             ]);

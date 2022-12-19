@@ -22,10 +22,39 @@ class UserController extends Controller
         $fields = $request->all();
 
         $successMessage = 'Successfully updated';
+
+        if (isset($fields['new_first_name'])){
+            $inputEmail = $request->validate(['new_first_name' => ['string','min:2','max:45']]);
+            try {
+                User::where('id',$user_id)
+                    ->update(['first_name' => $inputEmail['new_first_name']]);
+            }catch (QueryException $exception){
+                return response()->json([
+                    'message' => 'Invalid Request!',
+                    'error' => $exception->getMessage()
+                ],401);
+            }
+            $successMessage = $successMessage. ' first name';
+        }
+
+        if (isset($fields['new_last_name'])){
+            $inputEmail = $request->validate(['new_last_name' => ['string','min:2','max:45']]);
+            try {
+                User::where('id',$user_id)
+                    ->update(['last_name' => $inputEmail['new_last_name']]);
+            }catch (QueryException $exception){
+                return response()->json([
+                    'message' => 'Invalid Request!',
+                    'error' => $exception->getMessage()
+                ],401);
+            }
+            $successMessage = $successMessage. ' last name';
+        }
+
         if (isset($fields['new_email'])){
             $inputEmail = $request->validate(['new_email' => ['unique:users,email','email']]);
             try {
-                User::where('id',$user_id)
+                 User::where('id',$user_id)
                     ->update(['email' => $inputEmail['new_email']]);
             }catch (QueryException $exception){
                 return response()->json([
@@ -55,7 +84,9 @@ class UserController extends Controller
         if ($successMessage === 'Successfully updated'){$successMessage = 'Nothing Updated';}
 
         $successMessage = $successMessage. '!';
-        $user = auth()->user();
+
+        $user = User::where('id',$user_id)->first();
+
         return response()->json([
             'message' => $successMessage,
             'user' => $user
