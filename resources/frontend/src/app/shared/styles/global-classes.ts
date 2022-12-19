@@ -1,0 +1,35 @@
+
+export class GlobalClasses {
+
+  //TODO: move inputs in formClasses class
+
+  /** -------------Inputs------------- */
+  static readonly input = ' bg-gray-100 text-neutral-800 placeholder:text-slate-400 ' +
+    'dark:bg-slate-900 dark:text-neutral-300 dark:placeholder:text-slate-600 ' +
+    'w-full text-sm border-none outline-none py-3 pr-4 pl-2 rounded-r ';
+
+  static readonly inputIcon = 'bg-gray-100 text-neutral-800 ' +
+    'dark:bg-slate-900 dark:text-slate-600 py-3 pr-2 pl-3 rounded-l ';
+
+
+  /** ------------- Buttons ------------- */
+
+
+  /** ------------- Links ------------- */
+
+
+  /** ------------- Icons ------------- */
+  static readonly icon = `mr-2 p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white`;
+
+  /** ------------- Navigations Menus ------------- */
+  static readonly header = `bg-gray-100 dark:bg-gray-800 relative w-full flex flex-wrap items-center justify-between
+  py-4 px-5 shadow-lg`;
+
+  static readonly nav = `flex flex-wrap justify-center gap-4 items-center`
+  static readonly navLink = `hover:bg-gray-200 active:bg-gray-300
+  dark:hover:bg-gray-700 dark:active:bg-gray-600 text-gray-500 hover:text-gray-700 focus:text-gray-600
+  dark:text-gray-500 dark:hover:text-gray-300 py-2 px-3 cursor-pointer rounded`;
+
+
+
+}

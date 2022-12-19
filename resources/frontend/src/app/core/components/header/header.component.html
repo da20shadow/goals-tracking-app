@@ -1,0 +1,11 @@
+<!-- Private Navigation -->
+<ng-container *ngIf="authService.isLoggedIn$ |async; else publicNavigation">
+  <app-private-nav [ngClass]="classes.header"></app-private-nav>
+</ng-container>
+
+<!-- Public Navigation -->
+<ng-template #publicNavigation>
+  <app-public-nav [ngClass]="classes.header"></app-public-nav>
+</ng-template>
+
+
