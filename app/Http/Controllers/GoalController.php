@@ -205,6 +205,19 @@ class GoalController extends Controller
             }
         }
 
+        if (isset($fields['start_date'])){
+            $inputDueDate = $request->validate(['start_date' => ['Date']]);
+            try {
+                Goal::where('user_id',$user_id)->where('id',$id)
+                    ->update(['start_date' => $inputDueDate['start_date']]);
+            }catch (QueryException $exception){
+                return response()->json([
+                    'message' => 'An Error Occur! Please, try again!',
+                    'error' => $exception->getMessage(),
+                ],400);
+            }
+        }
+
         $updatedGoal = Goal::where('user_id',$user_id)
             ->where('id',$id)->first();
 
