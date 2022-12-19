@@ -7,11 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {JWTInterceptorService} from "./auth/interceptors/jwt-interceptor";
 import {APP_BASE_HREF} from "@angular/common";
 import {AppStateModule} from "./Store/app.state";
+import {extModules} from "./build-specifics";
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import {AppStateModule} from "./Store/app.state";
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot(),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
+    extModules,
   ],
   providers: [
     {
