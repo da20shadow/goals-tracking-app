@@ -1,4 +1,3 @@
-
 export class GlobalClasses {
 
   //TODO: move inputs in formClasses class
@@ -9,7 +8,7 @@ export class GlobalClasses {
     'w-full text-sm border-none outline-none py-3 pr-4 pl-2 rounded-r ';
 
   static readonly inputIcon = 'bg-gray-100 text-neutral-800 ' +
-    'dark:bg-slate-900 dark:text-slate-600 py-3 pr-2 pl-3 rounded-l ';
+    'dark:bg-slate-900 dark:text-slate-600 pt-2 pr-2 pl-3 rounded-l ';
 
 
   /** ------------- Buttons ------------- */
@@ -30,6 +29,10 @@ export class GlobalClasses {
   dark:hover:bg-gray-700 dark:active:bg-gray-600 text-gray-500 hover:text-gray-700 focus:text-gray-600
   dark:text-gray-500 dark:hover:text-gray-300 py-2 px-3 cursor-pointer rounded`;
 
+  static readonly link = 'font-medium text-blue-600 hover:text-blue-700 hover:underline';
+  // static readonly navLink = 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium';
 
+
+  static readonly bgDarkSecBlue = 'dark:bg-[#162231]';
 
 }
