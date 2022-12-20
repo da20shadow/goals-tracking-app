@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {UserPageActions} from "../../Store/user-store/user-page.actions";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-logout',
@@ -6,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./logout.component.scss']
 })
 export class LogoutComponent {
+
+  constructor(private store$: Store) {
+    this.store$.dispatch(UserPageActions.logout());
+  }
 
 }
