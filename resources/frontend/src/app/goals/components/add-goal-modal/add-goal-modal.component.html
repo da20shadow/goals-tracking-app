@@ -1,0 +1,92 @@
+<form mat-dialog-content
+        (ngSubmit)="addGoalFormHandler(addGoalForm)"
+        #addGoalForm="ngForm"
+        class="bg-white dark:bg-gray-800 mt-8 space-y-6 shadow p-10 rounded-sm
+            shadow-2xl dark:shadow dark:shadow-gray-500">
+
+    <button class="dark:text-gray-500 hover:dark:text-gray-400 absolute top-3 right-3" mat-dialog-close mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <h2 class="mt-0 text-center text-3xl text-color-light dark:text-color-dark">Add New Goal</h2>
+
+
+  <section class="flex flex-wrap ">
+    <!-- Goal Title Input Container-->
+    <div class="w-[75%]">
+      <div class="flex align-center border border-slate-600 rounded">
+        <input [ngClass]="classes.input"
+               type="text"
+               name="title"
+               #title="ngModel"
+               placeholder="Goal Title..."
+               minlength="10"
+               required
+               ngModel />
+      </div>
+      <!-- Error messages -->
+      <ng-container *ngIf="title.touched">
+            <span *ngIf="title.errors?.['required']"
+                  class="text-sm text-red-600">
+              Goal Title can not be empty!
+            </span>
+        <span *ngIf="title.errors?.['minlength']"
+              class="text-sm text-red-600">
+              Goal must be at least 10 characters long!
+            </span>
+      </ng-container>
+
+    </div>
+    <!-- Goal Due Date Input Container-->
+    <div class="w-[20%]">
+      <div class="flex align-center border border-slate-600 rounded">
+        <input [ngClass]="classes.input"
+               type="date"
+               name="due_date"
+               #due_date="ngModel"
+               required
+               ngModel />
+      </div>
+      <!-- Error messages -->
+      <ng-container *ngIf="due_date.touched">
+            <span *ngIf="due_date.errors?.['required']"
+                  class="text-sm text-red-600">
+              Goal Due Date can not be empty!
+            </span>
+      </ng-container>
+
+    </div>
+
+  </section>
+
+
+    <!-- Goal description Input Container-->
+    <div>
+      <div class="flex align-center border border-slate-600 rounded">
+            <textarea [ngClass]="classes.input"
+                      class="w-full min-h-[175px] py-2 px-3 "
+                      name="description"
+                      #description="ngModel"
+                      placeholder="Goal Description..."
+                      required
+                      ngModel></textarea>
+      </div>
+      <!-- Error messages -->
+      <ng-container *ngIf="title.touched">
+            <span *ngIf="description.errors?.['required']"
+                  class="text-sm text-red-600">
+              Description can not be empty!
+            </span>
+      </ng-container>
+
+    </div>
+    <!-- Add Button -->
+    <div>
+
+      <button class="flex items-center relative btn-primary dark:btn-primary-dark" type="submit">
+        <mat-icon>add</mat-icon>
+        Add
+      </button>
+
+    </div>
+  </form>
