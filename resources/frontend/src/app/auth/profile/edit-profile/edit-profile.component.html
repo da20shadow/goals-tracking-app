@@ -1,1 +1,126 @@
-<p>edit-profile works!</p>
+<app-page-title title="Edit Profile"></app-page-title>
+
+<ng-container *ngIf="(user$|async) as user">
+
+  <div class="w-10/12 mx-auto">
+
+
+    <form (ngSubmit)="editProfileFormHandler(editProfileForm)" #editProfileForm="ngForm"
+          class="bg-white dark:bg-gray-800 mt-8 space-y-6 shadow p-10 rounded-lg
+            shadow-2xl dark:shadow dark:shadow-gray-500">
+      <section class="flex items-top gap-5">
+
+        <!-- Current Email Container-->
+        <div class="w-1/2">
+          <label>Current Email:</label>
+
+          <input [ngClass]="classes.input"
+                 type="email"
+                 [defaultValue]="user.email"
+                 readonly/>
+        </div>
+
+        <!-- New Email Input Container-->
+        <div class="w-1/2">
+
+          <!-- New Email Input -->
+          <label>New Email:</label>
+
+          <input [ngClass]="classes.input"
+                 type="email"
+                 name="new_email"
+                 autocomplete="off"
+                 #new_email="ngModel"
+                 placeholder="New Email"
+                 pattern="^[a-z0-9_]+[@][a-z]+[.][a-z]{2,5}$"
+                 ngModel
+          />
+          <!-- New Email Input -->
+
+          <!-- Error/OK messages -->
+          <ng-container *ngIf="new_email.touched">
+
+            <span *ngIf="new_email.errors?.['pattern']"
+                  class="text-sm text-red-600">
+              Please enter Valid Email!
+            </span>
+
+          </ng-container>
+          <!-- Error/OK messages -->
+
+        </div>
+
+      </section>
+
+      <section class="flex items-top gap-5">
+
+        <!-- New First Name Input Container-->
+        <div class="w-1/2">
+
+          <!-- New First Name Input -->
+          <label>First name:</label>
+
+          <input [ngClass]="classes.input"
+                 type="text"
+                 name="new_first_name"
+                 autocomplete="off"
+                 #new_first_name="ngModel"
+                 placeholder="First name"
+                 pattern="^[a-zA-Z]{2,45}$"
+                 [ngModel]="user.first_name"
+          />
+          <!-- New First Name Input -->
+
+          <!-- Error/OK messages -->
+          <ng-container *ngIf="new_first_name.touched">
+
+            <span *ngIf="new_first_name.errors?.['pattern']"
+                  class="text-sm text-red-600">
+              Please enter Valid First name!
+            </span>
+
+          </ng-container>
+          <!-- Error/OK messages -->
+
+        </div>
+
+        <!-- New Last Name Input Container-->
+        <div class="w-1/2">
+
+          <!-- New Last Name Input -->
+          <label>Last name:</label>
+
+          <input [ngClass]="classes.input"
+                 type="text"
+                 name="new_last_name"
+                 autocomplete="off"
+                 #new_last_name="ngModel"
+                 placeholder="Last name"
+                 pattern="^[a-zA-Z]{2,45}$"
+                 [ngModel]="user.last_name"
+          />
+          <!-- New Last Name Input -->
+
+          <!-- Error messages -->
+          <ng-container *ngIf="new_last_name.touched">
+
+            <span *ngIf="new_last_name.errors?.['pattern']"
+                  class="text-sm text-red-600">
+              Please enter Valid First name!
+            </span>
+
+          </ng-container>
+          <!-- Error/OK messages -->
+
+        </div>
+
+      </section>
+
+      <button type="submit" class="btn-primary dark:btn-primary-dark">Save Changes</button>
+
+    </form>
+
+
+  </div>
+
+</ng-container>
