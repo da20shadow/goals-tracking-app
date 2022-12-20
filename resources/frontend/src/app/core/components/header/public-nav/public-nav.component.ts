@@ -10,7 +10,7 @@ export class PublicNavComponent {
 
   classes = GlobalClasses;
   publicNavLinks = [
-    {url: 'home', name: 'Home'},
+    {url: '/', name: 'Home'},
     {url: 'faq', name: 'FAQ'},
     {url: 'about', name: 'About'},
     {url: 'contact-us', name: 'Contact us'},
