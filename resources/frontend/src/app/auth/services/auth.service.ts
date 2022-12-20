@@ -7,7 +7,7 @@ import {ApiUrls} from "../../shared/constants/ApiUrls";
 import {UserAPIActions} from "../../Store/user-store/user-api.actions";
 
 interface UserRegistration {
-  username:string;
+  first_name:string;
   email:string;
   password:string;
   password_confirmation:string;
@@ -46,10 +46,7 @@ export class AuthService {
     );
   }
 
-  async isLoggedIn(): Promise<boolean>{
-    if (!this.getToken()){
-      throw {error: 'Not Logged In!'}
-    }
+  async isLoggedIn(){
     return !!this.getToken();
   }
 
@@ -63,11 +60,11 @@ export class AuthService {
   }
 
   register(regForm: any) {
-    const {username,email,pass} = regForm;
+    const {firstName,email,pass} = regForm;
     const {password,rePassword} = pass;
 
     const regFormData: UserRegistration = {
-      username,
+      first_name: firstName,
       email,
       password,
       password_confirmation: rePassword
