@@ -35,7 +35,7 @@ class GoalController extends Controller
         }
 
         if (count($goals) < 1){
-            return response()->json(['message' => 'No Goals Yet!'],400);
+            return response()->json(['message' => 'No Goals Yet!'],204);
         }
 
         //Goal will contain:
@@ -80,14 +80,11 @@ class GoalController extends Controller
             ],400);
         }
 
-        //TODO: if no goal uncomment and remove $goal = Goal::create
-//        $addedGoal = Goal::where('user_id',$user_id)
-//            ->where('title',$fields['title'])->first();
+        $goal = self::setTargetInfoForGoal($goal);
 
         return response()->json([
             "message" => "Successfully added new goal!",
             "goal" => $goal
-//            "goal" => $addedGoal
         ],201);
     }
 
