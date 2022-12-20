@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {GlobalClasses} from "../../../../shared/styles/global-classes";
 
 @Component({
   selector: 'app-nav-links',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class NavLinksComponent {
 
+  @Input()
+  navLinks:any;
+  classes = GlobalClasses;
 }
