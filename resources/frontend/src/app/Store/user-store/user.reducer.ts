@@ -19,9 +19,16 @@ export const UserReducer = createReducer(
   on(UserAPIActions.loginSuccess, (state,{user}) => {
     return ({
       ...state,
-      user,
+      user:user,
       error:null,
       status: 'success'
     })
-  })
+  }),
+  on(UserAPIActions.setUser, (state,{user}) => {
+    return ({
+      ...state,
+      user: user
+    })
+  }),
+  on(UserAPIActions.logoutSuccess, () => initialState)
 )

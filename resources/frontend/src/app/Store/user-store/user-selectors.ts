@@ -13,7 +13,7 @@ const selectUser = createSelector(
   selectUserState,
   (state) => state.user
 );
-export const UserSelectors = {
+export const userSelectors = {
   selectUserState,
   selectUserStateStatus,
   selectUser,
