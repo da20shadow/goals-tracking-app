@@ -21,23 +21,27 @@ class UserController extends Controller
 
         $fields = $request->all();
 
-        $successMessage = 'Successfully updated';
+        $currentUserData = User::where('id',$user_id)->first();
+
+        $successMessages = [];
 
         if (isset($fields['new_first_name'])){
-            $inputEmail = $request->validate(['new_first_name' => ['string','min:2','max:45']]);
-            try {
-                User::where('id',$user_id)
-                    ->update(['first_name' => $inputEmail['new_first_name']]);
-            }catch (QueryException $exception){
-                return response()->json([
-                    'message' => 'Invalid Request!',
-                    'error' => $exception->getMessage()
-                ],401);
+            if ($currentUserData->first_name != $fields['new_first_name']){
+                $inputEmail = $request->validate(['new_first_name' => ['string','min:2','max:45']]);
+                try {
+                    User::where('id',$user_id)
+                        ->update(['first_name' => $inputEmail['new_first_name']]);
+                }catch (QueryException $exception){
+                    return response()->json([
+                        'message' => 'Invalid Request!',
+                        'error' => $exception->getMessage()
+                    ],401);
+                }
+                array_push($successMessages,' first name');
             }
-            $successMessage = $successMessage. ' first name';
         }
 
-        if (isset($fields['new_last_name'])){
+        if (isset($fields['new_last_name']) && $currentUserData->last_name != $fields['new_last_name']){
             $inputEmail = $request->validate(['new_last_name' => ['string','min:2','max:45']]);
             try {
                 User::where('id',$user_id)
@@ -48,10 +52,11 @@ class UserController extends Controller
                     'error' => $exception->getMessage()
                 ],401);
             }
-            $successMessage = $successMessage. ' last name';
+
+            array_push($successMessages,' last name');
         }
 
-        if (isset($fields['new_email'])){
+        if (isset($fields['new_email']) && $currentUserData->email != $fields['new_email']){
             $inputEmail = $request->validate(['new_email' => ['unique:users,email','email']]);
             try {
                  User::where('id',$user_id)
@@ -62,7 +67,7 @@ class UserController extends Controller
                     'error' => $exception->getMessage()
                 ],401);
             }
-            $successMessage = $successMessage. ' email';
+            array_push($successMessages,' email');
         }
 
         if (isset($fields['new_password'])){
@@ -78,17 +83,23 @@ class UserController extends Controller
                 ],401);
             }
 
-            $successMessage = $successMessage. ' password';
+            array_push($successMessages,' password');
         }
 
-        if ($successMessage === 'Successfully updated'){$successMessage = 'Nothing Updated';}
-
-        $successMessage = $successMessage. '!';
+        if (count($successMessages) > 0){
+            array_unshift($successMessages, 'Successfully updated');
+            $message = implode(', ', $successMessages);
+        }else{
+            $message = 'Nothing to update!';
+            return response()->json([
+                'message' => $message,
+            ],400);
+        }
 
         $user = User::where('id',$user_id)->first();
 
         return response()->json([
-            'message' => $successMessage,
+            'message' => $message,
             'user' => $user
         ]);
 
