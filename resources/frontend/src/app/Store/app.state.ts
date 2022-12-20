@@ -1,17 +1,20 @@
 import {UserReducer, UserState} from "./user-store/user.reducer";
 import {ActionReducerMap, createFeatureSelector, MetaReducer, StoreModule} from "@ngrx/store";
 import {NgModule} from "@angular/core";
+import {GoalsListState, GoalsReducer} from "./goals-store/goals.reducer";
 
 const APP_FEATURE_KEY = 'appState'
 
 /** States */
 export interface AppState {
-  userState: UserState
+  userState: UserState,
+  goalsState: GoalsListState
 }
 
 /** Reducers */
 const reducers : ActionReducerMap<AppState> = {
   userState: UserReducer,
+  goalsState: GoalsReducer,
 }
 
 const metaReducers: MetaReducer<AppState>[] = [];
