@@ -10,11 +10,8 @@ import {GlobalClasses} from "../../../../shared/styles/global-classes";
 export class PrivateNavComponent {
 
   privateNavLinks = [
-    {url: 'profile', name: 'Profile'},
-    {url: 'profile/edit', name: 'Edit Profile'},
     {url: 'goals', name: 'Goals'},
     {url: 'agenda', name: 'Agenda'},
-    {url: 'logout', name: 'Logout'},
   ]
   darkMode: boolean;
   classes = GlobalClasses;

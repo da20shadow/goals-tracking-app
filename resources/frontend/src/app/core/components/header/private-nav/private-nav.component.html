@@ -23,12 +23,18 @@
     <!-- Avatar Dropdown Button -->
     <div class="relative ml-3">
       <div>
-        <button type="button" class="flex max-w-xs items-center rounded-full bg-gray-800 text-sm outline-none ring-2 ring-white ring-offset-2 ring-offset-gray-800">
+        <button mat-button [matMenuTriggerFor]="beforeMenu"
+                type="button" class="flex max-w-xs items-center rounded-full bg-gray-800 text-sm outline-none ring-2 ring-white ring-offset-2 ring-offset-gray-800">
           <span class="sr-only">Open user menu</span>
           <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
         </button>
       </div>
-
+      <mat-menu #beforeMenu="matMenu" xPosition="before">
+        <button routerLink="profile" mat-menu-item>Profile</button>
+        <button routerLink="profile/edit" mat-menu-item>Edit Profile</button>
+        <button routerLink="settings" mat-menu-item>Settings</button>
+        <button routerLink="logout" mat-menu-item>Logout</button>
+      </mat-menu>
     </div>
 
   </div>
