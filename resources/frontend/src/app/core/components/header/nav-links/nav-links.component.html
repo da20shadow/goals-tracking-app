@@ -1,1 +1,5 @@
-<p>nav-links works!</p>
+<a [ngClass]="classes.navLink"
+   [routerLink]="link.url"
+   *ngFor="let link of navLinks">
+  {{link.name}}
+</a>
