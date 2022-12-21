@@ -1,19 +1,18 @@
 <form mat-dialog-content
-        (ngSubmit)="addGoalFormHandler(addGoalForm)"
-        #addGoalForm="ngForm"
-        class="bg-white dark:bg-gray-800 mt-8 space-y-6 shadow p-10 rounded-sm
+      (ngSubmit)="addGoalFormHandler(addGoalForm)"
+      #addGoalForm="ngForm"
+      class="bg-white dark:bg-gray-800 mt-8 space-y-6 shadow p-10 rounded-sm
             shadow-2xl dark:shadow dark:shadow-gray-500">
 
-    <button class="dark:text-gray-500 hover:dark:text-gray-400 absolute top-3 right-3" mat-dialog-close mat-icon-button>
-      <mat-icon>close</mat-icon>
-    </button>
+  <button class="dark:text-gray-500 hover:dark:text-gray-400 absolute top-3 right-3" mat-dialog-close mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
 
-    <h2 class="mt-0 text-center text-3xl text-color-light dark:text-color-dark">Add New Goal</h2>
+  <h2 class="mt-0 text-center text-color-light dark:text-color-dark text-gray-400 text-3xl">Add New Goal</h2>
 
 
-  <section class="flex flex-wrap ">
-    <!-- Goal Title Input Container-->
-    <div class="w-[75%]">
+  <!-- Goal Title Input Container-->
+  <div class="w-full">
       <div class="flex align-center border border-slate-600 rounded">
         <input [ngClass]="classes.input"
                type="text"
@@ -22,7 +21,7 @@
                placeholder="Goal Title..."
                minlength="10"
                required
-               ngModel />
+               ngModel/>
       </div>
       <!-- Error messages -->
       <ng-container *ngIf="title.touched">
@@ -37,15 +36,44 @@
       </ng-container>
 
     </div>
-    <!-- Goal Due Date Input Container-->
-    <div class="w-[20%]">
+
+  <!--Start and Due Dates Inputs Container-->
+  <section class="flex flex-wrap ">
+
+    <!-- Goal Start Date -->
+    <div class="w-[50%]">
+
+      <label class="text-color-light dark:text-color-dark">Start Date:</label>
+      <div class="flex align-center border border-slate-600 rounded">
+        <input [ngClass]="classes.input"
+               type="date"
+               name="start_date"
+               #start_date="ngModel"
+               ngModel/>
+      </div>
+
+        <!-- Error messages -->
+        <ng-container *ngIf="start_date.touched">
+            <span *ngIf="start_date.errors?.['required']"
+                  class="text-sm text-red-600">
+              Start Date can not be empty!
+            </span>
+        </ng-container>
+      <!-- Error messages -->
+
+    </div>
+    <!-- Goal Start Date -->
+
+    <!-- Goal Due Date -->
+    <div class="w-[50%]">
+      <label class="text-color-light dark:text-color-dark">Due Date:</label>
       <div class="flex align-center border border-slate-600 rounded">
         <input [ngClass]="classes.input"
                type="date"
                name="due_date"
                #due_date="ngModel"
                required
-               ngModel />
+               ngModel/>
       </div>
       <!-- Error messages -->
       <ng-container *ngIf="due_date.touched">
@@ -56,37 +84,43 @@
       </ng-container>
 
     </div>
+    <!-- Goal Due Date -->
 
   </section>
+  <!--Start and Due Dates Inputs Container-->
 
-
-    <!-- Goal description Input Container-->
-    <div>
-      <div class="flex align-center border border-slate-600 rounded">
+  <!-- Goal description Input Container-->
+  <div>
+    <div class="flex align-center border border-slate-600 rounded">
             <textarea [ngClass]="classes.input"
                       class="w-full min-h-[175px] py-2 px-3 "
                       name="description"
                       #description="ngModel"
                       placeholder="Goal Description..."
+                      minlength="5"
                       required
                       ngModel></textarea>
-      </div>
-      <!-- Error messages -->
-      <ng-container *ngIf="title.touched">
+    </div>
+    <!-- Error messages -->
+    <ng-container *ngIf="title.touched">
             <span *ngIf="description.errors?.['required']"
                   class="text-sm text-red-600">
               Description can not be empty!
             </span>
-      </ng-container>
+    </ng-container>
 
-    </div>
-    <!-- Add Button -->
-    <div>
+  </div>
+  <!-- Goal description Input Container-->
 
-      <button class="flex items-center relative btn-primary dark:btn-primary-dark" type="submit">
-        <mat-icon>add</mat-icon>
-        Add
-      </button>
+  <!-- Add Button -->
+  <div>
 
-    </div>
-  </form>
+    <button class="flex items-center relative btn-primary dark:btn-primary-dark" type="submit">
+      <mat-icon>add</mat-icon>
+      Add
+    </button>
+
+  </div>
+  <!-- Add Button -->
+
+</form>
