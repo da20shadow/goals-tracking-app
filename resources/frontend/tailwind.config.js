@@ -75,7 +75,7 @@ module.exports = {
         '.btn-secondary-dark': config('theme.buttons.btnTransform'),
       })
 
-      const buttons = {
+      const classes = {
         '.btn-primary': {
           color: primaryBtnColors.textColor,
           backgroundColor: '#3B82F6',
@@ -118,9 +118,11 @@ module.exports = {
         },
         'btn-secondary-disabled': {},
         'btn-secondary-disabled-dark': {},
+        'text-color-light': {color: '#5e6e82'},
+        'text-color-dark': {color: '#9da9bb'}
       }
 
-      addComponents(buttons)
+      addComponents(classes)
     }
 
   ],
