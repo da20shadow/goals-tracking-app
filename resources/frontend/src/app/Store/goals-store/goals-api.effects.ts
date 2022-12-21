@@ -54,6 +54,7 @@ export class GoalApiEffects {
             return GoalsAPIActions.addNewGoalSuccess({goal: response.goal})
           }),
           catchError((err) => {
+            console.log('err',err)
             this.notificationService.showErrorNotification(err.error.message)
             return of(GoalsAPIActions.addNewGoalFailure({error: err.error.message}))
           })
@@ -74,7 +75,7 @@ export class GoalApiEffects {
           catchError((err) => {
             //TODO: remove the log!
             console.log('GoalsEffects updateActiveGoal$ Error: ', err);
-            return of(err)
+            return of(GoalsAPIActions.updateActiveGoalFailure({error: err.error.message}))
           })
         )
       })
