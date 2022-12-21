@@ -11,13 +11,15 @@ import {MatIconModule} from "@angular/material/icon";
 import { AddGoalModalComponent } from './components/add-goal-modal/add-goal-modal.component';
 import {FormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
+import { TargetsListComponent } from './components/targets-list/targets-list.component';
 
 
 @NgModule({
   declarations: [
     GoalsListComponent,
     GoalDetailsComponent,
-    AddGoalModalComponent
+    AddGoalModalComponent,
+    TargetsListComponent
   ],
   imports: [
     CommonModule,
