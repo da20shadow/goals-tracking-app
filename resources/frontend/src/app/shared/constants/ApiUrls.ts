@@ -21,6 +21,7 @@ export class ApiUrls {
 
   //Targets API urls
   static readonly TARGET = `${BASE_URL}/targets`;
+  static readonly TARGET_TASKS: string = `${BASE_URL}/target/tasks`;
   static readonly TARGET_ADD = `${BASE_URL}/targets/add`;
   static readonly TARGET_UPDATE = `${BASE_URL}/targets/update`;
   static readonly TARGET_DELETE = `${BASE_URL}/targets/delete`;
