@@ -1,0 +1,127 @@
+<!-- Total/Completed Targets and daily % target -->
+<section class="flex justify-between items-center">
+
+  <!-- Completed / total -->
+  <div class="flex gap-3">
+    <span>Targets:</span>
+    <span class="text-sm px-3 flex justify-center items-center border rounded-full">
+    <mat-icon class="text-sm">done</mat-icon>
+      {{targetsDone}} of {{totalTargets}}
+    </span>
+  </div>
+  <!-- Completed / total -->
+
+  <!-- daily target % -->
+  <div class="flex gap-3">
+    <p class="flex gap-1 justify-center items-center">
+      <mat-icon class="text-[24px]">playlist_add_check</mat-icon>
+        Today's target: <strong>{{dailyTarget}}% </strong>
+        <span class="text-sm"> /Day</span>
+    </p>
+  </div>
+  <!-- daily target % -->
+
+</section>
+<!-- Total/Completed Targets and daily % target -->
+
+<hr class="my-5">
+
+<!-- Add New Target Form & Button-->
+<section class="my-5 flex" [ngClass]="{'justify-end':!showAddTargetForm}">
+
+  <!-- Add target Form -->
+  <ng-container *ngIf="showAddTargetForm">
+
+    <form [@fadeInOut]
+          class="w-full my-2 flex items-center border dark:border-gray-300 container-light dark:container-dark shadow-sm dark:shadow-gray-300"
+          (ngSubmit)="addTargetFormHandler(addTargetFrom)"
+          #addTargetFrom="ngForm" ngForm>
+      <div class="w-[85%] border-r dark:border-gray-300">
+        <input [ngClass]="classes.input"
+               type="text"
+               placeholder="Target Title..."
+               name="title"
+               #title="ngModel"
+               minlength="5"
+               maxlength="255"
+               required
+               ngModel/>
+      </div>
+
+      <div class="flex mx-auto">
+
+        <button type="submit" (click)="addTargetFormHandler(addTargetFrom);showAddTargetForm = false"
+                class="text-green-600 mr-2 ">
+          <mat-icon>add_task</mat-icon>
+        </button>
+
+        <button type="button" (click)="showAddTargetForm = false"
+                class="text-[#a05e5e] ">
+          <mat-icon>cancel</mat-icon>
+        </button>
+
+      </div>
+
+    </form>
+
+  </ng-container>
+  <!-- Add target Form -->
+
+  <button [@fadeInOut] class="whitespace-nowrap my-2 px-3 py-2.5 border"
+          *ngIf="!showAddTargetForm"
+          (click)="showAddTargetForm = true">
+    Add target
+  </button>
+
+</section>
+<!-- Add New Target Form & Button-->
+
+
+<!-- Targets List -->
+<table class="w-full container-light dark:container-dark dark:shadow-gray-500 rounded"
+       *ngIf="(targetsList$|async) as targetsList">
+
+  <!--Table Header START-->
+  <thead>
+  <tr class="bg-[#364962] dark:bg-[#364962]">
+    <th class="py-4 uppercase">Target</th>
+    <th class="py-4 uppercase">Progress</th>
+  </tr>
+  </thead>
+  <!--Table Header END-->
+
+  <tbody>
+
+  <!--Table Body Row START-->
+  <tr [@fadeInOut] [ngClass]="classes.tableBodyRow" *ngFor="let target of targetsList">
+
+    <td [routerLink]="['/target/',target.id]" class="w-[75%] py-3 cursor-pointer">
+      {{target.title}}
+    </td>
+
+    <!-- Target progress -->
+    <td class="text-center py-3 max-w-[150px] border-l dark:border-gray-600">
+
+      <!--Target Progress  -->
+      <div class="w-[85%] mx-auto flex justify-between text-[12px]">
+        <span>tasks</span>
+        <span>{{target.total_completed_tasks}}/{{target.total_tasks}}</span>
+      </div>
+
+      <div class="w-[85%] mx-auto border dark:border-gray-200 bg-white dark:bg-gray-600">
+        <div class="text-center text-sm bg-green-600 dark:bg-green-800 text-gray-900 dark:text-gray-300"
+             [style]="'width:'+(target.progress).toFixed(1)+'%'">{{(target.progress).toFixed(1)}}%
+        </div>
+      </div>
+      <!--Target Progress -->
+
+    </td>
+
+  </tr>
+  <!--Table Body Row END-->
+
+  </tbody>
+
+</table>
+
+
