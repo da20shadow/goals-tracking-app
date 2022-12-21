@@ -33,6 +33,10 @@ export class GlobalClasses {
   // static readonly navLink = 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium';
 
 
-  static readonly bgDarkSecBlue = 'dark:bg-[#162231]';
+  /** ----------Tables style---------- */
+  static readonly tableBodyRow = `text-center border border-transparent dark:hover:border-gray-600 dark:hover:text-[#f0f8ff] dark:bg-[#252f3f] dark:hover:bg-gray-900 dark:odd:bg-gray-800`;
+  static readonly tableBodyRowData = `py-3 whitespace-nowrap dark:hover:bg-[#4b5563] max-w-[75px] border-l dark:border-gray-600 cursor-pointer`;
 
+
+  static readonly bgDarkSecBlue = 'dark:bg-[#162231]';
 }
