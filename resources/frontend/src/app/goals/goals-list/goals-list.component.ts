@@ -16,7 +16,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   animations: [
     trigger('fadeInOut', [
       state('void', style({
-        transform: 'scale(0.5)', opacity: 0
+        transform: 'scale(0.01)', opacity: 0
       })),
       transition('void <=> *', animate(400)),
     ]),
@@ -46,15 +46,17 @@ export class GoalsListComponent {
         // width: '750px',
         enterAnimationDuration: '200ms',
         exitAnimationDuration: '200ms',
-        data: {goalId: '1'}
+        data: {justTest: 'Just Testing how it works!'}
       })
 
     dialogRef.afterClosed().subscribe(result => {
-      this.store$.dispatch(GoalPageActions.addNewGoal({goal:result.data}));
+      if (result.data.goalForm){
+        this.store$.dispatch(GoalPageActions.addNewGoal({goal:result.data.goalForm}));
+      }
     })
   }
 
   setActiveGoal(goalId: number) {
-    this.store$.dispatch(GoalPageActions.getActiveGoal({goalId}));
+    this.store$.dispatch(GoalPageActions.setActiveGoal({goalId}));
   }
 }
