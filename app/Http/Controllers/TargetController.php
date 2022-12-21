@@ -12,11 +12,37 @@ use Illuminate\Support\Facades\DB;
 class TargetController extends Controller
 {
 
+    public function getTargetTasks($id): JsonResponse{
+        $userId = auth()->user()->getAuthIdentifier();
+        $result = self::chekIfExist($userId,$id);
+
+        if ($result['error']){
+            return response()->json([
+                'message' => 'Such Target Not Exist!',
+                'error' => $result['message'],
+            ],400);
+        }
+
+        try {
+            $tasksList = DB::table('tasks')
+                ->where('target_id',$id)
+                ->where('user_id',$userId)
+                ->get();
+        }catch (QueryException $exception){
+            return response()->json([
+                'message' => 'No Tasks For This Target!',
+                'error' => $exception->getMessage()
+            ],400);
+        }
+
+        return response()->json($tasksList);
+    }
+
     public function store(Request $request): JsonResponse
     {
         $fields = $request->validate([
-            'title' => ['required','string'],
-            'description' => ['required','string'],
+            'title' => ['required','string','min:5','max:255'],
+            'description' => ['string'],
             'goal_id' => ['required','Integer'],
         ]);
 
@@ -67,6 +93,15 @@ class TargetController extends Controller
 //        $addedTarget = Target::where('user_id',$user_id)
 //            ->where('title',$fields['title'])->first();
 
+        $result = self::calculateTargetProgress($target->id,$user_id);
+        if ($result['target'] === null){
+            return response()->json([
+                'message' => 'Error! Target with this ID not exist!',
+                'error' => $result['error']
+            ], 400);
+        }
+        $target = $result['target'];
+
         return response()->json([
             "message" => "Successfully added new target!",
             "target" => $target
@@ -76,11 +111,12 @@ class TargetController extends Controller
 
     public function show($id): JsonResponse
     {
-        $result = self::calculateTargetProgress($id);
+        $userId = auth()->user()->getAuthIdentifier();
+        $result = self::calculateTargetProgress($id,$userId);
 
         if ($result['target'] === null){
             return response()->json([
-                'message' => 'Error! Cannot get Target By ID!',
+                'message' => 'Error! Such Target Not Exist!',
                 'error' => $result['error']
             ], 400);
         }
@@ -102,7 +138,7 @@ class TargetController extends Controller
         $fields = $request->all();
 
         if (isset($fields['title'])){
-            $inputTitle = $request->validate(['title' => ['string','min:10','max:455']]);
+            $inputTitle = $request->validate(['title' => ['string','min:5','max:255']]);
             try {
                 Target::where('user_id',$user_id)
                     ->where('id',$id)
@@ -128,7 +164,7 @@ class TargetController extends Controller
             }
         }
 
-        $result = self::calculateTargetProgress($id);
+        $result = self::calculateTargetProgress($id,$user_id);
 
         if ($result['target'] === null){
             return response()->json([
@@ -176,45 +212,54 @@ class TargetController extends Controller
         ]);
     }
 
-    private static function calculateTargetProgress($targetId): ?array
+    private static function calculateTargetProgress($targetId,$userId): ?array
     {
         $result = [];
         try {
             $target = DB::table('targets')
-                ->select(DB::raw("targets.id,targets.title,targets.description,
+                ->select(DB::raw("targets.id,targets.title,targets.description,targets.goal_id,targets.created_at,
             count(tasks.id) as total_tasks,
             sum(case when tasks.status = 'Completed' then 1 else 0 end) as total_completed_tasks"))
                 ->leftJoin('tasks','targets.id','tasks.target_id')
                 ->where('targets.id','=',$targetId)
-                ->groupBy('targets.id')
-                ->groupBy('targets.title')
-                ->groupBy('targets.description')
+                ->where('targets.user_id','=',$userId)
+                ->groupBy('targets.id','targets.title','targets.goal_id','targets.description','targets.created_at')
                 ->first();
             $result['target'] = $target;
         }catch (QueryException $exception){
             $result['error'] = $exception->getMessage();
-            return $result['target'] = null;
+            $result['target'] = null;
+            return $result;
         }
 
-
-        $progress = 0;
-
-        if ($target->total_tasks > 0){
-            $progress = ($target->total_completed_tasks / $target->total_tasks) * 100;
+        if (isset($target) ){
+            if ($target->total_tasks > 0){
+                $progress = ($target->total_completed_tasks / $target->total_tasks) * 100;
+                $target->progress = $progress;
+            }else {
+                $target->progress = 0;
+            }
         }
-        $target->progress = $progress;
 
         $result['target'] = $target;
-
+        if (!$target){
+            $result['error'] = 'Such Target Not Exist!';
+        }
         return $result;
     }
 
+    /**
+     * @param mixed $user_id
+     * @param $targetId
+     * @return array with target and error
+     */
     private static function chekIfExist(mixed $user_id, $targetId): array
     {
         $result = ['error' => false, 'message' => ''];
         try {
             $targetExist = DB::table('targets')
-                ->where(['id' => $targetId, 'user_id' => $user_id])->first();
+                ->where(['id' => $targetId, 'user_id' => $user_id])
+                ->first();
         }catch (QueryException $exception){
             $result['error'] = true;
             $result['message'] = $exception->getMessage();
@@ -224,6 +269,7 @@ class TargetController extends Controller
         if (null === $targetExist){
             $result['error'] = true;
             $result['message'] = 'Such target not exist!';
+            $result['target'] = null;
         }
         $result['target'] = $targetExist;
         return $result;

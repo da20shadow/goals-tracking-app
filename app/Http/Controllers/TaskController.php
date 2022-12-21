@@ -37,8 +37,8 @@ class TaskController extends Controller
     public function store(Request $request): JsonResponse
     {
         $fields = $request->validate([
-            'title' => ['required','string'],
-            'description' => ['string'],
+            'title' => ['required','string','min:5','max:255'],
+            'description' => ['string','min:5'],
             'start_date' => ['date'],
             'end_date' => ['date'],
             'status' => ['string'],
@@ -87,16 +87,16 @@ class TaskController extends Controller
         $fields['user_id'] = $user_id;
 
         try {
-            $task = Task::create($fields);
+            Task::create($fields);
         }catch (QueryException $exception){
             return response()->json([
                 'message' => 'An Error Occur! Please, try again!',
                 'error' => $exception->getMessage()
             ],400);
         }
-        //TODO Remove if all is ok with and returns the task!
-//        $task = Task::where('user_id',$user_id)
-//            ->where('title',$fields['title'])->first();
+        $task = Task::where('user_id',$user_id)
+            ->where('title',$fields['title'])->first();
+
         return response()->json([
             'message' => 'Successfully added new task!',
             'task' => $task,
