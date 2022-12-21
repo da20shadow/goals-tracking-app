@@ -42,7 +42,7 @@ export const GoalsReducer = createReducer(
   }),
   on(GoalPageActions.setActiveGoal, (state, {goalId}) => {
     //TODO: maybe have to remove it because is useless now!
-    const goal = state.goals.find(g => g.id = goalId);
+    const goal = state.goals.find(g => g.id === goalId);
     if (!goal){return state;}
     return ({
       ...state,
