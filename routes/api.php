@@ -32,9 +32,10 @@ Route::group(['middleware' => ['auth:sanctum']],function () {
 
     /** --------TARGETS-------- */
     Route::get('targets/{id}', [TargetController::class, 'show']);
+    Route::get('target/tasks/{id}', [TargetController::class, 'getTargetTasks']);
     Route::post('targets/add', [TargetController::class, 'store']);
     Route::patch('targets/update/{id}', [TargetController::class, 'update']);
-    Route::patch('targets/delete/{id}', [TargetController::class, 'destroy']);
+    Route::delete('targets/delete/{id}', [TargetController::class, 'destroy']);
 
     /** ---------TASKS--------- */
     Route::get('tasks',[TaskController::class,'index']);
