@@ -20,6 +20,8 @@ import {AuthModule} from "./auth/auth.module";
 import {UserApiEffects} from "./Store/user-store/user-api.effects";
 import {GoalApiEffects} from "./Store/goals-store/goals-api.effects";
 import {MatDialogModule} from "@angular/material/dialog";
+import {TargetEffects} from "./Store/tartgets-store/target.effects";
+import {TaskApiEffects} from "./Store/task-store/task-api.effects";
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     EffectsModule.forRoot([
       UserApiEffects,
       GoalApiEffects,
+      TargetEffects,
+      TaskApiEffects
     ]),
     StoreRouterConnectingModule.forRoot(),
     extModules,
