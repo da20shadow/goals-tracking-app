@@ -50,7 +50,7 @@ export class GoalsListComponent {
       })
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result.data.goalForm){
+      if (result && result.data.goalForm){
         this.store$.dispatch(GoalPageActions.addNewGoal({goal:result.data.goalForm}));
       }
     })
