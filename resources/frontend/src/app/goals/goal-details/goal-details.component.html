@@ -4,9 +4,79 @@
 
   <article class="bg-white dark:bg-gray-800 relative m-5 p-5 border rounded">
 
+    <!-- Goal Details -->
+    <section [@fadeGoalInOut] *ngIf="!editGoal">
+
+        <!-- Edit Goal Icon -->
+        <div class="absolute top-3 right-3">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Goal menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="editGoal=true" mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button (click)="deleteGoal(goal.id)" mat-menu-item>
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+
+        </div>
+        <!-- Edit Goal Icon -->
+
+
+        <!-- Goal Progress & Days Left -->
+        <section class="my-5 flex gap-3 justify-center items-center">
+
+          <!--Progress bar -->
+          <div class="w-[100%] border dark:border-gray-200 bg-gray-50 dark:bg-gray-600">
+            <div class="text-center py-1 bg-green-600 dark:bg-green-800 text-gray-900 dark:text-gray-300"
+                 [style]="'width:'+(goal.progress).toFixed(2)+'%'">{{(goal.progress).toFixed(2)}}%
+            </div>
+          </div>
+          <!--Progress bar -->
+
+          <!-- TODO: calculate days left -->
+          <div class="p-[0.30rem] whitespace-nowrap flex gap-1 items-center border">
+            <mat-icon class="text-[24px]">schedule</mat-icon>
+            <ng-container *ngIf="daysLeft == 'Overdue'; else daysLeftTemplate">
+              <span class="text-rose-300">Overdue</span>
+            </ng-container>
+            <ng-template #daysLeftTemplate>
+            <span>Days Left: <strong>{{daysLeft}}</strong></span>
+            </ng-template>
+          </div>
+
+        </section>
+        <!-- Goal Progress & Days Left -->
+
+
+        <!-- Goal Description -->
+        <pre class="p-5 border bg-gray-50 dark:bg-gray-700">{{goal.description}}</pre>
+        <!-- Goal Description -->
+
+        <!-- Start and Due Dates -->
+        <div class="py-5 flex flex-wrap justify-between">
+
+          <p class="flex items-center">
+            <mat-icon class="mb-[9px] text-xl">calendar_today</mat-icon>
+            <span>Start Date: {{goal.start_date| date: 'MMM d, y'}}</span>
+          </p>
+
+          <p class="flex items-center">
+            <mat-icon class="mb-[5px] text-[24px]">event</mat-icon>
+            <span>Due Date: {{goal.due_date| date: 'MMM d, y'}}</span>
+          </p>
+        </div>
+        <!-- Start and Due Dates -->
+
+    </section>
+    <!-- Goal Details -->
+
     <!-- Edit Goal Form -->
-    <ng-container *ngIf="editGoal">
-      <form [@fadeInOut] (ngSubmit)="editGoalFormHandler(editGoalForm)"
+      <form *ngIf="editGoal" [@fadeInOut] (ngSubmit)="editGoalFormHandler(editGoalForm)"
             #editGoalForm="ngForm"
             class="bg-white dark:bg-gray-800 mt-8 space-y-6 shadow p-10 rounded-lg
             shadow-2xl dark:shadow dark:shadow-gray-500">
@@ -131,81 +201,7 @@
 
 
       </form>
-    </ng-container>
     <!-- Edit Goal Form -->
-
-
-    <!-- Goal Details -->
-    <ng-container *ngIf="!editGoal">
-
-        <!-- Edit Goal Icon -->
-        <div class="absolute top-3 right-3">
-          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Goal menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button (click)="editGoal=true" mat-menu-item>
-              <mat-icon>edit</mat-icon>
-              <span>Edit</span>
-            </button>
-            <button (click)="deleteGoal(goal.id)" mat-menu-item>
-              <mat-icon>delete</mat-icon>
-              <span>Delete</span>
-            </button>
-          </mat-menu>
-
-        </div>
-        <!-- Edit Goal Icon -->
-
-
-        <!-- Goal Progress & Days Left -->
-        <section class="my-5 flex gap-3 justify-center items-center">
-
-          <!--Progress bar -->
-          <div class="w-[100%] border dark:border-gray-200 bg-gray-50 dark:bg-gray-600">
-            <div class="text-center py-1 bg-green-600 dark:bg-green-800 text-gray-900 dark:text-gray-300"
-                 [style]="'width:'+(goal.progress).toFixed(2)+'%'">{{(goal.progress).toFixed(2)}}%
-            </div>
-          </div>
-          <!--Progress bar -->
-
-          <!-- TODO: calculate days left -->
-          <div class="p-[0.30rem] whitespace-nowrap flex gap-1 items-center border">
-            <mat-icon class="text-[24px]">schedule</mat-icon>
-            <ng-container *ngIf="daysLeft == 'Overdue'; else daysLeftTemplate">
-              <span class="text-rose-300">Overdue</span>
-            </ng-container>
-            <ng-template #daysLeftTemplate>
-            <span>Days Left: <strong>{{daysLeft}}</strong></span>
-            </ng-template>
-          </div>
-
-        </section>
-        <!-- Goal Progress & Days Left -->
-
-
-        <!-- Goal Description -->
-        <pre class="p-5 border bg-gray-50 dark:bg-gray-700">{{goal.description}}</pre>
-        <!-- Goal Description -->
-
-        <!-- Start and Due Dates -->
-        <div class="py-5 flex flex-wrap justify-between">
-
-          <p class="flex items-center">
-            <mat-icon class="mb-[9px] text-xl">calendar_today</mat-icon>
-            <span>Start Date: {{goal.start_date| date: 'MMM d, y'}}</span>
-          </p>
-
-          <p class="flex items-center">
-            <mat-icon class="mb-[5px] text-[24px]">event</mat-icon>
-            <span>Due Date: {{goal.due_date| date: 'MMM d, y'}}</span>
-          </p>
-        </div>
-        <!-- Start and Due Dates -->
-
-    </ng-container>
-    <!-- Goal Details -->
-
 
   </article>
   <!-- Goal Details -->

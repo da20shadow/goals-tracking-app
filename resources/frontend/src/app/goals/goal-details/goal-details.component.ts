@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Observable} from "rxjs";
-import {Goal, Target} from "../../core/models";
+import {Goal} from "../../core/models";
 import {Store} from "@ngrx/store";
 import {goalsListSelectors} from "../../Store/goals-store/goal-selectors";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -11,8 +11,6 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TargetPageActions} from "../../Store/tartgets-store/target-page.actions";
 import {GoalsAPIActions} from "../../Store/goals-store/goal-api.actions";
 import {NotificationService} from "../../core/services/notification.service";
-import {Operations} from "../../shared/enums/Operations";
-import {TargetApiActions} from "../../Store/tartgets-store/target-api.actions";
 
 @Component({
   selector: 'app-goal-details',
@@ -21,7 +19,13 @@ import {TargetApiActions} from "../../Store/tartgets-store/target-api.actions";
   animations: [
     trigger('fadeInOut', [
       state('void', style({
-        transform: 'scaleX(0.01)', opacity: 0
+        transform: 'scaleY(0.01)', opacity: 0
+      })),
+      transition('void <=> *', animate(800)),
+    ]),
+    trigger('fadeGoalInOut', [
+      state('void', style({
+        transform: 'scaleY(0.01)', opacity: 0
       })),
       transition('void <=> *', animate(400)),
     ]),
