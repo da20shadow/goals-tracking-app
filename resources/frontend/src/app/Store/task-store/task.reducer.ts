@@ -28,6 +28,9 @@ export const TaskReducer = createReducer(
   on(TaskAPIActions.updateActiveTaskSuccess, (state,{changedTask})=> {
     return ({...state,activeTask: changedTask})
   }),
+  on(TaskAPIActions.updateActiveTaskFailure, (state,{error})=> {
+    return ({...state,error})
+  }),
   on(TaskAPIActions.loadTargetTasksSuccess, (state,{tasks}) => {
     return ({...state,tasksList: tasks,status:'success'})
   }),
@@ -38,7 +41,7 @@ export const TaskReducer = createReducer(
     return ({...state,error})
   }),
   on(TaskAPIActions.updateTaskSuccess,(state,{changedTask})=> {
-    return ({...state,tasksList: state.tasksList.map(t => t.id === changedTask.id ? changedTask : t)})
+    return ({...state, tasksList: state.tasksList.map(t => t.id === changedTask.id ? changedTask : t)})
   }),
   on(TaskAPIActions.updateTaskFailure, (state,{error})=> {
     return ({...state,error})
