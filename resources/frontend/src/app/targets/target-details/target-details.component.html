@@ -1,6 +1,14 @@
-<ng-container *ngIf="(activeTarget$|async) as target; else noTarget">
+<ng-container *ngIf="(activeTarget$|async) as target;">
 
-  <app-page-title [title]="'🎯 Target:'" [text]="target.title"></app-page-title>
+  <app-page-title [title]="'🎯 TARGET:'" [text]="target.title"></app-page-title>
+
+  <!-- BACK BUTTON -->
+  <button [routerLink]="['/goals',target.goal_id]"
+          class="m-5 flex gap-3 items-center px-3 py-2 cursor-pointer border rounded">
+    <mat-icon>arrow_back_ios_new</mat-icon>
+    <span>Goal</span>
+  </button>
+  <!-- BACK BUTTON -->
 
   <!-- Active Target Details -->
   <article class="bg-white dark:bg-gray-800 relative m-5 p-5 border rounded">
@@ -65,78 +73,78 @@
     <!-- Target Details -->
 
     <!-- Edit Target Form -->
-      <form *ngIf="editTarget" [@fadeInOut] (ngSubmit)="editTargetFormHandler(editTargetForm)"
-            #editTargetForm="ngForm"
-            class="bg-white dark:bg-gray-800 mt-8 space-y-6 shadow p-10 rounded-lg
+    <form *ngIf="editTarget" [@fadeInOut] (ngSubmit)="editTargetFormHandler(editTargetForm)"
+          #editTargetForm="ngForm"
+          class="bg-white dark:bg-gray-800 mt-8 space-y-6 shadow p-10 rounded-lg
             shadow-2xl dark:shadow dark:shadow-gray-500">
 
-        <input type="hidden" [ngModel]="target.id" name="id" ngModel>
+      <input type="hidden" [ngModel]="target.id" name="id" ngModel>
 
-        <!-- Target Title Input Container-->
-        <div>
-          <div class="flex align-center border border-slate-600 rounded">
-            <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
-                   type="text"
-                   name="title"
-                   #title="ngModel"
-                   placeholder="Title..."
-                   minlength="5"
-                   [ngModel]="target.title"
-            />
-          </div>
-          <!-- Error messages -->
-          <ng-container *ngIf="title.touched">
+      <!-- Target Title Input Container-->
+      <div>
+        <div class="flex align-center border border-slate-600 rounded">
+          <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
+                 type="text"
+                 name="title"
+                 #title="ngModel"
+                 placeholder="Title..."
+                 minlength="5"
+                 [ngModel]="target.title"
+          />
+        </div>
+        <!-- Error messages -->
+        <ng-container *ngIf="title.touched">
             <span *ngIf="title.errors?.['required']"
                   class="text-sm text-red-600">
               Please enter Title!
             </span>
-            <span *ngIf="title.errors?.['minlength']"
-                  class="text-sm text-red-600">
+          <span *ngIf="title.errors?.['minlength']"
+                class="text-sm text-red-600">
               The Target title must be at least 10 characters long!
             </span>
-          </ng-container>
+        </ng-container>
 
-        </div>
-        <!-- Target Title Input Container-->
+      </div>
+      <!-- Target Title Input Container-->
 
-        <!-- Target Description Input Container-->
-        <div>
-          <div class="flex align-center border border-slate-600 rounded">
+      <!-- Target Description Input Container-->
+      <div>
+        <div class="flex align-center border border-slate-600 rounded">
             <textarea
               class="w-full min-h-[175px] py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
               name="description"
               #description="ngModel"
               placeholder="Target Description..."
               [ngModel]="target.description"></textarea>
-          </div>
-          <!-- Error messages -->
-          <ng-container *ngIf="title.touched">
+        </div>
+        <!-- Error messages -->
+        <ng-container *ngIf="title.touched">
             <span *ngIf="description.errors?.['required']"
                   class="text-sm text-red-600">
               Description can not be empty!
             </span>
-          </ng-container>
-        </div>
-        <!-- Target Description Input Container-->
+        </ng-container>
+      </div>
+      <!-- Target Description Input Container-->
 
-        <!-- Save Button -->
-        <div>
+      <!-- Save Button -->
+      <div>
 
-          <button type="submit" class="relative btn-primary dark:btn-primary-dark">
-            Save Changes
-          </button>
+        <button type="submit" class="relative btn-primary dark:btn-primary-dark">
+          Save Changes
+        </button>
 
-          <button class="py-2 px-3 ml-3 border shadow dark:shadow-gray-300 rounded dark:active:bg-gray-700"
-                  type="button"
-                  (click)="editTarget=false">
-            Cancel
-          </button>
+        <button class="py-2 px-3 ml-3 border shadow dark:shadow-gray-300 rounded dark:active:bg-gray-700"
+                type="button"
+                (click)="editTarget=false">
+          Cancel
+        </button>
 
-        </div>
-        <!-- Save Button -->
+      </div>
+      <!-- Save Button -->
 
 
-      </form>
+    </form>
     <!-- Edit Target Form -->
 
   </article>
@@ -144,13 +152,9 @@
 
   <section class="my-5" *ngIf="(targetTasksList$|async) as targetTasksList">
 
-    <app-tasks-list (taskEvent)="updateTargetProgress($event,target)"  [targetId]="target.id" [tasksList]="targetTasksList" ></app-tasks-list>
+    <app-tasks-list (taskEvent)="updateTargetProgress($event,target)" [targetId]="target.id"
+                    [tasksList]="targetTasksList"></app-tasks-list>
 
   </section>
 
 </ng-container>
-
-
-<ng-template #noTarget>
-  <h2 class="my-5 text-center text-2xl">Loading...</h2>
-</ng-template>
