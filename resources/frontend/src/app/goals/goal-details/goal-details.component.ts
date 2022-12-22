@@ -47,8 +47,8 @@ export class GoalDetailsComponent {
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       const goalId = params['id'];
-      this.getGoalTargets(goalId);
       this.store$.dispatch(GoalPageActions.getActiveGoal({goalId}));
+      this.getGoalTargets(goalId);
     });
 
     const oneDay = 24 * 60 * 60 * 1000;
