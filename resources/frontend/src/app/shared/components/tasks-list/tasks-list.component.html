@@ -1,0 +1,234 @@
+<!-- Add New Task Form & Button -->
+<section class="p-5 flex justify-end">
+
+  <!-- Add task Form -->
+  <ng-container *ngIf="showAddToDoTaskForm">
+
+    <form [@fadeInOut]
+          class="w-full my-2 flex items-center border dark:border-gray-300 container-light dark:container-dark shadow-sm dark:shadow-gray-300"
+          (ngSubmit)="addTaskFormHandler(addTaskFrom)"
+          #addTaskFrom="ngForm" ngForm>
+      <!-- Task Title Input -->
+      <div class="w-[35%] border-r dark:border-gray-300">
+        <input [ngClass]="classes.input"
+               type="text"
+               placeholder="Target Title..."
+               name="title"
+               #title="ngModel"
+               minlength="5"
+               maxlength="255"
+               required
+               ngModel/>
+      </div>
+      <!-- Task Title Input -->
+
+      <!-- Task Status -->
+      <div class="w-[13%] flex mx-auto">
+
+        <select [ngClass]="classes.input"
+                name="status"
+                #status="ngModel"
+                ngModel>
+          <option value="">Status</option>
+          <option value="{{status}}"
+                  *ngFor="let status of taskStatuses">
+            {{status}}
+          </option>
+        </select>
+
+      </div>
+      <!-- Task Status -->
+
+      <!-- Task Priority -->
+      <div class="w-[13%] flex mx-auto">
+
+        <select [ngClass]="classes.input"
+                name="priority"
+                #priority="ngModel"
+                ngModel>
+          <option value="">Priority</option>
+          <option value="{{priority}}"
+                  *ngFor="let priority of taskPriority">
+            {{priority}}
+          </option>
+        </select>
+
+      </div>
+      <!-- Task Priority -->
+
+      <!-- Task Start Date Input -->
+      <div class="w-[13%] border-r dark:border-gray-300">
+        <input [ngClass]="classes.input"
+               type="date"
+               name="start_date"
+               #start_date="ngModel"
+               ngModel>
+      </div>
+      <!-- Task Start Date Input -->
+
+      <!-- Task End Date Input -->
+      <div class="w-[13%] border-r dark:border-gray-300">
+        <input [ngClass]="classes.input"
+               type="date"
+               name="end_date"
+               #end_date="ngModel"
+               ngModel>
+      </div>
+      <!-- Task End Date Input -->
+
+      <!-- Task Action Buttons -->
+      <div class="w-[13%] flex justify-center border-r dark:border-gray-300">
+        <button type="submit" (click)="addTaskFormHandler(addTaskFrom);showAddToDoTaskForm = false"
+                class="text-green-600 mr-2 ">
+          <mat-icon>add_task</mat-icon>
+        </button>
+
+        <button type="button" (click)="showAddToDoTaskForm = false"
+                class="text-[#a05e5e] ">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </div>
+      <!-- Task Action Buttons -->
+
+    </form>
+
+  </ng-container>
+  <!-- Add task Form -->
+
+  <!-- Add Task Button -->
+  <button [@fadeInOut] class="whitespace-nowrap my-2 px-3 py-[0.69rem] border"
+          *ngIf="!showAddToDoTaskForm"
+          (click)="showAddToDoTaskForm = true">
+    Add Task
+  </button>
+  <!-- Add Task Button -->
+
+</section>
+<!-- Add New Task Form & Button -->
+
+<!--Tasks List Table -->
+<section [style]="'overflow-x:auto;'" class="overflow-x-auto p-5">
+
+  <table matSort (matSortChange)="sortData($event)" *ngIf="tasksList"
+         matSortActive="priority" matSortDirection="desc" matSortDisableClear
+         class="w-full container-light dark:container-dark dark:shadow-gray-500">
+
+    <!--Table Header START-->
+    <thead>
+
+    <tr class="bg-[#364962] dark:bg-[#364962]">
+
+      <th class="text-center whitespace-nowrap px-2 py-3 uppercase" [mat-sort-header]="head.header"
+          *ngFor="let head of tableHead">{{head.name}}</th>
+      <th class="text-center whitespace-nowrap px-2 py-3 uppercase">Action</th>
+
+    </tr>
+
+    </thead>
+    <!--Table Header END-->
+
+    <tbody>
+
+    <!--Table Body Row START-->
+    <tr [@fadeInOut] *ngFor="let task of tasksList" [ngClass]="classes.tableBodyRow">
+
+      <!-- Task Title START -->
+      <td [routerLink]="['/tasks/',task.id]" class="py-3 dark:hover:bg-[#4b5563] cursor-pointer">
+        {{task.title}}
+      </td>
+      <!-- Task Title END -->
+
+      <!-- Task Status START -->
+      <td #selectorStatus mat-button [matMenuTriggerFor]="statusMenu"
+          [ngClass]="classes.tableBodyRowTD">
+        {{task.status}}
+        <mat-menu class="example-mat-menu dark:example-mat-menu-dark" #statusMenu="matMenu" xPosition="after">
+          <button (click)="updateTaskId(task.id,task.status,'status',status);
+                selectorStatus.innerText = status"
+                  *ngFor="let status of taskStatuses" mat-menu-item>
+            {{status}}
+          </button>
+        </mat-menu>
+      </td>
+      <!-- Task Status END -->
+
+      <!-- Task Priority START -->
+      <td #selectorPriority mat-button [matMenuTriggerFor]="priorityMenu"
+          class="py-3 dark:hover:bg-[#4b5563] max-w-[50px] border-l dark:border-gray-600 cursor-pointer">
+        {{task.priority}}
+        <mat-menu class="example-mat-menu" #priorityMenu="matMenu" xPosition="after">
+          <button (click)="updateTaskId(task.id,task.status,'priority',priority);
+                  selectorPriority.innerText = priority"
+                  *ngFor="let priority of taskPriority" mat-menu-item>
+            {{priority}}
+          </button>
+        </mat-menu>
+      </td>
+      <!-- Task Priority END -->
+
+      <!-- Task Start Date START-->
+      <td #startDateData (click)="showStartDateEditInput.value = 'true'"
+          [ngClass]="showStartDateEditInput.value === 'true' ? classes.editTableBodyTD : classes.tableBodyRowTD ">
+        <input type="hidden" #showStartDateEditInput value="false"/>
+        <ng-container *ngIf="showStartDateEditInput.value === 'false'; else editStartDate">
+          {{task?.start_date | date: 'MMM d, y, H:mm'}}
+        </ng-container>
+        <ng-template #editStartDate>
+          <input [ngClass]="classes.input"
+                 type="date"
+                 #startDate
+                 (change)="updateTaskId(task.id,task.status,'start_date',startDate.value);
+                  showStartDateEditInput.value='false';
+                  startDateData.innerText = toDate(startDate.value)"/>
+        </ng-template>
+      </td>
+      <!-- Task Start Date END-->
+
+      <!-- Task End Date START-->
+      <td #endDateSelector (click)="showEndDateInput.value = 'true'"
+          [ngClass]="showEndDateInput.value === 'true' ? classes.editTableBodyTD : classes.tableBodyRowTD">
+        <input type="hidden" #showEndDateInput value="false"/>
+        <ng-container *ngIf="showEndDateInput.value === 'false'; else editEndDateInput">
+          {{task?.end_date | date: 'MMM d, y, H:mm'}}
+        </ng-container>
+        <ng-template #editEndDateInput>
+          <input [ngClass]="classes.input"
+                 type="date"
+                 #endDate
+                 (change)="updateTaskId(task.id,task.status,'end_date',endDate.value);
+                  showEndDateInput.value='false';
+                  endDateSelector.innerText = toDate(endDate.value)"/>
+        </ng-template>
+      </td>
+      <!-- Task End Date END-->
+
+      <!-- Task Action Buttons START -->
+      <td class="py-3 max-w-[50px] border-l dark:border-gray-600">
+        <button class="text-gray-500 mr-2 cursor-pointer text-[#3174d3]"
+                (click)="openEditTaskModal(task)"
+                mat-raised-button
+                matTooltip="Edit Task"
+                matTooltipPosition="above"
+                matTooltipHideDelay="150">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button class="text-gray-500 cursor-pointer text-[#a05e5e]"
+                (click)="openDeleteTaskModal(task)"
+                mat-raised-button
+                matTooltip="Delete Task"
+                matTooltipPosition="above"
+                matTooltipHideDelay="150">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+      <!-- Task Action Buttons END -->
+
+    </tr>
+    <!--Table Body Row END-->
+
+    </tbody>
+
+  </table>
+
+</section>
+<!--Tasks List Table -->
