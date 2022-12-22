@@ -12,6 +12,7 @@ import { AddGoalModalComponent } from './components/add-goal-modal/add-goal-moda
 import {FormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import { TargetsListComponent } from './components/targets-list/targets-list.component';
+import {CoreModule} from "../core/core.module";
 
 
 @NgModule({
@@ -29,7 +30,7 @@ import { TargetsListComponent } from './components/targets-list/targets-list.com
     FormsModule,
     RouterModule,
     GoalsRoutingModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class GoalsModule { }

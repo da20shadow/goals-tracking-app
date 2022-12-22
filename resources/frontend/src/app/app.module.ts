@@ -22,6 +22,7 @@ import {GoalApiEffects} from "./Store/goals-store/goals-api.effects";
 import {MatDialogModule} from "@angular/material/dialog";
 import {TargetEffects} from "./Store/tartgets-store/target.effects";
 import {TaskApiEffects} from "./Store/task-store/task-api.effects";
+import {LoadingInterceptor} from "./core/interceptors/loading.interceptor";
 
 @NgModule({
   declarations: [
@@ -54,6 +55,11 @@ import {TaskApiEffects} from "./Store/task-store/task-api.effects";
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JWTInterceptorService,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
       multi: true
     },
     {provide: APP_BASE_HREF, useValue: '/angular/'}

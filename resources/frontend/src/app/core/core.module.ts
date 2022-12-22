@@ -21,10 +21,11 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     PublicNavComponent,
     SpinnerComponent
   ],
-  exports: [
-    HeaderComponent,
-    FooterComponent
-  ],
+    exports: [
+        HeaderComponent,
+        FooterComponent,
+        SpinnerComponent
+    ],
   imports: [
     CommonModule,
     RouterModule,
