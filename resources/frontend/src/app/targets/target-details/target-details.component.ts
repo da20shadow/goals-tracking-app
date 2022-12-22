@@ -22,13 +22,13 @@ import {Operations} from "../../shared/enums/Operations";
       state('void', style({
         transform: 'scaleY(0.01)', opacity: 0
       })),
-      transition('void <=> *', animate(400)),
+      transition('void <=> *', animate(800)),
     ]),
-    trigger('taskFadeInOut', [
+    trigger('fadeTargetInOut', [
       state('void', style({
-        transform: 'scaleX(0.01)', opacity: 0
+        transform: 'scaleY(0.01)', opacity: 0
       })),
-      transition('void <=> *', animate(500)),
+      transition('void <=> *', animate(400)),
     ]),
   ]
 })

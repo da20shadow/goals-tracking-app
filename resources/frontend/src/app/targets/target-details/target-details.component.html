@@ -5,9 +5,67 @@
   <!-- Active Target Details -->
   <article class="bg-white dark:bg-gray-800 relative m-5 p-5 border rounded">
 
+    <!-- Target Details -->
+    <section [@fadeTargetInOut] *ngIf="!editTarget">
+
+      <!-- Edit Target Icon -->
+      <div class="absolute top-3 right-3">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Target menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="editTarget=true" mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button (click)="deleteTarget(target.id,target.goal_id)" mat-menu-item>
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+
+      </div>
+      <!-- Edit Target Icon -->
+
+      <!-- Target Progress 0/2 Tasks done -->
+      <section class="my-5">
+
+        <!--Target Progress  -->
+        <div class="w-full mx-auto flex justify-between">
+          <span>tasks</span>
+          <span>{{target.total_completed_tasks}}/{{target.total_tasks}}</span>
+        </div>
+
+        <div class="w-full mx-auto border dark:border-gray-200 bg-white dark:bg-gray-600">
+          <div class="text-center text-center bg-green-600 dark:bg-green-800 text-gray-900 dark:text-gray-300"
+               [style]="'width:'+(target.progress).toFixed(1)+'%'">{{(target.progress).toFixed(1)}}%
+          </div>
+        </div>
+        <!--Target Progress -->
+
+      </section>
+      <!-- Target Progress 0/2 Tasks done -->
+
+      <!-- Target Description -->
+      <pre class="p-5 border bg-gray-50 dark:bg-gray-700">{{target.description}}</pre>
+      <!-- Target Description -->
+
+      <!-- Created Date -->
+      <div class="py-5 flex flex-wrap justify-start">
+
+        <p class="flex items-center">
+          <mat-icon class="mb-[9px] text-xl">calendar_today</mat-icon>
+          <span>Created at: {{target.created_at| date: 'MMM d, y'}}</span>
+        </p>
+
+      </div>
+      <!-- Start and Due Dates -->
+
+    </section>
+    <!-- Target Details -->
+
     <!-- Edit Target Form -->
-    <ng-container *ngIf="editTarget">
-      <form [@fadeInOut] (ngSubmit)="editTargetFormHandler(editTargetForm)"
+      <form *ngIf="editTarget" [@fadeInOut] (ngSubmit)="editTargetFormHandler(editTargetForm)"
             #editTargetForm="ngForm"
             class="bg-white dark:bg-gray-800 mt-8 space-y-6 shadow p-10 rounded-lg
             shadow-2xl dark:shadow dark:shadow-gray-500">
@@ -79,71 +137,7 @@
 
 
       </form>
-    </ng-container>
     <!-- Edit Target Form -->
-
-
-    <!-- Target Details -->
-    <ng-container *ngIf="!editTarget">
-
-      <!-- Edit Target Icon -->
-      <div class="absolute top-3 right-3">
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Target menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button (click)="editTarget=true" mat-menu-item>
-            <mat-icon>edit</mat-icon>
-            <span>Edit</span>
-          </button>
-          <button (click)="deleteTarget(target.id,target.goal_id)" mat-menu-item>
-            <mat-icon>delete</mat-icon>
-            <span>Delete</span>
-          </button>
-        </mat-menu>
-
-      </div>
-      <!-- Edit Target Icon -->
-
-
-      <!-- Target Progress 0/2 Tasks done -->
-      <section class="my-5">
-
-        <!--Target Progress  -->
-        <div class="w-full mx-auto flex justify-between">
-          <span>tasks</span>
-          <span>{{target.total_completed_tasks}}/{{target.total_tasks}}</span>
-        </div>
-
-        <div class="w-full mx-auto border dark:border-gray-200 bg-white dark:bg-gray-600">
-          <div class="text-center text-center bg-green-600 dark:bg-green-800 text-gray-900 dark:text-gray-300"
-               [style]="'width:'+(target.progress).toFixed(1)+'%'">{{(target.progress).toFixed(1)}}%
-          </div>
-        </div>
-        <!--Target Progress -->
-
-      </section>
-      <!-- Target Progress 0/2 Tasks done -->
-
-
-      <!-- Target Description -->
-      <pre class="p-5 border bg-gray-50 dark:bg-gray-700">{{target.description}}</pre>
-      <!-- Target Description -->
-
-      <!-- Created Date -->
-      <div class="py-5 flex flex-wrap justify-start">
-
-        <p class="flex items-center">
-          <mat-icon class="mb-[9px] text-xl">calendar_today</mat-icon>
-          <span>Created at: {{target.created_at| date: 'MMM d, y'}}</span>
-        </p>
-
-      </div>
-      <!-- Start and Due Dates -->
-
-    </ng-container>
-    <!-- Target Details -->
-
 
   </article>
   <!-- Active Target Details -->
