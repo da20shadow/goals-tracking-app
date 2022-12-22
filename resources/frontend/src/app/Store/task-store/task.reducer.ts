@@ -19,6 +19,15 @@ const initialState: TasksState = {
 
 export const TaskReducer = createReducer(
   initialState,
+  on(TaskAPIActions.loadActiveTaskSuccess, (state,{task})=> {
+    return ({...state,activeTask: task})
+  }),
+  on(TaskAPIActions.loadActiveTaskFailure, (state,{error})=> {
+    return ({...state,error})
+  }),
+  on(TaskAPIActions.updateActiveTaskSuccess, (state,{changedTask})=> {
+    return ({...state,activeTask: changedTask})
+  }),
   on(TaskAPIActions.loadTargetTasksSuccess, (state,{tasks}) => {
     return ({...state,tasksList: tasks,status:'success'})
   }),
