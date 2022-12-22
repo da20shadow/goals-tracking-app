@@ -31,7 +31,7 @@
                    type="text"
                    autocomplete="off"
                    placeholder="Firstname"
-                   pattern="^[a-zA-Z]{2,45}$"
+                   pattern="^[A-Z][a-z]{1,45}$"
                    formControlName="firstName"
                    required
             />
@@ -44,7 +44,7 @@
             </span>
             <span *ngIf="regForm.get('firstName')?.errors?.['pattern']"
                   class="text-sm text-red-600">
-              First name must contains only letters between 2 - 45 characters!
+              First name must Start with capital letter and contains only letters between 2 - 45 characters (No Whitespace!)!
             </span>
             <span class="text-sm text-green-600" *ngIf="!regForm.get('firstName')?.errors">Looks OK!</span>
           </ng-container>
