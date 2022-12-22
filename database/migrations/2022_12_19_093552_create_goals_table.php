@@ -16,9 +16,9 @@ return new class extends Migration
     {
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable(false);
-            $table->string('description')->nullable(true);
-            $table->timestamp('start_date')->nullable(false);
+            $table->string('title',145)->nullable(false);
+            $table->longText('description')->nullable(true);
+            $table->timestamp('start_date')->nullable(false)->useCurrent();
             $table->timestamp('due_date')->nullable(true);
             $table->foreignIdFor(User::class);
             $table->enum('category',[

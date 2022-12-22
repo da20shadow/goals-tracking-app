@@ -17,8 +17,8 @@ return new class extends Migration
     {
         Schema::create('targets', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable(false);
-            $table->string('description')->nullable(true);
+            $table->string('title',145)->nullable(false);
+            $table->longText('description')->nullable(true);
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Goal::class);
             $table->timestamps();

@@ -17,8 +17,8 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable(false);
-            $table->string('description')->nullable(true);
+            $table->string('title',145)->nullable(false);
+            $table->longText('description')->nullable(true);
             $table->enum('status',['In Progress','To Do','In Revision','Completed'])->default('To Do');
             $table->enum('priority',['No priority','Low','High','Urgent'])->default('No priority');
             $table->foreignIdFor(Target::class)->nullable(true);
