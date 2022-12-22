@@ -1,1 +1,237 @@
-<p>task-details works!</p>
+<ng-container *ngIf="(activeTask$|async) as task; else noTask">
+
+  <app-page-title title="✔ task:" [text]="task.title"></app-page-title>
+
+  <article class="bg-white dark:bg-gray-800 relative m-5 p-5 border rounded">
+
+    <!-- TASK Details -->
+      <section [@fadeInOut] *ngIf="!editTask">
+
+        <!-- Edit task Icon -->
+        <div class="absolute top-3 right-3">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="task menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="editTask=true" mat-menu-item>
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button (click)="deleteTask(task)" mat-menu-item>
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+
+        </div>
+        <!-- Edit task Icon -->
+
+        <!-- Task Status And Priority
+        TODO: add colors for status and priority depending on status and priority type green red orange -->
+        <section class="my-5 flex gap-3 items-center">
+
+          <!-- TASK STATUS -->
+          <span #selectorStatus mat-button [matMenuTriggerFor]="statusMenu" class=" px-3 py-2 cursor-pointer border">
+          {{task.status}}
+            <mat-menu class="example-mat-menu dark:example-mat-menu-dark" #statusMenu="matMenu" xPosition="after">
+          <button (click)="updateTaskId(task.id,task.status,'status',status);
+                selectorStatus.innerText = status"
+                  *ngFor="let status of taskStatuses" mat-menu-item>
+            {{status}}
+          </button>
+        </mat-menu>
+        </span>
+          <!-- TASK STATUS -->
+
+          <!-- TASK PRIORITY -->
+          <span #selectorPriority mat-button [matMenuTriggerFor]="priorityMenu"
+                class=" px-3 py-2 cursor-pointer border">
+          {{task.priority}}
+            <mat-menu class="example-mat-menu" #priorityMenu="matMenu" xPosition="after">
+          <button (click)="updateTaskId(task.id,task.status,'priority',priority);
+                  selectorPriority.innerText = priority"
+                  *ngFor="let priority of taskPriority" mat-menu-item>
+            {{priority}}
+          </button>
+        </mat-menu>
+        </span>
+          <!-- TASK PRIORITY -->
+
+        </section>
+        <!-- Task Status And Priority -->
+
+        <!--Progress bar
+        //TODO: to implement Subtasks -->
+        <!--      <div class="my-5 w-[100%] border dark:border-gray-200 bg-gray-50 dark:bg-gray-600">-->
+        <!--        <div class="text-center py-1 bg-green-600 dark:bg-green-800 text-gray-900 dark:text-gray-300"-->
+        <!--             [style]="'width:'+(task.progress).toFixed(2)+'%'">{{(task.progress).toFixed(2)}}%-->
+        <!--        </div>-->
+        <!--      </div>-->
+        <!--Progress bar -->
+
+
+        <!-- task Description -->
+        <pre class="p-5 border bg-gray-50 dark:bg-gray-700">{{task.description}}</pre>
+        <!-- task Description -->
+
+        <!-- Start and End Dates -->
+        <div class="py-5 flex flex-wrap justify-between">
+
+          <p class="flex items-center">
+            <mat-icon class="mb-[9px] text-xl">calendar_today</mat-icon>
+            <span>Start Date: {{task.start_date| date: 'MMM d, y'}}</span>
+          </p>
+
+          <p class="flex items-center">
+            <mat-icon class="mb-[5px] text-[24px]">event</mat-icon>
+            <span>End Date: {{task.end_date| date: 'MMM d, y'}}</span>
+          </p>
+        </div>
+        <!-- Start and Due Dates -->
+      </section>
+    <!-- TASK Details -->
+
+    <!-- Edit task Form -->
+      <form *ngIf="editTask" [@fadeTaskInOut] (ngSubmit)="editTaskFormHandler(editTaskForm)"
+            #editTaskForm="ngForm"
+            class="bg-white dark:bg-gray-800 mt-8 space-y-6 shadow p-10 rounded-lg
+            shadow-2xl dark:shadow dark:shadow-gray-500">
+
+        <input type="hidden" [ngModel]="task.id" name="id" ngModel>
+
+        <!-- task Title Input Container-->
+        <div>
+          <div class="flex align-center border border-slate-600 rounded">
+            <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
+                   type="text"
+                   name="title"
+                   #title="ngModel"
+                   placeholder="Title..."
+                   minlength="5"
+                   required
+                   [ngModel]="task.title"
+            />
+          </div>
+          <!-- Error messages -->
+          <ng-container *ngIf="title.touched">
+            <span *ngIf="title.errors?.['required']"
+                  class="text-sm text-red-600">
+              Please enter Title!
+            </span>
+            <span *ngIf="title.errors?.['minlength']"
+                  class="text-sm text-red-600">
+              The task title must be at least 5 characters long!
+            </span>
+          </ng-container>
+
+        </div>
+        <!-- task Title Input Container-->
+
+        <!--Start and Due Dates Inputs Container-->
+        <section class="flex flex-wrap ">
+
+          <!-- task Start Date -->
+          <div class="w-[50%]">
+
+            <label class="text-color-light dark:text-color-dark">Start Date:</label>
+            <div class="flex align-center border border-slate-600 rounded">
+              <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
+                     type="date"
+                     name="start_date"
+                     #start_date="ngModel"
+                     [ngModel]="toInputDefaultDate(task.start_date)"/>
+            </div>
+
+            <!-- Error messages -->
+            <ng-container *ngIf="start_date.touched">
+            <span *ngIf="start_date.errors?.['required']"
+                  class="text-sm text-red-600">
+              Start Date can not be empty!
+            </span>
+            </ng-container>
+            <!-- Error messages -->
+
+          </div>
+          <!-- task Start Date -->
+
+          <!-- task End Date -->
+          <div class="w-[50%]">
+            <label class="text-color-light dark:text-color-dark">End Date:</label>
+            <div class="flex align-center border border-slate-600 rounded">
+              <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
+                     type="date"
+                     name="end_date"
+                     #due_date="ngModel"
+                     [ngModel]="toInputDefaultDate(task.end_date)"/>
+            </div>
+            <!-- Error messages -->
+            <ng-container *ngIf="due_date.touched">
+            <span *ngIf="due_date.errors?.['required']"
+                  class="text-sm text-red-600">
+              task Due Date can not be empty!
+            </span>
+            </ng-container>
+
+          </div>
+          <!-- task Due Date -->
+
+        </section>
+        <!--Start and Due Dates Inputs Container-->
+
+        <!-- task Description Input Container-->
+        <div>
+          <div class="flex align-center border border-slate-600 rounded">
+            <textarea
+              class="w-full min-h-[175px] py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
+              name="description"
+              #description="ngModel"
+              placeholder="task Description..."
+              required
+              [ngModel]="task.description"></textarea>
+          </div>
+          <!-- Error messages -->
+          <ng-container *ngIf="title.touched">
+            <span *ngIf="description.errors?.['required']"
+                  class="text-sm text-red-600">
+              Description can not be empty!
+            </span>
+          </ng-container>
+        </div>
+        <!-- task Description Input Container-->
+
+        <!-- Save Button -->
+        <div>
+
+          <button type="submit" class="relative btn-primary dark:btn-primary-dark">
+            Save Changes
+          </button>
+
+          <button class="py-2 px-3 ml-3 border shadow dark:shadow-gray-300 rounded dark:active:bg-gray-700"
+                  type="button"
+                  (click)="editTask=false">
+            Cancel
+          </button>
+
+        </div>
+        <!-- Save Button -->
+
+
+      </form>
+    <!-- Edit task Form -->
+
+  </article>
+  <!-- task Details -->
+
+  <!-- Targets //TODO: implement subtasks!-->
+  <!--  <section class="m-5" *ngIf="(tasksList$|async) as tasksList">-->
+
+  <!--    <app-tasks-list [tasksList]="tasksList"></app-tasks-list>-->
+
+  <!--  </section>-->
+  <!-- Targets -->
+
+</ng-container>
+
+<ng-template #noTask>
+  <h2 class="my-5 text-center text-2xl">Loading...</h2>
+</ng-template>

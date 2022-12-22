@@ -25,4 +25,8 @@ export class TaskService {
   deleteTask(taskId: number) {
     return this.http.delete<TaskApiResponse>(ApiUrls.TASK_DELETE+`/${taskId}`);
   }
+
+  getTaskById(taskId: number) {
+    return this.http.get<Task>(ApiUrls.TASKS+`/${taskId}`);
+  }
 }
