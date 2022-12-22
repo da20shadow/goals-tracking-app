@@ -8,7 +8,7 @@
     <mat-icon>close</mat-icon>
   </button>
 
-  <h2 class="mt-0 text-center text-color-light dark:text-color-dark text-gray-400 text-3xl">Add New Goal</h2>
+  <h2 class="mt-0 text-center text-gray-800 dark:text-gray-400 text-3xl">Add New Goal</h2>
 
 
   <!-- Goal Title Input Container-->
@@ -43,13 +43,13 @@
     <!-- Goal Start Date -->
     <div class="w-[50%]">
 
-      <label class="text-color-light dark:text-color-dark">Start Date:</label>
+      <label class="text-gray-800 dark:text-gray-400">Start Date:</label>
       <div class="flex align-center border border-slate-600 rounded">
         <input [ngClass]="classes.input"
                type="date"
                name="start_date"
                #start_date="ngModel"
-               ngModel/>
+               [ngModel]="currentDate()"/>
       </div>
 
         <!-- Error messages -->
@@ -66,7 +66,7 @@
 
     <!-- Goal Due Date -->
     <div class="w-[50%]">
-      <label class="text-color-light dark:text-color-dark">Due Date:</label>
+      <label class="text-gray-800 dark:text-gray-400">Due Date:</label>
       <div class="flex align-center border border-slate-600 rounded">
         <input [ngClass]="classes.input"
                type="date"
@@ -102,7 +102,7 @@
                       ngModel></textarea>
     </div>
     <!-- Error messages -->
-    <ng-container *ngIf="title.touched">
+    <ng-container *ngIf="description.touched">
             <span *ngIf="description.errors?.['required']"
                   class="text-sm text-red-600">
               Description can not be empty!
