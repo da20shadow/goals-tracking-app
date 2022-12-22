@@ -9,6 +9,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {ProfileComponent} from "./profile/profile.component";
 import {EditProfileComponent} from "./profile/edit-profile/edit-profile.component";
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {EditProfileComponent} from "./profile/edit-profile/edit-profile.componen
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
     ReactiveFormsModule,
     SharedModule,
     MatIconModule,
