@@ -9,6 +9,7 @@ import {RouterModule} from "@angular/router";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     FooterComponent,
     NavLinksComponent,
     PrivateNavComponent,
-    PublicNavComponent
+    PublicNavComponent,
+    SpinnerComponent
   ],
   exports: [
     HeaderComponent,
