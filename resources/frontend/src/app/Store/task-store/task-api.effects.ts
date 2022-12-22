@@ -7,9 +7,41 @@ import {TaskService} from "../../tasks/services/task.service";
 import {TaskAPIActions} from "./task-api.actions";
 import {TargetPageActions} from "../tartgets-store/target-page.actions";
 import {targetSelectors} from "../tartgets-store/target-selectors";
+import {taskSelectors} from "./task-selectors";
 
 @Injectable()
 export class TaskApiEffects {
+
+  getActiveTaskState$ = createEffect(()=> {
+    return this.actions$.pipe(
+      ofType(TaskPageActions.getActiveTask),
+      concatMap((action) => {
+        return of(action).pipe(
+          withLatestFrom(this.store$.select(taskSelectors.selectActiveTask)),
+          filter(([_,task])=> {
+            return task === null || task.id !== action.taskId
+          }),
+          map(() => TaskPageActions.loadActiveTask({taskId: action.taskId}))
+        )
+      })
+    )
+  });
+
+  loadActiveTask$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TaskPageActions.loadActiveTask),
+      switchMap(({taskId}) => {
+        return from(this.taskService.getTaskById(taskId)).pipe(
+          map((task) => {
+            return TaskAPIActions.loadActiveTaskSuccess({task})
+          }),
+          catchError(err => {
+            return of(TaskAPIActions.loadActiveTaskFailure({error: err.error.message}))
+          })
+        )
+      })
+    )
+  });
 
   getTasksListState$ = createEffect(()=> {
     return this.actions$.pipe(
