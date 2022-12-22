@@ -10,6 +10,7 @@ import {TaskService} from "../services/task.service";
 import {NotificationService} from "../../core/services/notification.service";
 import {TaskAPIActions} from "../../Store/task-store/task-api.actions";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {TargetPageActions} from "../../Store/tartgets-store/target-page.actions";
 
 @Component({
   selector: 'app-task-details',
@@ -60,7 +61,14 @@ export class TaskDetailsComponent {
   }
 
   editTaskFormHandler(editTaskForm: NgForm) {
+    if (editTaskForm.invalid){
+      this.notificationService.showErrorNotification('Invalid Form Fields!');
+      return;
+    }
+    const formData = editTaskForm.value;
+    this.store$.dispatch(TaskPageActions.updateActiveTask({taskId:formData.id,changedTask:formData}))
 
+    this.editTask = false;
   }
 
   toInputDefaultDate(start_date: any) {
