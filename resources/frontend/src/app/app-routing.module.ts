@@ -43,6 +43,12 @@ const routes: Routes = [
     canActivate: [isLoggedInGuardFn],
     canLoad: [isLoggedInGuardFn]
   },
+  {
+    path: 'tasks',loadChildren: () =>
+      import('./tasks/tasks.module').then(m => m.TasksModule),
+    canActivate: [isLoggedInGuardFn],
+    canLoad: [isLoggedInGuardFn]
+  },
   {path: '**', component: NotFoundComponent, pathMatch:'full'},
 ];
 
