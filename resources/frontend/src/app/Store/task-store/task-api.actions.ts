@@ -12,6 +12,7 @@ const addTaskSuccess = createAction('[TASK API] Add Task To Target Success',prop
 const AddTaskFailure = createAction('[TASK API] Add Task To Target Failure',props<{error: string}>());
 
 const updateActiveTaskSuccess = createAction('[TASK API] Update Active Task Success',props<{changedTask: Task}>());
+const updateActiveTaskFailure = createAction('[TASK API] Update Active Task Failure',props<{error: string}>());
 
 const updateTaskSuccess = createAction('[TASK API] Update Task Success',props<{changedTask: Task}>());
 const updateTaskFailure = createAction('[TASK API] Update Task Failure',props<{error: string}>());
@@ -23,6 +24,7 @@ export const TaskAPIActions = {
   loadActiveTaskSuccess,
   loadActiveTaskFailure,
   updateActiveTaskSuccess,
+  updateActiveTaskFailure,
   loadTargetTasksSuccess,
   loadTargetTasksFailure,
   addTaskSuccess,

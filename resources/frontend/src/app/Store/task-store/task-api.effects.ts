@@ -8,6 +8,9 @@ import {TaskAPIActions} from "./task-api.actions";
 import {TargetPageActions} from "../tartgets-store/target-page.actions";
 import {targetSelectors} from "../tartgets-store/target-selectors";
 import {taskSelectors} from "./task-selectors";
+import {GoalPageActions} from "../goals-store/goal-page.actions";
+import {GoalsAPIActions} from "../goals-store/goal-api.actions";
+import {NotificationService} from "../../core/services/notification.service";
 
 @Injectable()
 export class TaskApiEffects {
@@ -37,6 +40,23 @@ export class TaskApiEffects {
           }),
           catchError(err => {
             return of(TaskAPIActions.loadActiveTaskFailure({error: err.error.message}))
+          })
+        )
+      })
+    )
+  });
+
+  updateActiveTask$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TaskPageActions.updateActiveTask),
+      concatMap(({taskId, changedTask}) => {
+        return from(this.taskService.updateTask(taskId, changedTask)).pipe(
+          map((response) => {
+            this.notificationService.showSuccessNotification(response.message);
+            return TaskAPIActions.updateActiveTaskSuccess({changedTask: response.task})
+          }),
+          catchError((err) => {
+            return of(TaskAPIActions.updateActiveTaskFailure({error: err.error.message}))
           })
         )
       })
@@ -77,6 +97,7 @@ export class TaskApiEffects {
 
   constructor(private actions$: Actions,
               private store$: Store,
-              private taskService: TaskService) {
+              private taskService: TaskService,
+              private notificationService: NotificationService) {
   }
 }
