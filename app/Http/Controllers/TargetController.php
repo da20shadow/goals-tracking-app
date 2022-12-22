@@ -41,7 +41,7 @@ class TargetController extends Controller
     public function store(Request $request): JsonResponse
     {
         $fields = $request->validate([
-            'title' => ['required','string','min:5','max:255'],
+            'title' => ['required','string','min:5','max:145'],
             'description' => ['string'],
             'goal_id' => ['required','Integer'],
         ]);
@@ -138,7 +138,7 @@ class TargetController extends Controller
         $fields = $request->all();
 
         if (isset($fields['title'])){
-            $inputTitle = $request->validate(['title' => ['string','min:5','max:255']]);
+            $inputTitle = $request->validate(['title' => ['string','min:5','max:145']]);
             try {
                 Target::where('user_id',$user_id)
                     ->where('id',$id)

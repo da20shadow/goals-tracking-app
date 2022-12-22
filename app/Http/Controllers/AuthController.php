@@ -42,12 +42,7 @@ class AuthController extends Controller
         ]);
 
         try {
-            $user = User::create([
-                'first_name' => $fields['first_name'],
-                'last_name' => $fields['last_name'],
-                'email' => $fields['email'],
-                'password' => bcrypt($fields['password']),
-            ]);
+            $user = User::create($fields);
         }catch (QueryException $exception){
             return response()->json([
                 'message' => 'Invalid request!',

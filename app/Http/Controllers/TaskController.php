@@ -37,7 +37,7 @@ class TaskController extends Controller
     public function store(Request $request): JsonResponse
     {
         $fields = $request->validate([
-            'title' => ['required','string','min:5','max:255'],
+            'title' => ['required','string','min:5','max:145'],
             'description' => ['string','min:5'],
             'start_date' => ['date'],
             'end_date' => ['date'],
@@ -129,7 +129,7 @@ class TaskController extends Controller
         $message = [];
 
         if (isset($fields['title'])){
-            $inputTitle = $request->validate(['title' => ['string','min:10','max:455']]);
+            $inputTitle = $request->validate(['title' => ['string','min:10','max:145']]);
             try {
                 Task::where('user_id',$user_id)->where('id',$id)
                     ->update(['title' => $inputTitle['title']]);
