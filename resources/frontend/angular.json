@@ -71,7 +71,7 @@
               "sourceMap": true,
               "namedChunks": true,
               "outputPath": "dist/frontend",
-              "baseHref": "/frontend/"
+              "baseHref": "/"
             }
           },
           "defaultConfiguration": "production"
