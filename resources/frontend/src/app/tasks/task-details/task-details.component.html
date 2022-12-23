@@ -4,7 +4,7 @@
 
   <!-- BACK BUTTON -->
   <button [routerLink]="['/target',task.target_id]"
-          class="m-5 flex gap-3 items-center px-3 py-2 cursor-pointer border rounded">
+          class="m-5 flex gap-3 items-center dark:hover:bg-gray-800 px-3 py-2 cursor-pointer border rounded">
     <mat-icon>arrow_back_ios_new</mat-icon>
     <span>Target</span>
   </button>
@@ -220,7 +220,7 @@
                    type="date"
                    name="end_date"
                    #due_date="ngModel"
-                   [ngModel]="toInputDefaultDate(task.end_date)"/>
+                   ngModel/>
           </div>
           <!-- Error messages -->
           <ng-container *ngIf="due_date.touched">

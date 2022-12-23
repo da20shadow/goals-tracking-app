@@ -92,8 +92,11 @@ export class TargetDetailsComponent {
       case Operations.ADDED:
         total_tasks++;
         break;
+      case Operations.UPDATED:
+          total_completed_tasks--;
+        break;
       case Operations.REMOVED:
-        if ($event.isDeletedTskCompleted){
+        if ($event.isDeletedTaskCompleted){
           total_completed_tasks--;
         }
         total_tasks--;

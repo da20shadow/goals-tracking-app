@@ -2,5 +2,6 @@
 export enum Operations {
   REMOVED = 'Removed',
   ADDED = 'Added',
+  UPDATED = 'Updated',
   COMPLETED = 'Completed',
 }

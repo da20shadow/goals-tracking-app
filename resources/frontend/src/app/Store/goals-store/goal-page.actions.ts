@@ -12,6 +12,10 @@ const setActiveGoal = createAction('[GOAL DETAILS PAGE] Set Active Goal',props<{
 const updateActiveGoal = createAction('[GOAL DETAILS PAGE] Update Active Goal', props<{ goalId: number, changedGoal: Goal }>());
 const removeActiveGoal = createAction('[GOAL DETAILS PAGE] Delete Active Goal', props<{ goalId: number }>());
 
+const goalTargetCompleted = createAction('[GOAL DETAILS PAGE] Goal Target Completed');
+const goalTargetDeleted = createAction('[GOAL DETAILS PAGE] Goal Target Deleted');
+
+
 export const GoalPageActions = {
   get,
   getActiveGoal,
@@ -20,5 +24,7 @@ export const GoalPageActions = {
   addNewGoal,
   setActiveGoal,
   updateActiveGoal,
-  removeActiveGoal
+  removeActiveGoal,
+  goalTargetCompleted,
+  goalTargetDeleted
 }

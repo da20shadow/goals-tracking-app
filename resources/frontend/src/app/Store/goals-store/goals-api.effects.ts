@@ -10,6 +10,8 @@ import {goalsListSelectors} from "./goal-selectors";
 import {GoalsAPIActions} from "./goal-api.actions";
 import {GoalService} from "../../goals/services/goal.service";
 import {Router} from "@angular/router";
+import {TargetApiActions} from "../tartgets-store/target-api.actions";
+import {targetSelectors} from "../tartgets-store/target-selectors";
 
 @Injectable()
 export class GoalApiEffects {
@@ -84,6 +86,30 @@ export class GoalApiEffects {
   //     map(() => GoalPageActions.loadGoals())
   //   )
   // });
+
+  /** Update Active goal progress when active target progress is updated! */
+  updateActiveGoalProgress$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TargetApiActions.updateActiveTargetSuccess),
+      concatMap((action) => {
+        return of(action).pipe(
+          withLatestFrom(this.store$.select(targetSelectors.selectActiveTarget)),
+          filter(([_, activeTarget]) => activeTarget ? activeTarget.progress >= 100 : false),
+          map(() => GoalPageActions.goalTargetCompleted())
+        )
+      })
+    )
+  });
+
+  // TargetApiActions.deletedActiveTargetSuccess
+  /** Update Active goal progress when active target is deleted! */
+    //TODO: not works now to make it works!
+  updateActiveGoalProgressWhenTargetDeleted$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TargetApiActions.deletedActiveTargetSuccess),
+      map(() => GoalPageActions.goalTargetDeleted())
+    )
+  });
 
   /** Update Active goal */
   updateActiveGoal$ = createEffect(() => {

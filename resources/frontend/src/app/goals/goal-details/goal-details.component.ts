@@ -36,10 +36,10 @@ export class GoalDetailsComponent {
 
   activeGoal$: Observable<Goal | null>;
   editGoal: boolean = false;
-  daysLeft!: string|number;
+  daysLeft!: string | number;
   dailyTarget!: string;
 
-  goalDesc!: string|undefined;
+  goalDesc!: string | undefined;
 
   editor!: Editor;
   toolbar: Toolbar = [
@@ -47,7 +47,7 @@ export class GoalDetailsComponent {
     ['underline', 'strike'],
     ['code', 'blockquote'],
     ['ordered_list', 'bullet_list'],
-    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    [{heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']}],
     ['link', 'image'],
     ['text_color', 'background_color'],
     ['align_left', 'align_center', 'align_right', 'align_justify'],
@@ -56,8 +56,8 @@ export class GoalDetailsComponent {
     editorContent: new FormControl(this.goalDesc, Validators.required()),
   });
 
-  constructor(private store$: Store,private activatedRoute: ActivatedRoute,
-              private route: Router,private goalService: GoalService,
+  constructor(private store$: Store, private activatedRoute: ActivatedRoute,
+              private route: Router, private goalService: GoalService,
               private notificationService: NotificationService) {
     this.activeGoal$ = this.store$.select(goalsListSelectors.selectActiveGoal);
     this.activeGoal$.subscribe(goal => this.goalDesc = goal?.description)
@@ -82,27 +82,27 @@ export class GoalDetailsComponent {
 
         let left = Math.round(dueDateInMillis - startDateInMillis);
 
-        if (left < 0){
+        if (left < 0) {
           this.daysLeft = 'Overdue';
 
-        }else{
+        } else {
           left = Math.round((dueDateInMillis - startDateInMillis) / oneDay);
           this.daysLeft = left;
         }
-          this.dailyTarget = left <= 0 ? '100' : (100 / left).toFixed(2);
+        this.dailyTarget = left <= 0 ? '100' : (100 / left).toFixed(2);
       }
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.store$.dispatch(TargetPageActions.clear());
     this.editor.destroy();
   }
 
-  onTargetEvent(action: any,currentGoal: Goal){
+  onTargetEvent(action: any, currentGoal: Goal) {
     let totalCompletedTargets = currentGoal.totalCompletedTargets;
     let totalTargets = currentGoal.totalTargets;
-    if (action.type === 'added'){
+    if (action.type === 'added') {
       totalTargets++;
       const progress = (totalCompletedTargets / totalTargets) * 100;
       const goal = {
@@ -115,7 +115,7 @@ export class GoalDetailsComponent {
     }
   }
 
-  getGoalTargets(goalId:number){
+  getGoalTargets(goalId: number) {
     this.store$.dispatch(TargetPageActions.get({goalId}));
   }
 
@@ -127,7 +127,7 @@ export class GoalDetailsComponent {
     this.editor.setContent(editGoalForm.value.description);
     // const html = toHTML(jsonDoc);
     const jsonDoc = toDoc(editGoalForm.value.description);
-    console.log('jsonDoc',jsonDoc)
+    console.log('jsonDoc', jsonDoc)
 
     const changedGoal = editGoalForm.value;
     this.store$.dispatch(GoalPageActions.updateActiveGoal({goalId: changedGoal.id, changedGoal}))
@@ -135,20 +135,19 @@ export class GoalDetailsComponent {
   }
 
   deleteGoal(goalId: number) {
-    if (!goalId) {
-      alert('Invalid Goal!');
-      return;
+    if (!goalId) { alert('Invalid Goal!'); return; }
+
+    if (confirm('Are you sure? All Targets and tasks also will be deleted!')) {
+      this.goalService.deleteGoal(goalId).subscribe({
+        next: () => {
+          this.store$.dispatch(GoalsAPIActions.removeActiveGoalSuccess({goalId}))
+          this.route.navigate(['/goals']);
+        },
+        error: err => {
+          alert('Error!' + err.error.message)
+        }
+      })
     }
-    confirm('Are you sure? All Targets and tasks also will be deleted!');
-    this.goalService.deleteGoal(goalId).subscribe({
-      next: () => {
-        this.store$.dispatch(GoalsAPIActions.removeActiveGoalSuccess({goalId}))
-        this.route.navigate(['/goals']);
-      },
-      error: err => {
-        alert('Error!' + err.error.message)
-      }
-    })
   }
 
   richEditHandler() {

@@ -97,6 +97,17 @@ export const GoalsReducer = createReducer(
   }),
   on(GoalsAPIActions.updateActiveGoalFailure, (state,{error})=> {
     return ({...state,error})
-  })
+  }),
+  on(GoalPageActions.goalTargetCompleted, (state)=> {
+    if (!state.activeGoal){return state;}
+    let progress = (state.activeGoal.totalCompletedTargets / state.activeGoal.totalTargets) * 100;
+    return ({...state, activeGoal: {...state.activeGoal,progress}})
+  }),
+  on(GoalPageActions.goalTargetDeleted, (state)=> {
+    if (!state.activeGoal){return state;}
+    //TODO: not works now to make it works correctly!
+    let progress = (state.activeGoal.totalCompletedTargets / state.activeGoal.totalTargets) * 100;
+    return ({...state, activeGoal: {...state.activeGoal,progress}})
+  }),
 
 )

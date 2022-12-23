@@ -8,7 +8,6 @@ import {NotificationService} from "../../../core/services/notification.service";
 import {Store} from "@ngrx/store";
 import {TaskAPIActions} from "../../../Store/task-store/task-api.actions";
 import {NgForm} from "@angular/forms";
-import {TaskPageActions} from "../../../Store/task-store/task-page.actions";
 import {Operations} from "../../enums/Operations";
 
 @Component({
@@ -107,6 +106,8 @@ export class TasksListComponent {
         // this.store$.dispatch(TaskAPIActions.updateTaskSuccess({changedTask: response.task}));
         if (type == 'status' && field == TaskStatus.COMPLETED){
           this.taskEvent.emit({operation: Operations.COMPLETED});
+        }else if (type == 'status' && field != TaskStatus.COMPLETED){
+          this.taskEvent.emit({operation: Operations.UPDATED});
         }
       },
       error: (er) => {
@@ -130,7 +131,7 @@ export class TasksListComponent {
       next: (response) => {
         this.notificationService.showSuccessNotification(response.message);
         this.store$.dispatch(TaskAPIActions.deleteTaskSuccess({taskId}));
-        this.taskEvent.emit({operation: Operations.REMOVED,isDeletedTskCompleted: isCompleted});
+        this.taskEvent.emit({operation: Operations.REMOVED,isDeletedTaskCompleted: isCompleted});
       },
       error: (err) => {
         this.notificationService.showErrorNotification(err.error.message);
