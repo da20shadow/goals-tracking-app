@@ -7,24 +7,29 @@ import {RouterModule} from "@angular/router";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSortModule} from "@angular/material/sort";
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
   declarations: [
     PageTitleComponent,
     TasksListComponent,
+    PieChartComponent,
   ],
   imports: [
     CommonModule,
     MatMenuModule,
     MatIconModule,
     MatSortModule,
+    MatTooltipModule,
     FormsModule,
     RouterModule,
   ],
   exports: [
     PageTitleComponent,
-    TasksListComponent
+    TasksListComponent,
+    PieChartComponent,
   ],
 })
 export class SharedModule {

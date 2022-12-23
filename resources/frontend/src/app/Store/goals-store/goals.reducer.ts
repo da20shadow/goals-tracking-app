@@ -26,11 +26,19 @@ export const GoalsReducer = createReducer(
     })
   }),
   on(GoalsAPIActions.loadGoalsSuccess, (state, {goals}) => {
+    if (goals && goals.length > 0){
+      return ({
+        ...state,
+        goals: goals,
+        error: null,
+        status: 'success'
+      })
+    }
     return ({
       ...state,
-      goals,
+      goals: goals,
       error: null,
-      status: 'success'
+      status: 'pending'
     })
   }),
   on(GoalsAPIActions.loadGoalsFailure, (state,{error})=>{
@@ -57,7 +65,7 @@ export const GoalsReducer = createReducer(
   }),
   on(GoalsAPIActions.addNewGoalSuccess, (state, {goal}) => {
     return state.goals
-      ? ({...state,goals: [goal,...state.goals]})
+      ? ({...state,goals: [goal,...state.goals],status:'success'})
       :  state;
   }),
   on(GoalsAPIActions.addNewGoalFailure, (state, {error}) => {
@@ -67,6 +75,14 @@ export const GoalsReducer = createReducer(
     })
   }),
   on(GoalsAPIActions.removeActiveGoalSuccess, (state, {goalId}) => {
+    if (state.goals.length === 1){
+      return ({
+        ...state,
+        goals: state.goals.filter(g => g.id !== goalId),
+        activeGoal: null,
+        status: 'pending'
+      })
+    }
     return ({
       ...state,
       goals: state.goals.filter(g => g.id !== goalId),

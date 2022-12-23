@@ -62,6 +62,29 @@ export class GoalApiEffects {
       })
     )
   });
+
+  /** Reload Goal List After Adding New Goal */
+  reloadGoalToListOnAddingNewGoal$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GoalsAPIActions.addNewGoalSuccess),
+      concatMap((action) => {
+        return of(action).pipe(
+          withLatestFrom(this.store$.select(goalsListSelectors.selectGoalsListLoadStatus)),
+          filter(([_, loadStatus]) => loadStatus === 'pending'),
+          map(() => GoalPageActions.loadGoals())
+        )
+      })
+    )
+  });
+
+  /** Reload Goal List After Deleting Goal !DONE WITH REDUCER!*/
+  // reloadGoalToListOnDeletingGoal$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(GoalsAPIActions.removeActiveGoalSuccess),
+  //     map(() => GoalPageActions.loadGoals())
+  //   )
+  // });
+
   /** Update Active goal */
   updateActiveGoal$ = createEffect(() => {
     return this.actions$.pipe(
@@ -81,6 +104,7 @@ export class GoalApiEffects {
       })
     )
   });
+
   /** Remove Active goal */
   removeActiveGoal$ = createEffect(() => this.actions$.pipe(
     ofType(GoalPageActions.removeActiveGoal),

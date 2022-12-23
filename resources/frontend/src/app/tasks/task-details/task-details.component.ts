@@ -37,6 +37,7 @@ export class TaskDetailsComponent {
   // tasksList$: Observable<Task[]>;
   taskStatuses = Object.values(TaskStatus);
   taskPriority = Object.values(TaskPriority);
+  TaskPriorityNames = TaskPriority;
   editTask: boolean = false;
 
   constructor(private store$: Store, private taskService: TaskService,
@@ -60,13 +61,29 @@ export class TaskDetailsComponent {
     this.store$.dispatch(TaskPageActions.clear());
   }
 
-  editTaskFormHandler(editTaskForm: NgForm) {
+  editTaskFormHandler(editTaskForm: NgForm, task: Task) {
     if (editTaskForm.invalid){
       this.notificationService.showErrorNotification('Invalid Form Fields!');
       return;
     }
     const formData = editTaskForm.value;
-    this.store$.dispatch(TaskPageActions.updateActiveTask({taskId:formData.id,changedTask:formData}))
+    let changedTask = {};
+
+    if (formData.title && formData.title !== task.title){
+      changedTask = {...changedTask,title: formData.title}
+    }
+    if (formData.description && formData.description !== task.description){
+      changedTask = {...changedTask,description: formData.description}
+    }
+    if (formData.start_date && formData.start_date + ' 00:00:00' !== task.start_date){
+      changedTask = {...changedTask,start_date: formData.start_date}
+    }
+    if (formData.end_date && formData.end_date + ' 00:00:00' !== task.end_date){
+      changedTask = {...changedTask,end_date: formData.end_date}
+    }
+    changedTask = {...changedTask,id:task.id}
+
+    this.store$.dispatch(TaskPageActions.updateActiveTask({taskId:task.id,changedTask}))
 
     this.editTask = false;
   }

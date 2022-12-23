@@ -4,6 +4,7 @@ import {NgModule} from "@angular/core";
 import {GoalsListState, GoalsReducer} from "./goals-store/goals.reducer";
 import {TargetReducer, TargetState} from "./tartgets-store/target.reducer";
 import {TaskReducer, TasksState} from "./task-store/task.reducer";
+import {AgendaReducer, AgendaState} from "./agenda-store/agenda.reducer";
 
 const APP_FEATURE_KEY = 'appState'
 
@@ -12,7 +13,8 @@ export interface AppState {
   userState: UserState,
   goalsState: GoalsListState,
   targetsState: TargetState,
-  tasksState: TasksState
+  tasksState: TasksState,
+  agendaState: AgendaState
 }
 
 /** Reducers */
@@ -21,6 +23,7 @@ const reducers : ActionReducerMap<AppState> = {
   goalsState: GoalsReducer,
   targetsState: TargetReducer,
   tasksState: TaskReducer,
+  agendaState: AgendaReducer,
 }
 
 const metaReducers: MetaReducer<AppState>[] = [];

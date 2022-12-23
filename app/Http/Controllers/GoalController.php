@@ -303,6 +303,7 @@ class GoalController extends Controller
                     $goalProgress = ($totalCompletedTargets / $totalTargets) * 100;
                 }
 
+                $goal->totalCompletedTargets = $totalCompletedTargets;
                 $goal->totalTargets = $totalTargets;
                 $goal->progress = $goalProgress;
             }

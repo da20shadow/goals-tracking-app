@@ -123,7 +123,8 @@ export class TasksListComponent {
   openDeleteTaskModal(task:Task) {
     const taskId = task.id;
     const isCompleted = task.status === TaskStatus.COMPLETED;
-    confirm('Are you sure?')
+    if (confirm('Are you sure?')){
+      //TODO: create nice modal for delete confirmation
     //TODO: send delete request with Effect not service!!
     this.taskService.deleteTask(taskId).subscribe({
       next: (response) => {
@@ -135,6 +136,7 @@ export class TasksListComponent {
         this.notificationService.showErrorNotification(err.error.message);
       }
     })
+    }
   }
 
   toDate(date: string) {
@@ -162,6 +164,8 @@ export class TasksListComponent {
           return compare(a.title, b.title, isAsc);
         case 'priority':
           return compare(a.priority, b.priority, isAsc);
+        case 'status':
+          return compare(a.status, b.status, isAsc);
         case 'startDate':
           return compare(a.start_date, b.start_date, isAsc);
         case 'endDate':
@@ -178,11 +182,16 @@ function compare(a: number | TaskPriority | string | undefined|null,
                  b: number | TaskPriority | string | undefined|null, isAsc: boolean) {
   if (!a || !b) { return 0 }
   let isPriority = false;
+  let isStatus = false;
   switch (a) {
     case TaskPriority.URGENT: a = 1; isPriority = true; break;
     case TaskPriority.HIGH: a = 2; isPriority = true; break;
     case TaskPriority.LOW: a = 3; isPriority = true; break;
     case TaskPriority.NO_PRIORITY: a = 4; isPriority = true; break;
+    case TaskStatus.COMPLETED: a = 4; isStatus = true; break;
+    case TaskStatus.IN_Revision: a = 3; isStatus = true; break;
+    case TaskStatus.TO_DO: a = 2; isStatus = true; break;
+    case TaskStatus.IN_PROGRESS: a = 1; isStatus = true; break;
   }
   if (isPriority){
     switch (b) {
@@ -191,6 +200,14 @@ function compare(a: number | TaskPriority | string | undefined|null,
       case TaskPriority.LOW: b = 3; break;
       case TaskPriority.NO_PRIORITY: b = 4; break;
     }
+  }else if (isStatus){
+    switch (b) {
+      case TaskStatus.COMPLETED: b = 4; break;
+      case TaskStatus.IN_Revision: b = 3; break;
+      case TaskStatus.TO_DO: b = 2; break;
+      case TaskStatus.IN_PROGRESS: b = 1; break;
+    }
   }
+
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

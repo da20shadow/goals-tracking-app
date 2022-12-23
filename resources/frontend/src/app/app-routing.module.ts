@@ -10,12 +10,14 @@ import {ProfileComponent} from "./auth/profile/profile.component";
 import {isLoggedInGuardFn} from "./auth/guards/isLoggedInGuardFn";
 import {EditProfileComponent} from "./auth/profile/edit-profile/edit-profile.component";
 import {LogoutComponent} from "./auth/logout/logout.component";
+import {AboutComponent} from "./pages/about/about.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent, pathMatch:'full'},
   {path: 'faq', component: FaqComponent},
   {path: 'contact-us', component: ContactUsComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'about', component: AboutComponent},
   {path: 'register', component: RegisterComponent},
   {
     path: 'profile',component: ProfileComponent,
@@ -46,6 +48,12 @@ const routes: Routes = [
   {
     path: 'tasks',loadChildren: () =>
       import('./tasks/tasks.module').then(m => m.TasksModule),
+    canActivate: [isLoggedInGuardFn],
+    canLoad: [isLoggedInGuardFn]
+  },
+  {
+    path: 'agenda',loadChildren: () =>
+      import('./agenda/agenda.module').then(m => m.AgendaModule),
     canActivate: [isLoggedInGuardFn],
     canLoad: [isLoggedInGuardFn]
   },

@@ -28,6 +28,7 @@ export class TargetsListComponent {
   targetsList$: Observable<Target[]>;
   @Input() dailyTarget = '';
   @Input() goalId!: number;
+  @Output() onTargetEvents = new EventEmitter();
   showAddTargetForm: boolean = false;
   classes = GlobalClasses;
   targetsDone?:number = 0;
@@ -67,6 +68,8 @@ export class TargetsListComponent {
       next: (response) => {
         this.notificationService.showSuccessNotification(response.message);
         this.store$.dispatch(TargetApiActions.addTargetSuccess({target:response.target}))
+
+        this.onTargetEvents.emit({type: 'added'});
       },
       error: (err) => {
         this.notificationService.showErrorNotification(err.error.message)

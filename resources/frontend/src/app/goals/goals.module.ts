@@ -9,10 +9,10 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatIconModule} from "@angular/material/icon";
 import { AddGoalModalComponent } from './components/add-goal-modal/add-goal-modal.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import { TargetsListComponent } from './components/targets-list/targets-list.component';
-import {CoreModule} from "../core/core.module";
+import {NgxEditorModule} from "ngx-editor";
 
 
 @NgModule({
@@ -28,9 +28,11 @@ import {CoreModule} from "../core/core.module";
     MatMenuModule,
     MatIconModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     GoalsRoutingModule,
     SharedModule,
+    NgxEditorModule,
   ]
 })
 export class GoalsModule { }

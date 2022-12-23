@@ -1,5 +1,15 @@
-<h2>LOGO</h2>
+<h2 class="font-semibold text-[#2563eb] dark:text-gray-400 drop-shadow">GoalsAPP</h2>
 
 <!-- Public Nav Links -->
 <app-nav-links [ngClass]="classes.nav" [navLinks]="publicNavLinks"></app-nav-links>
 <!-- Public Nav Links -->
+<div class="hidden md:block">
+  <div class="ml-4 flex items-center md:ml-6">
+  <!-- Dark/Light Mode Button -->
+  <button (click)="toggleDarkMode()" [ngClass]="classes.icon">
+    <span class="sr-only">Dark/Light Mode</span>
+    <mat-icon>{{darkMode ? 'nightlight' : 'light_mode'}}</mat-icon>
+
+  </button>
+  </div>
+</div>

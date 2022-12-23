@@ -29,4 +29,8 @@ export class TaskService {
   getTaskById(taskId: number) {
     return this.http.get<Task>(ApiUrls.TASKS+`/${taskId}`);
   }
+
+  getTodayTasks() {
+    return this.http.get<Task[]>(ApiUrls.TASKS);
+  }
 }

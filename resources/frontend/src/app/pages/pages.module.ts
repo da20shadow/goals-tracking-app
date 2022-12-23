@@ -7,6 +7,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import {FormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {SharedModule} from "../shared/shared.module";
+import { AboutComponent } from './about/about.component';
 
 
 
@@ -15,7 +16,8 @@ import {SharedModule} from "../shared/shared.module";
     HomeComponent,
     FaqComponent,
     ContactUsComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AboutComponent
   ],
   imports: [
     CommonModule,

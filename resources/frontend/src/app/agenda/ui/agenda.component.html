@@ -1,0 +1,118 @@
+<app-page-title [title]="'Agenda'"></app-page-title>
+
+<section class="p-5 grid grid-cols-1 lg:grid-cols-2 gap-5">
+
+  <!-- Today's Tasks -->
+  <div class="h-[75vh] p-5 bg-white dark:bg-gray-900 border overflow-auto rounded-md">
+
+    <h3 class="text-2xl">My Work</h3>
+
+    <hr class="my-3">
+
+    <!-- Today Tasks List -->
+    <input #showAddTaskButton type="hidden" value="false">
+    <div class="mb-3 h-4 flex gap-3 items-center" (mouseenter)="showAddTaskButton.value='true'"
+         (mouseleave)="showAddTaskButton.value='false'" >
+      <span class="py-1 text-sm">Today({{(todayTasks$ |async)?.length}})</span>
+      <button *ngIf="showAddTaskButton.value === 'true'"
+              class="px-2 py-1 text-sm dark:hover:bg-gray-700 dark:active:bg-gray-800 rounded">
+        + Add Task
+      </button>
+    </div>
+    <ul *ngIf="(todayTasks$ | async) as todayTasks">
+
+      <li class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
+          *ngFor="let task of todayTasks">
+        <p class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
+        <span class="text-sm absolute right-1">
+          Today: {{task.start_date | date: 'H:mm'}} - {{task.end_date | date: 'H:mm'}}
+        </span>
+      </li>
+    </ul>
+    <!-- Today Tasks List -->
+
+    <!-- Overdue Tasks List -->
+    <p (click)="showOverdueTasks.value='true'"
+       class="my-3 text-sm cursor-pointer">Overdue(2)</p>
+
+    <input type="hidden" #showOverdueTasks value="false">
+    <ul *ngIf="showOverdueTasks.value==='true'">
+
+      <li [@fadeInOut] class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700">
+        <p class="text-ellipsis overflow-hidden ...">Overdue Task Title...</p>
+        <span class="text-[12px] text-rose-300 absolute right-1">
+          Due Date: 21/11/2022
+        </span>
+      </li>
+      <li [@fadeInOut] class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700">
+        <p class="text-ellipsis overflow-hidden ...">Overdue Task, To add this style in the global classes...</p>
+        <span class="text-[12px] text-rose-300 absolute right-1">Due Date: 22/11/2022</span>
+      </li>
+    </ul>
+    <!-- Overdue Tasks List -->
+
+    <!-- Next Tasks List -->
+    <p class="my-3 text-sm cursor-pointer">Next(5)</p>
+    <!-- Next Tasks List -->
+
+    <!-- Next Tasks List -->
+    <p class="my-3 text-sm cursor-pointer">Unscheduled(2)</p>
+    <!-- Next Tasks List -->
+
+  </div>
+  <!-- Today's Tasks -->
+
+  <!-- Calendar View Today -->
+  <div class="h-[75vh] p-5 bg-white dark:bg-gray-900 border overflow-auto rounded-md">
+
+    <h3 class="text-2xl">Calendar</h3>
+
+    <hr class="my-3">
+
+    <p class="mb-3">{{today | date: 'd MMM, EEEE'}}</p>
+
+    <section class="flex">
+
+      <!-- Right Side Hours -->
+      <div class="w-fit border-r">
+
+        <div class="flex gap-5 items-center p-2 text-sm relative"
+           *ngFor="let time of times">
+
+          <span>{{time.hour}}</span>
+
+          <div *ngIf="time.hour === '10:00'" class="flex items-center absolute z-50">
+
+            <span class="px-2 text-orange-900 bg-orange-400 rounded-lg" >{{hourNow}}</span>
+            <span class="h-[1px] w-[340px] bg-orange-400"></span>
+
+          </div>
+
+
+        </div>
+
+      </div>
+      <!-- Right Side Hours -->
+
+      <!-- Left Side Tasks By Hour -->
+      <div class="w-[90%] h-[75vh] ">
+
+        <p  class="p-2 m-1 text-sm text-ellipsis overflow-hidden ... cursor-pointer border bg-gray-800 hover:bg-gray-700 rounded "
+           *ngFor="let task of (todayTasks$ | async)">{{task.title}}</p>
+
+      </div>
+      <!-- Left Side Tasks By Hour -->
+
+
+    </section>
+
+  </div>
+  <!-- Calendar View Today -->
+
+</section>
+
+<!-- TODO: Maybe One day will use it... :D -->
+<!--<section class="my-8 p-5 w-[50%] h-[50vh] mx-auto bg-white dark:bg-gray-800 overflow-auto">-->
+<!--  <app-calendar class="bg-white dark:bg-gray-800"></app-calendar>-->
+<!--</section>-->
+

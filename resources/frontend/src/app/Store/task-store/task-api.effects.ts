@@ -8,8 +8,6 @@ import {TaskAPIActions} from "./task-api.actions";
 import {TargetPageActions} from "../tartgets-store/target-page.actions";
 import {targetSelectors} from "../tartgets-store/target-selectors";
 import {taskSelectors} from "./task-selectors";
-import {GoalPageActions} from "../goals-store/goal-page.actions";
-import {GoalsAPIActions} from "../goals-store/goal-api.actions";
 import {NotificationService} from "../../core/services/notification.service";
 
 @Injectable()

@@ -76,7 +76,11 @@ export class TargetDetailsComponent {
   }
 
   deleteTarget(targetId: number,goalId:number) {
-    this.store$.dispatch(TargetPageActions.deleteActiveTarget({targetId,goalId}));
+
+    if (confirm('Are You Sure? All Target Tasks Also will be deleted!')){
+      this.store$.dispatch(TargetPageActions.deleteActiveTarget({targetId,goalId}));
+    }
+
   }
 
   updateTargetProgress($event: any,currentTarget: Target) {

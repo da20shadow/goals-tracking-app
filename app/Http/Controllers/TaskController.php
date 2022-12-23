@@ -14,15 +14,24 @@ class TaskController extends Controller
     {
         $user_id = auth()->user()->getAuthIdentifier();
 
+        $year = date('Y');
+        $month = date('m');
+        $day = date('d');
+
         try {
             $tasksList = DB::table('tasks')
                 ->where(['user_id' => $user_id])
                 ->where('status','!=','Completed')
-                ->orderBy('end_date')
+                ->whereYear('start_date','=',$year)
+                ->whereMonth('start_date','=',$month)
+                ->whereDay('start_date','=',$day)
+                ->orderBy('start_date')
+                ->orderBy('priority','desc')
                 ->get();
         }catch (QueryException $exception){
             return response()->json([
-                'message' => 'An Error Occur! Please, try again!'
+                'message' => 'An Error Occur! Please, try again!',
+                'error' => $exception->getMessage(),
             ],400);
         }
 

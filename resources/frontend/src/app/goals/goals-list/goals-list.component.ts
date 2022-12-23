@@ -8,6 +8,7 @@ import {NgForm} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {AddGoalModalComponent} from "../components/add-goal-modal/add-goal-modal.component";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {ChartType} from "../../shared/enums/ChartType";
 
 @Component({
   selector: 'app-goals-list',
@@ -25,7 +26,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 export class GoalsListComponent {
 
   $goalsList$!: Observable<Goal[]>;
-
+  chartTypes = ChartType;
   constructor(private store$: Store,
               private dialog: MatDialog) {
     this.$goalsList$ =  this.store$.select(goalsListSelectors.selectGoalsList);

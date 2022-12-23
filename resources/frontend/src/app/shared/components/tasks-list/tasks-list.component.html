@@ -110,7 +110,6 @@
 <section [style]="'overflow-x:auto;'" class="overflow-x-auto p-5">
 
   <table matSort (matSortChange)="sortData($event)" *ngIf="tasksList"
-         matSortActive="priority" matSortDirection="desc" matSortDisableClear
          class="w-full container-light dark:container-dark dark:shadow-gray-500">
 
     <!--Table Header START-->
@@ -133,8 +132,22 @@
     <tr [@fadeInOut] *ngFor="let task of tasksList" [ngClass]="classes.tableBodyRow">
 
       <!-- Task Title START -->
-      <td [routerLink]="['/tasks/',task.id]" class="py-3 dark:hover:bg-[#4b5563] cursor-pointer">
-        {{task.title}}
+      <td class="py-3 relative dark:hover:bg-[#4b5563] cursor-pointer">
+        <span [routerLink]="['/tasks/',task.id]">{{task.title}}</span>
+
+        <button class="absolute right-[7px] ml-2"
+                matTooltip="Show Task Description"
+                matTooltipPosition="above"
+                mat-button [matMenuTriggerFor]="description">
+          <mat-icon>subject</mat-icon>
+        </button>
+        <mat-menu #description="matMenu">
+
+          <p class="p-5 bg-white dark:text-gray-400 dark:bg-gray-900" >
+            {{task.description}}
+          </p>
+
+        </mat-menu>
       </td>
       <!-- Task Title END -->
 

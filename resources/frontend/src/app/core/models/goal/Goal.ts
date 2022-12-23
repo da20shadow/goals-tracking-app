@@ -9,5 +9,6 @@ export interface Goal {
   created_at: string;
   updated_at: string;
   totalTargets: number;
+  totalCompletedTargets: number;
   progress: number;
 }

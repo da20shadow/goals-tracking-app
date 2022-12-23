@@ -1,4 +1,4 @@
-<ng-container *ngIf="(activeGoal$|async) as goal; else noGoal">
+<ng-container *ngIf="(activeGoal$|async) as goal;">
 
   <app-page-title title="🏆 GOAL:" [text]="goal.title"></app-page-title>
 
@@ -60,8 +60,12 @@
       <!-- Goal Progress & Days Left -->
 
 
+      <!-- HTML Description -->
+      <div [innerHTML]="goal.description"></div>
+      <!-- HTML Description -->
+
       <!-- Goal Description -->
-      <pre class="p-5 border bg-gray-50 dark:bg-gray-700">{{goal.description}}</pre>
+<!--      <pre class="p-5 border bg-gray-50 dark:bg-gray-700">{{goal.description}}</pre>-->
       <!-- Goal Description -->
 
       <!-- Start and Due Dates -->
@@ -81,6 +85,28 @@
 
     </section>
     <!-- Goal Details -->
+
+
+    <!-- textAngular Editor -->
+
+    <!-- textAngular Editor -->
+
+    <!-- TODO: Reactive Form With Rich Text Editor  -->
+<!--    <form (ngSubmit)="richEditHandler()"  [formGroup]="richEditGoalForm">-->
+
+
+<!--      <div class="NgxEditor__Wrapper">-->
+<!--        <ngx-editor-menu [editor]="editor"-->
+<!--                         [toolbar]="toolbar"></ngx-editor-menu>-->
+<!--        <ngx-editor [editor]="editor"-->
+<!--                    formControlName="editorContent">-->
+<!--        </ngx-editor>-->
+<!--      </div>-->
+
+<!--      <button type="submit">Update</button>-->
+<!--    </form>-->
+    <!-- TODO: Reactive Form With Rich Text Editor -->
+
 
     <!-- Edit Goal Form -->
     <form *ngIf="editGoal" [@fadeInOut] (ngSubmit)="editGoalFormHandler(editGoalForm)"
@@ -172,6 +198,7 @@
       <!-- Goal Description Input Container-->
       <div>
         <div class="flex align-center border border-slate-600 rounded">
+
             <textarea
               class="w-full min-h-[175px] py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
               name="description"
@@ -216,13 +243,14 @@
   <!-- Targets -->
   <section class="m-5">
 
-    <app-targets-list [goalId]="goal.id" [dailyTarget]="dailyTarget"></app-targets-list>
+    <app-targets-list (onTargetEvents)="onTargetEvent($event,goal)" [goalId]="goal.id" [dailyTarget]="dailyTarget"></app-targets-list>
 
   </section>
   <!-- Targets -->
 
 </ng-container>
 
-<ng-template #noGoal>
-  <h2 class="my-5 text-center text-2xl">No Goal Found! 🤷‍♂️</h2>
-</ng-template>
+<!--TODO: when wrong ID or not exist show this or page not found? -->
+<!--<ng-template #noGoal>-->
+<!--  <h2 class="my-5 text-center text-2xl">No Goal Found! 🤷‍♂️</h2>-->
+<!--</ng-template>-->
