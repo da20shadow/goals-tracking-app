@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[592],{797:(r,o,n)=>{n.d(o,{T:()=>e,h:()=>s});class s{}s.TO_DO="To Do",s.IN_PROGRESS="In Progress",s.IN_Revision="In Revision",s.COMPLETED="Completed";class e{}e.URGENT="Urgent",e.HIGH="High",e.LOW="Low",e.NO_PRIORITY="No priority"}}]);
