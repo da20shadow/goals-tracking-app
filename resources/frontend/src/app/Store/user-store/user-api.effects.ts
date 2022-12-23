@@ -11,20 +11,34 @@ import {Router} from "@angular/router";
 @Injectable()
 export class UserApiEffects {
 
-  getProfile$ = createEffect(()=> this.actions$.pipe(
-    ofType(UserPageActions.getUser),
-    concatLatestFrom(() => this.store$.select(userSelectors.selectUser)),
-    filter(([action,user]) => {
-      return user === null
-    }),
+
+  loginCheck$ = createEffect(() => this.actions$.pipe(
+    ofType(UserPageActions.loginCheck),
     switchMap(() =>
-      from(this.userService.getUserProfileInfo()).pipe(
-        map((user) => UserAPIActions.setUser({user})),
-        catchError((error) => {
-          console.log('UseApiEffects getProfile$ error', error)
-          return of(error);
+      from(this.userService.isLoggedIn()).pipe(
+        map((isLogged) => {
+          if (!isLogged){
+            return UserAPIActions.setIsLoggedFailure();
+          }
+          return UserAPIActions.setIsLoggedSuccess();
         })
       ))
+  ));
+
+  getProfile$ = createEffect(() => this.actions$.pipe(
+    ofType(UserPageActions.getUser),
+    concatLatestFrom(() => this.store$.select(userSelectors.selectIsLoggedIn)),
+    filter(([action, isLogged]) => {
+      return isLogged === true
+    }),
+    switchMap(() => {
+      return (from(this.userService.getUserProfileInfo()).pipe(
+        map((user) => UserAPIActions.setUser({user})),
+        catchError((error) => {
+          return of(UserAPIActions.setIsLoggedFailure());
+        })
+      ))
+    })
   ));
 
   logout$ = createEffect(() => this.actions$.pipe(
@@ -35,10 +49,6 @@ export class UserApiEffects {
           this.router.navigate(['login']);
           return UserAPIActions.logoutSuccess()
         }),
-        catchError((error) => {
-          console.log('logout$ Error: ',error)
-          return of(error)
-        })
       ))
   ))
 

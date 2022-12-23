@@ -1,5 +1,5 @@
 <!-- Private Navigation -->
-<ng-container *ngIf="user$ |async; else publicNavigation">
+<ng-container *ngIf="isLogged$ |async; else publicNavigation">
   <app-private-nav [ngClass]="classes.header"></app-private-nav>
 </ng-container>
 

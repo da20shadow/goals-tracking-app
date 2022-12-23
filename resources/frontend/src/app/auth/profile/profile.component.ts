@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {User} from "../../core/models";
 import {Store} from "@ngrx/store";
 import {userSelectors} from "../../Store/user-store/user-selectors";
@@ -12,11 +12,11 @@ import {UserPageActions} from "../../Store/user-store/user-page.actions";
 })
 export class ProfileComponent {
 
-  user$: Observable<User|null>;
+  user$: Observable<User | null>;
 
   constructor(private store$: Store) {
-     this.store$.dispatch(UserPageActions.getUser());
-     this.user$ = this.store$.select(userSelectors.selectUser);
+    this.store$.dispatch(UserPageActions.getUser());
+    this.user$ = this.store$.select(userSelectors.selectUser);
   }
 
 }

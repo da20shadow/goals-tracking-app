@@ -16,21 +16,21 @@ import {UserPageActions} from "../../../Store/user-store/user-page.actions";
 export class HeaderComponent {
   classes = GlobalClasses;
 
-  user$;
+  isLogged$;
 
   constructor(private titleService: Title,
               private auth: AuthService,
               private store$: Store,
               private route: Router) {
     this.titleService.setTitle('Home - GoalsApp');
-    this.user$ = this.store$.select(userSelectors.selectUser);
-    this.store$.dispatch(UserPageActions.getUser())
+    this.isLogged$ = this.store$.select(userSelectors.selectIsLoggedIn);
+    this.store$.dispatch(UserPageActions.loginCheck());
   }
 
   ngOnInit() {
     this.route.events.subscribe(event => {
       if (event.constructor.name === "NavigationEnd") {
-        this.store$.dispatch(UserPageActions.getUser())
+        this.store$.dispatch(UserPageActions.loginCheck());
       }
     })
   }

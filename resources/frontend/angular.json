@@ -61,7 +61,7 @@
               ],
               "outputHashing": "all",
               "outputPath": "../../public/frontend",
-              "baseHref": "/"
+              "baseHref": "/frontend/"
             },
             "development": {
               "buildOptimizer": false,
