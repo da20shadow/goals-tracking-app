@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build && cp ../../public/frontend/index.html ../views/angular.blade.php",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
