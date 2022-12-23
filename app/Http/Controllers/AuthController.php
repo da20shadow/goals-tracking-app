@@ -36,13 +36,16 @@ class AuthController extends Controller
     {
         $fields = $request->validate([
             'first_name' => ['required','string','min:2','max:45'],
-            'last_name' => ['string','min:2','max:45'],
             'email' => ['required','unique:users,email','email'],
             'password' => ['required','min:8','max:75','string','confirmed'],
         ]);
 
         try {
-            $user = User::create($fields);
+            $user = User::create([
+                'first_name' => $fields['first_name'],
+                'email' => $fields['email'],
+                'password' => bcrypt($fields['password']),
+            ]);
         }catch (QueryException $exception){
             return response()->json([
                 'message' => 'Invalid request!',
