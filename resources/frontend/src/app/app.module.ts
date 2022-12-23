@@ -99,7 +99,7 @@ import {NgxEditorModule} from "ngx-editor";
       useClass: LoadingInterceptor,
       multi: true
     },
-    {provide: APP_BASE_HREF, useValue: '/frontend/'}
+    {provide: APP_BASE_HREF, useValue: '/'}
   ],
   bootstrap: [AppComponent]
 })
