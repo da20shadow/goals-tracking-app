@@ -15,7 +15,6 @@ import {UserPageActions} from "../../../Store/user-store/user-page.actions";
 })
 export class HeaderComponent {
   classes = GlobalClasses;
-
   isLogged$;
 
   constructor(private titleService: Title,

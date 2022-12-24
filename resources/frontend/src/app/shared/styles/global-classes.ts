@@ -21,7 +21,7 @@ export class GlobalClasses {
   static readonly icon = `mr-2 p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white`;
 
   /** ------------- Navigations Menus ------------- */
-  static readonly header = `bg-gray-100 dark:bg-gray-800 relative w-full flex flex-wrap items-center justify-between
+  static readonly header = `bg-gray-100 dark:bg-gray-800 relative w-full flex flex-wrap items-center justify-end md:justify-between
   py-4 px-5 shadow-lg`;
 
   static readonly nav = `flex flex-wrap justify-center gap-4 items-center`

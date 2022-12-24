@@ -25,6 +25,11 @@ import {TaskApiEffects} from "./Store/task-store/task-api.effects";
 import {LoadingInterceptor} from "./core/interceptors/loading.interceptor";
 import {AgendaApiEffects} from "./Store/agenda-store/agenda-api.effects";
 import {NgxEditorModule} from "ngx-editor";
+import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -36,7 +41,12 @@ import {NgxEditorModule} from "ngx-editor";
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    RouterModule,
     MatDialogModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
     ReactiveFormsModule,
     AppStateModule,
     StoreModule.forRoot({}, {}),

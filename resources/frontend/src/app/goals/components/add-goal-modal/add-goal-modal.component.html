@@ -1,14 +1,9 @@
-<form mat-dialog-content
-      (ngSubmit)="addGoalFormHandler(addGoalForm)"
+<form (ngSubmit)="addGoalFormHandler(addGoalForm)"
       #addGoalForm="ngForm"
-      class="bg-white dark:bg-gray-800 mt-8 space-y-6 shadow p-10 rounded-sm
-            shadow-2xl dark:shadow dark:shadow-gray-500">
+      class="w-[96vw] md:w-[75vw] bg-white dark:bg-gray-800 space-y-6 shadow p-10 rounded-sm
+            shadow-2xl dark:shadow dark:shadow-gray-500 overflow-hidden">
 
-  <button class="dark:text-gray-500 hover:dark:text-gray-400 absolute top-3 right-3" mat-dialog-close mat-icon-button>
-    <mat-icon>close</mat-icon>
-  </button>
-
-  <h2 class="mt-0 text-center text-gray-800 dark:text-gray-400 text-3xl">Add New Goal</h2>
+  <h2 class="mt-0 text-center text-gray-800 dark:text-gray-400 text-3xl">{{title}}</h2>
 
 
   <!-- Goal Title Input Container-->
@@ -113,11 +108,17 @@
   <!-- Goal description Input Container-->
 
   <!-- Add Button -->
-  <div>
+  <div class="flex gap-3">
 
     <button class="flex items-center relative btn-primary dark:btn-primary-dark" type="submit">
       <mat-icon>add</mat-icon>
       Add
+    </button>
+
+    <button class="px-3 py-2 dark:text-gray-500 hover:dark:text-gray-400 flex items-center relative border rounded-md"
+            mat-dialog-close mat-icon-button>
+      <span>Cancel</span>
+      <mat-icon>close</mat-icon>
     </button>
 
   </div>

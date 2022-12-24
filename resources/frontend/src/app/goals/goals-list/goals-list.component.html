@@ -1,7 +1,7 @@
 <app-page-title title="My Goals 🏆"></app-page-title>
 
 <ng-container *ngIf="($goalsList$|async) as goals; else noGoalsYet">
-  <section class="my-5 p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+  <section class="my-5 p-1 md:p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
 
     <article [@fadeInOut] *ngFor="let goal of goals"
              [routerLink]="['/goals',goal.id]" (click)="setActiveGoal(goal.id)"
@@ -54,6 +54,8 @@
 </ng-template>
 
 <div (click)="openAddGoalModal()"
-     class="cursor-pointer py-2 px-3 border border-gray-700 bg-gray-700 hover:bg-gray-800 fixed bottom-10 right-4 rounded-md shadow-sm dark:shadow-gray-100">
-  Add Goal
+     class="z-50 cursor-pointer md:py-2 md:px-3 border bg-gray-700 hover:bg-gray-800 fixed bottom-20 md:bottom-10 right-4 rounded-full md:rounded-md  active:bg-gray-900 ">
+  <span class="hidden md:block">Add Goal</span>
+  <mat-icon [style]="'width:44px; height:37px;'"
+            class="block md:hidden text-[40px] pt-[2px] pl-[2px] font-extrabold">add</mat-icon>
 </div>

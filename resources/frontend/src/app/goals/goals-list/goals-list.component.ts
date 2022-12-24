@@ -10,6 +10,7 @@ import {AddGoalModalComponent} from "../components/add-goal-modal/add-goal-modal
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ChartType} from "../../shared/enums/ChartType";
 import {Title} from "@angular/platform-browser";
+import {ModalService} from "../../core/services/modal.service";
 
 @Component({
   selector: 'app-goals-list',
@@ -30,6 +31,7 @@ export class GoalsListComponent {
   chartTypes = ChartType;
   constructor(private store$: Store,
               private title: Title,
+              private modalService: ModalService,
               private dialog: MatDialog) {
     this.$goalsList$ =  this.store$.select(goalsListSelectors.selectGoalsList);
     this.title.setTitle('My Goals - GoalsApp');
@@ -44,14 +46,7 @@ export class GoalsListComponent {
   }
 
   openAddGoalModal() {
-    let dialogRef = this.dialog.open(AddGoalModalComponent,
-      {
-        width: '75%',
-        // width: '750px',
-        enterAnimationDuration: '200ms',
-        exitAnimationDuration: '200ms',
-        data: {justTest: 'Just Testing how it works!'}
-      })
+    let dialogRef = this.modalService.openFormModal(AddGoalModalComponent,{title:'Add New Goal!'});
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.data.goalForm){

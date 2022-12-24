@@ -13,12 +13,16 @@ export class AddGoalModalComponent {
 
   classes = GlobalClasses;
 
+  title = this.data.title;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<AddGoalModalComponent>,
               private notificationService: NotificationService) {
   }
 
   ngOnInit(){
+    console.log('this.data',this.data);
+    console.log('this.data.title',this.data.title);
   }
 
   addGoalFormHandler(addGoalForm: NgForm) {

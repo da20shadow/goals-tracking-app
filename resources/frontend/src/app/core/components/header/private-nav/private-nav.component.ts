@@ -14,6 +14,7 @@ export class PrivateNavComponent {
     {url: 'agenda', name: 'Agenda'},
   ]
   darkMode: boolean;
+  openSidenav: boolean = false;
   classes = GlobalClasses;
 
   constructor(private darkModeService: DarkLightModeService) {

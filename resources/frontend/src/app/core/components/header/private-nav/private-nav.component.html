@@ -1,7 +1,22 @@
 
 <!-- Public Nav Links -->
-<app-nav-links [navLinks]="privateNavLinks"></app-nav-links>
+<app-nav-links class="hidden md:block" [navLinks]="privateNavLinks"></app-nav-links>
 <!-- Public Nav Links -->
+
+<div class="md:hidden">
+
+  <!-- Dark/Light Mode Button -->
+  <button (click)="toggleDarkMode()" [ngClass]="classes.icon">
+    <span class="sr-only">Dark/Light Mode</span>
+    <mat-icon>{{darkMode ? 'nightlight' : 'light_mode'}}</mat-icon>
+
+  </button>
+
+  <span (click)="openSidenav=!openSidenav">
+    <mat-icon>menu</mat-icon>
+  </span>
+
+</div>
 
 <div class="hidden md:block">
 
@@ -40,3 +55,32 @@
   </div>
 
 </div>
+
+
+<section [ngClass]="openSidenav ? 'block' : 'hidden'"
+         class="z-[1000] w-[90%] md:w-[275px] h-[100vh] bg-white dark:bg-[#0b1727] fixed top-0 right-0 md:left-0 transition ease-in-out duration-300 shadow-lg">
+
+  <span (click)="openSidenav=!openSidenav" class="absolute top-3 right-2 cursor-pointer">
+    <mat-icon>close</mat-icon>
+  </span>
+
+  <ul class="my-8">
+
+    <li>
+
+      <h4 class="mx-1 text-xl" >Goals</h4>
+
+      <nav>
+        <a [routerLink]="'goals'" (click)="openSidenav=!openSidenav" class="m-2 py-2 px-3 block bg-gray-50 hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">All</a>
+        <a [routerLink]="'personal'" (click)="openSidenav=!openSidenav" class="m-2 py-2 px-3 block bg-gray-50 hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">Personal</a>
+        <a [routerLink]="'relationship'" (click)="openSidenav=!openSidenav" class="m-2 py-2 px-3 block bg-gray-50 hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">Financial</a>
+        <a [routerLink]="'financial'" (click)="openSidenav=!openSidenav" class="m-2 py-2 px-3 block bg-gray-50 hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">Relationship</a>
+        <a [routerLink]="'business'" (click)="openSidenav=!openSidenav" class="m-2 py-2 px-3 block bg-gray-50 hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">Business</a>
+        <a [routerLink]="'other'" (click)="openSidenav=!openSidenav" class="m-2 py-2 px-3 block bg-gray-50 hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">Other</a>
+      </nav>
+
+    </li>
+
+  </ul>
+
+</section>

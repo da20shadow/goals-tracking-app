@@ -38,7 +38,7 @@ class TaskController extends Controller
         if (count($tasksList) < 1){
             return response()->json([
                 'message' => 'No Tasks Yet!'
-            ],400);
+            ],204);
         }
         return response()->json($tasksList);
     }

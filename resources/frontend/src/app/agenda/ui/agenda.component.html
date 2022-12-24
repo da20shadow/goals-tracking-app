@@ -1,6 +1,6 @@
 <app-page-title [title]="'Agenda'"></app-page-title>
 
-<section class="p-5 grid grid-cols-1 lg:grid-cols-2 gap-5">
+<section class="px-2 py-5 md:p-5 grid grid-cols-1 lg:grid-cols-2 gap-5">
 
   <!-- Today's Tasks -->
   <div class="h-[75vh] p-5 bg-white dark:bg-gray-900 border overflow-auto rounded-md">
@@ -13,7 +13,14 @@
     <input #showAddTaskButton type="hidden" value="false">
     <div class="mb-3 h-4 flex gap-3 items-center" (mouseenter)="showAddTaskButton.value='true'"
          (mouseleave)="showAddTaskButton.value='false'" >
-      <span class="py-1 text-sm">Today({{(todayTasks$ |async)?.length}})</span>
+
+      <span *ngIf="(todayTasks$ | async) as todayTasks; else todayTasksTemplate">
+        Today({{todayTasks.length}})
+      </span>
+      <ng-template #todayTasksTemplate>
+        <span class="py-1 text-sm">Today(0)</span>
+      </ng-template>
+
       <button *ngIf="showAddTaskButton.value === 'true'"
               class="px-2 py-1 text-sm dark:hover:bg-gray-700 dark:active:bg-gray-800 rounded">
         + Add Task
@@ -69,19 +76,19 @@
 
     <hr class="my-3">
 
-    <p class="mb-3">{{today | date: 'd MMM, EEEE'}}</p>
+    <p class="text-sm mb-3">{{today | date: 'd MMM, EEEE'}}</p>
 
     <section class="flex">
 
       <!-- Right Side Hours -->
       <div class="w-fit border-r">
 
-        <div class="flex gap-5 items-center p-2 text-sm relative"
+        <div class="flex gap-5 items-center pl-0 md:pl-2 p-2 text-sm relative"
            *ngFor="let time of times">
 
           <span>{{time.hour}}</span>
 
-          <div *ngIf="time.hour === '10:00'" class="flex items-center absolute z-50">
+          <div *ngIf="time.hour === '10:00'" class="flex items-center absolute z-10">
 
             <span class="px-2 text-orange-900 bg-orange-400 rounded-lg" >{{hourNow}}</span>
             <span class="h-[1px] w-[340px] bg-orange-400"></span>
