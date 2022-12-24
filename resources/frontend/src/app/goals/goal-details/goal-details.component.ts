@@ -12,6 +12,7 @@ import {TargetPageActions} from "../../Store/tartgets-store/target-page.actions"
 import {GoalsAPIActions} from "../../Store/goals-store/goal-api.actions";
 import {NotificationService} from "../../core/services/notification.service";
 import {Editor, toDoc, toHTML, Toolbar, Validators} from "ngx-editor";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-goal-details',
@@ -58,9 +59,10 @@ export class GoalDetailsComponent {
 
   constructor(private store$: Store, private activatedRoute: ActivatedRoute,
               private route: Router, private goalService: GoalService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,private title: Title) {
     this.activeGoal$ = this.store$.select(goalsListSelectors.selectActiveGoal);
-    this.activeGoal$.subscribe(goal => this.goalDesc = goal?.description)
+    this.activeGoal$.subscribe(goal => this.goalDesc = goal?.description);
+    this.title.setTitle('Goal Details - GoalsApp');
   }
 
   ngOnInit() {

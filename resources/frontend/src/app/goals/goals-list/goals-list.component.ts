@@ -9,6 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {AddGoalModalComponent} from "../components/add-goal-modal/add-goal-modal.component";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ChartType} from "../../shared/enums/ChartType";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-goals-list',
@@ -28,8 +29,10 @@ export class GoalsListComponent {
   $goalsList$!: Observable<Goal[]>;
   chartTypes = ChartType;
   constructor(private store$: Store,
+              private title: Title,
               private dialog: MatDialog) {
     this.$goalsList$ =  this.store$.select(goalsListSelectors.selectGoalsList);
+    this.title.setTitle('My Goals - GoalsApp');
   }
 
   ngOnInit(){

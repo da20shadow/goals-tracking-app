@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-faq',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class FaqComponent {
 
+  constructor(private title: Title) {
+    this.title.setTitle('FAQ - GoalsApp');
+  }
 }

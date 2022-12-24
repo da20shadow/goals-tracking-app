@@ -12,6 +12,7 @@ import {NotificationService} from "../../core/services/notification.service";
 import {TargetApiActions} from "../../Store/tartgets-store/target-api.actions";
 import {TaskPageActions} from "../../Store/task-store/task-page.actions";
 import {Operations} from "../../shared/enums/Operations";
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-target-details',
@@ -38,10 +39,11 @@ export class TargetDetailsComponent {
   targetTasksList$: Observable<Task[]>;
   editTarget: boolean = false;
 
-  constructor(private store$: Store, private activatedRoute: ActivatedRoute,
+  constructor(private store$: Store, private title: Title, private activatedRoute: ActivatedRoute,
               private notificationService: NotificationService) {
     this.activeTarget$ = this.store$.select(targetSelectors.selectActiveTarget);
     this.targetTasksList$ = this.store$.select(taskSelectors.selectTargetTasksList);
+    this.title.setTitle('Target Details - GoalsApp');
   }
 
   ngOnInit(){

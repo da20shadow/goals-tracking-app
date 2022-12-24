@@ -11,6 +11,7 @@ import {NotificationService} from "../../core/services/notification.service";
 import {TaskAPIActions} from "../../Store/task-store/task-api.actions";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TargetPageActions} from "../../Store/tartgets-store/target-page.actions";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-task-details',
@@ -42,7 +43,8 @@ export class TaskDetailsComponent {
 
   constructor(private store$: Store, private taskService: TaskService,
               private notificationService: NotificationService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute, private title: Title) {
+    this.title.setTitle('Task Details - GoalsApp');
     this.activeTask$ = this.store$.select(taskSelectors.selectActiveTask);
     //TODO: implement subtasks!
     // this.tasksList$ = this.store$.select(taskSelectors.selectTaskTasksList);
