@@ -1,11 +1,11 @@
 {
-  "name": "frontend",
+  "name": "angular",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:prod": "ng build && cp ../../public/frontend/index.html ../views/angular.blade.php",
+    "build:prod": "ng build --prod --base-href /angular/ && copy ../../public/angular/index.html ../views/angular.blade.php",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
