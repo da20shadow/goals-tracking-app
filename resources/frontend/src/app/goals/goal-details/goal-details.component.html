@@ -1,15 +1,6 @@
 <ng-container *ngIf="(activeGoal$|async) as goal;">
 
-  <app-page-title title="🏆 GOAL:" [text]="goal.title"></app-page-title>
-
-  <!-- BACK BUTTON -->
-  <button [routerLink]="'/goals'" class="m-5 flex gap-3 items-center dark:hover:bg-gray-800 px-3 py-2 cursor-pointer border rounded">
-    <mat-icon>arrow_back_ios_new</mat-icon>
-    <span>My Goals</span>
-  </button>
-  <!-- BACK BUTTON -->
-
-  <article class="bg-white dark:bg-gray-800 relative p-4 m-1 md:m-5 md:p-5 border rounded">
+  <article class="bg-white dark:bg-gray-800 relative p-4 mx-1 mt-[75px] md:mt-[93px] md:m-5 md:p-5 border rounded">
 
     <!-- Goal Details -->
     <section [@fadeGoalInOut] *ngIf="!editGoal">
@@ -33,13 +24,87 @@
       </div>
       <!-- Edit Goal Icon -->
 
+      <!-- Goal TITLE -->
+      <h1 class="dark:c-text-dark mt-5 md:mt-0 text-[25px] md:text-3xl font-bold tracking-tight">
+        🏆 {{goal.title}}
+      </h1>
+      <!-- Goal TITLE -->
+
+      <!-- Goal Dates & Category -->
+      <section class="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <div>
+
+          <p class="flex whitespace-nowrap gap-3 py-1">
+            <mat-icon>label_important</mat-icon>
+            Category: {{goal.category}}
+          </p>
+
+          <p class="flex whitespace-nowrap gap-3 py-1">
+            <mat-icon>donut_large</mat-icon>
+            Progress:
+            <span [ngClass]="{
+            'text-rose-500':goal.progress <= 33,
+            'text-orange-500':goal.progress <= 66 && goal.progress > 33,
+            'text-green-500':goal.progress > 66
+            }" >
+              {{(goal.progress).toFixed(2)}}%
+            </span>
+          </p>
+
+          <div class="flex whitespace-nowrap gap-3 py-1">
+            <mat-icon>my_location</mat-icon>
+          <span>Targets:</span>
+
+          <div class="flex gap-3">
+            <span class="text-sm px-3 flex justify-center items-center border rounded-full">
+            <mat-icon class="text-sm">done</mat-icon>
+            {{goal.totalCompletedTargets}} of {{goal.totalTargets}}
+            </span>
+          </div>
+
+          </div>
+
+        </div>
+
+        <div>
+
+          <p class="flex whitespace-nowrap gap-3 py-1">
+            <mat-icon>calendar_today</mat-icon>
+            Started: {{goal.start_date | date: 'MMM d, y' }}
+          </p>
+
+          <p class="flex whitespace-nowrap gap-3 py-1">
+            <mat-icon>event</mat-icon>
+            Deadline: {{goal.due_date | date: 'MMM d, y' }}
+          </p>
+
+          <p class="flex whitespace-nowrap gap-3 py-1">
+            <mat-icon>schedule</mat-icon>
+            <ng-container *ngIf="daysLeft == 'Overdue'; else daysLeftTemplate">
+              <span class="text-rose-300">Overdue</span>
+            </ng-container>
+            <ng-template #daysLeftTemplate>
+              <span>Days Left: <strong>{{daysLeft}}</strong></span>
+            </ng-template>
+          </p>
+
+        </div>
+
+      </section>
+      <!-- Goal Dates & Category -->
 
       <!-- Goal Progress & Days Left -->
       <section class="my-8 flex flex-wrap md:flex-nowrap gap-3 justify-start md:justify-center items-center">
 
         <!--Progress bar -->
         <div class="w-[100%] border dark:border-gray-200 bg-gray-50 dark:bg-gray-600">
-          <div class="text-center py-1 bg-green-600 dark:bg-green-800 text-gray-900 dark:text-gray-300"
+          <div class="text-center py-1 text-gray-900 dark:text-gray-300"
+               [ngClass]="{
+            'bg-rose-600':goal.progress <= 33,
+            'bg-orange-600':goal.progress <= 66 && goal.progress > 33,
+            'bg-green-600':goal.progress > 66
+            }"
                [style]="'width:'+(goal.progress).toFixed(2)+'%'">{{(goal.progress).toFixed(2)}}%
           </div>
         </div>
@@ -47,13 +112,13 @@
 
         <!-- TODO: calculate days left -->
         <div class="p-[0.30rem] whitespace-nowrap flex gap-1 items-center border">
-          <mat-icon class="text-[24px]">schedule</mat-icon>
-          <ng-container *ngIf="daysLeft == 'Overdue'; else daysLeftTemplate">
-            <span class="text-rose-300">Overdue</span>
-          </ng-container>
-          <ng-template #daysLeftTemplate>
-            <span>Days Left: <strong>{{daysLeft}}</strong></span>
-          </ng-template>
+
+          <p class="flex gap-1 justify-center items-center">
+            <mat-icon class="text-[24px]">playlist_add_check</mat-icon>
+            Today's target: <strong>{{dailyTarget}}%</strong>
+            <span class="text-sm"> /Day</span>
+          </p>
+
         </div>
 
       </section>
@@ -61,27 +126,11 @@
 
 
       <!-- HTML Description -->
+      <h3 class="flex text-xl font-bold border-b mb-3">
+        <mat-icon>description</mat-icon> Goal Description
+      </h3>
       <div [innerHTML]="goal.description"></div>
       <!-- HTML Description -->
-
-      <!-- Goal Description -->
-<!--      <pre class="p-5 border bg-gray-50 dark:bg-gray-700">{{goal.description}}</pre>-->
-      <!-- Goal Description -->
-
-      <!-- Start and Due Dates -->
-      <div class="py-5 flex flex-wrap justify-between">
-
-        <p class="flex items-center">
-          <mat-icon class="mb-[9px] text-xl">calendar_today</mat-icon>
-          <span>Start Date: {{goal.start_date| date: 'MMM d, y'}}</span>
-        </p>
-
-        <p class="flex items-center">
-          <mat-icon class="mb-[5px] text-[24px]">event</mat-icon>
-          <span>Due Date: {{goal.due_date| date: 'MMM d, y'}}</span>
-        </p>
-      </div>
-      <!-- Start and Due Dates -->
 
     </section>
     <!-- Goal Details -->
@@ -111,45 +160,61 @@
     <!-- Edit Goal Form -->
     <form *ngIf="editGoal" [@fadeInOut] (ngSubmit)="editGoalFormHandler(editGoalForm)"
           #editGoalForm="ngForm"
-          class="bg-white dark:bg-gray-800 mt-8 space-y-6 shadow p-10 rounded-lg
-            shadow-2xl dark:shadow dark:shadow-gray-500">
+          class="bg-white dark:bg-gray-800 mt-5 space-y-6 md:shadow md:p-10 md:rounded-lg
+            dark:shadow-gray-500">
 
       <input type="hidden" [ngModel]="goal.id" name="id" ngModel>
 
-      <!-- Goal Title & Due Date Container-->
-      <section class="flex flex-wrap">
-
-        <!-- Goal Title Input-->
-        <div>
-          <label class="text-color-light dark:text-color-dark">Goal Title:</label>
-          <div class="flex align-center border border-slate-600 rounded">
-            <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
-                   type="text"
-                   name="title"
-                   #title="ngModel"
-                   placeholder="Title..."
-                   minlength="10"
-                   required
-                   [ngModel]="goal.title"
-            />
-          </div>
-          <!-- Title Error messages -->
-          <!-- Title Error messages -->
-          <ng-container *ngIf="title.touched">
+      <!-- Goal Title Input-->
+      <div>
+        <label class="text-color-light dark:text-color-dark">Goal Title:</label>
+        <div class="flex align-center border border-slate-600 rounded">
+          <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
+                 type="text"
+                 name="title"
+                 #title="ngModel"
+                 placeholder="Title..."
+                 minlength="10"
+                 required
+                 [ngModel]="goal.title"
+          />
+        </div>
+        <!-- Title Error messages -->
+        <ng-container *ngIf="title.touched">
             <span *ngIf="title.errors?.['required']"
                   class="text-sm text-red-600">
               Please enter Title!
             </span>
-            <span *ngIf="title.errors?.['minlength']"
-                  class="text-sm text-red-600">
+          <span *ngIf="title.errors?.['minlength']"
+                class="text-sm text-red-600">
               The goal title must be at least 10 characters long!
             </span>
-          </ng-container>
+        </ng-container>
+        <!-- Title Error messages -->
+
+      </div>
+      <!-- Goal Title Input-->
+
+      <!-- Start & Due Date Container-->
+      <section class="flex flex-wrap">
+
+        <!-- Start Date -->
+        <div class="text-sm w-full md:w-1/2">
+          <label class="text-color-light dark:text-color-dark">Start Date:</label>
+
+          <div class="flex align-center border border-slate-600 rounded">
+            <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
+                   type="date"
+                   name="start_date"
+                   #start_date="ngModel"
+                   [ngModel]="dateFn.dateToInputDate(goal.start_date)"/>
+          </div>
+
         </div>
-        <!-- Goal Title Input-->
+        <!-- Start Date -->
 
         <!-- Goal Due Date -->
-        <div class="w-[150px]">
+        <div class="text-sm w-full md:w-1/2">
           <label class="text-color-light dark:text-color-dark">Due Date:</label>
 
           <div class="flex align-center border border-slate-600 rounded">
@@ -164,7 +229,7 @@
         <!-- Goal Due Date -->
 
       </section>
-      <!-- Goal Title & Due Date Container-->
+      <!-- Start & Due Date Container-->
 
       <!-- Goal Description Input Container-->
       <div>

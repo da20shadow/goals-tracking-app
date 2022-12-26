@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 import {DarkLightModeService} from "../../../services/dark-light-mode.service";
 import {GlobalClasses} from "../../../../shared/styles/global-classes";
 
@@ -17,7 +18,8 @@ export class PrivateNavComponent {
   openSidenav: boolean = false;
   classes = GlobalClasses;
 
-  constructor(private darkModeService: DarkLightModeService) {
+  constructor(private darkModeService: DarkLightModeService,
+              private location: Location) {
     this.darkMode = this.darkModeService.checkUserPreferredMode();
   }
 
@@ -29,5 +31,13 @@ export class PrivateNavComponent {
       this.darkModeService.enableDarkTheme()
       this.darkMode = true;
     }
+  }
+
+  goBack() {
+    this.location.back();
+  }
+
+  toggleSidenav() {
+    this.openSidenav = !this.openSidenav;
   }
 }

@@ -1,6 +1,6 @@
 <!-- Private Navigation -->
 <ng-container *ngIf="isLogged$ |async; else publicNavigation">
-  <app-private-nav [ngClass]="classes.header"></app-private-nav>
+  <app-private-nav class="justify-between" [ngClass]="classes.header"></app-private-nav>
 </ng-container>
 
 <!-- Public Navigation -->

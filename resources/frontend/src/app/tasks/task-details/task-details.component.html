@@ -4,7 +4,7 @@
 
   <!-- BACK BUTTON -->
   <button [routerLink]="['/target',task.target_id]"
-          class="m-5 flex gap-3 items-center dark:hover:bg-gray-800 px-3 py-2 cursor-pointer border rounded">
+          class="hidden md:flex m-5 gap-3 items-center dark:hover:bg-gray-800 px-3 py-2 cursor-pointer border rounded">
     <mat-icon>arrow_back_ios_new</mat-icon>
     <span>Target</span>
   </button>
@@ -127,8 +127,8 @@
     <!-- Edit task Form -->
     <form *ngIf="editTask" [@fadeTaskInOut] (ngSubmit)="editTaskFormHandler(editTaskForm,task)"
           #editTaskForm="ngForm"
-          class="bg-white dark:bg-gray-800 mt-8 space-y-6 shadow p-10 rounded-lg
-            shadow-2xl dark:shadow dark:shadow-gray-500">
+          class="bg-white dark:bg-gray-800 mt-5 space-y-6 md:shadow md:p-10 md:rounded-lg
+            dark:shadow-gray-500">
       <!-- task Title Input Container-->
       <div>
         <div class="flex align-center border border-slate-600 rounded">
@@ -158,83 +158,41 @@
       </div>
       <!-- task Title Input Container-->
 
-      <!--Start and Due Dates Inputs Container-->
-      <section class="flex flex-wrap ">
+      <!-- Start & Due Date Container-->
+      <section class="flex flex-wrap">
 
-        <!-- task Start Date -->
-        <div class="w-[50%] flex gap-3">
-        <label class="text-color-light dark:text-color-dark">Start Date:</label>
-          <!--Start Date -->
-          <div class="flex items-center">
-            <div class="flex align-center border border-slate-600 rounded">
-              <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
-                     type="date"
-                     name="start_date"
-                     #start_date="ngModel"
-                     [ngModel]="dateFn.dateToInputDate(task.start_date)"/>
-            </div>
-            <!-- Error messages -->
-            <ng-container *ngIf="start_date.touched">
-            <span *ngIf="start_date.errors?.['required']"
-                  class="text-sm text-red-600">
-              Start Date can not be empty!
-            </span>
-            </ng-container>
-            <!-- Error messages -->
+        <!-- Start Date -->
+        <div class="text-sm w-full md:w-1/2">
+          <label class="text-color-light dark:text-color-dark">Start Date:</label>
+
+          <div class="flex align-center border border-slate-600 rounded">
+            <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
+                   type="date"
+                   name="start_date"
+                   #start_date="ngModel"
+                   [ngModel]="dateFn.dateToInputDate(task.start_date)"/>
           </div>
-          <!--Start Date -->
-
-          <!--Start Date Time -->
-          <div class="flex items-center">
-
-            <div class="flex align-center border border-slate-600 rounded">
-              <select #time="ngModel" name="time" ngModel
-                      class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700">
-                <option value="">Time</option>
-                <option value="08:00:00">08:00</option>
-                <option value="09:00:00">09:00</option>
-                <option value="10:00:00">10:00</option>
-                <option value="11:00:00">11:00</option>
-                <option value="12:00:00">12:00</option>
-                <option value="13:00:00">13:00</option>
-                <option value="14:00:00">14:00</option>
-                <option value="15:00:00">15:00</option>
-                <option value="16:00:00">16:00</option>
-                <option value="17:00:00">17:00</option>
-                <option value="18:00:00">18:00</option>
-                <option value="19:00:00">19:00</option>
-                <option value="20:00:00">20:00</option>
-              </select>
-            </div>
-          </div>
-          <!--Start Date Time -->
 
         </div>
-        <!-- task Start Date -->
+        <!-- Start Date -->
 
-        <!-- task End Date -->
-        <div class="w-[50%]">
+        <!-- Goal Due Date -->
+        <div class="text-sm w-full md:w-1/2">
           <label class="text-color-light dark:text-color-dark">End Date:</label>
+
           <div class="flex align-center border border-slate-600 rounded">
             <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
                    type="date"
                    name="end_date"
-                   #due_date="ngModel"
-                   ngModel/>
+                   #end_date="ngModel"
+                   [ngModel]="dateFn.dateToInputDate(task.end_date)"/>
           </div>
-          <!-- Error messages -->
-          <ng-container *ngIf="due_date.touched">
-            <span *ngIf="due_date.errors?.['required']"
-                  class="text-sm text-red-600">
-              task Due Date can not be empty!
-            </span>
-          </ng-container>
 
         </div>
-        <!-- task Due Date -->
+        <!-- Goal Due Date -->
 
       </section>
-      <!--Start and Due Dates Inputs Container-->
+      <!-- Start & Due Date Container-->
 
       <!-- task Description Input Container-->
       <div>

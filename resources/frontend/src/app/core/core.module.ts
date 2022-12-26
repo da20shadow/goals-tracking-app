@@ -10,6 +10,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
@@ -32,6 +33,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     MatSnackBarModule,
     MatMenuModule,
     MatIconModule,
+    MatProgressSpinnerModule,
+
   ]
 })
 export class CoreModule {

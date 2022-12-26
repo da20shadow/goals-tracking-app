@@ -5,6 +5,8 @@ import {Store} from "@ngrx/store";
 import {agendaSelectors} from "../../Store/agenda-store/agenda-selectors";
 import {AgendaPageActions} from "../../Store/agenda-store/agenda-page.actions";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {ModalService} from "../../core/services/modal.service";
+import {AddTaskModalComponent} from "../../shared/components/tasks-list/add-task-modal/add-task-modal.component";
 
 @Component({
   selector: 'app-agenda',
@@ -50,7 +52,7 @@ export class AgendaComponent {
     {hour: '20:00'},
   ]
 
-  constructor(private store$: Store) {
+  constructor(private store$: Store, private modalService: ModalService) {
     this.todayTasks$ = this.store$.select(agendaSelectors.selectTodayTasks);
   }
 
@@ -64,4 +66,14 @@ export class AgendaComponent {
     this.hourNow = `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}`
     this.lineTopPx = `${(date.getHours() * 60) + date.getMinutes()}px`;
   }
+
+  addNewTask(){
+    const modalRef = this.modalService.openFormModal(AddTaskModalComponent);
+    modalRef.afterClosed().subscribe(result => {
+      console.log(result);
+      alert('COMING SOON...');
+    })
+    //TODO: open modal for adding new task with option to select goal and target
+  }
+
 }

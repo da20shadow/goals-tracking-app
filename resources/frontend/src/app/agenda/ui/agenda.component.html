@@ -21,7 +21,7 @@
         <span class="py-1 text-sm">Today(0)</span>
       </ng-template>
 
-      <button *ngIf="showAddTaskButton.value === 'true'"
+      <button (click)="addNewTask()" *ngIf="showAddTaskButton.value === 'true'"
               class="px-2 py-1 text-sm dark:hover:bg-gray-700 dark:active:bg-gray-800 rounded">
         + Add Task
       </button>
@@ -70,20 +70,20 @@
   <!-- Today's Tasks -->
 
   <!-- Calendar View Today -->
-  <div class="h-[75vh] p-5 bg-white dark:bg-gray-900 border overflow-auto rounded-md">
+  <div class="h-[75vh] md:p-5 bg-white dark:bg-gray-900 border overflow-auto rounded-md">
 
-    <h3 class="text-2xl">Calendar</h3>
+    <h3 class="pl-5 md:pl-0 text-2xl">Calendar</h3>
 
     <hr class="my-3">
 
     <!-- Today Date -->
-    <p class="mb-3">Today: {{today | date: 'd MMM, EEEE'}}</p>
+    <p class="pl-5 md:pl-0 mb-3">Today: {{today | date: 'd MMM, EEEE'}}</p>
     <!-- Today Date -->
 
     <!-- Today's Tasks without time -->
     <div class="flex items-center gap-2 border-b dark:border-gray-600">
 
-      <span class="w-[70px] text-sm">All Day</span>
+      <span class="pl-5 md:pl-0 w-[70px] text-sm whitespace-nowrap">All Day</span>
       <div class="w-full">
 
         <p [routerLink]="['/tasks',task.id]" class="p-2 m-1 text-sm text-ellipsis overflow-hidden ... cursor-pointer border bg-gray-800 hover:bg-gray-700 rounded "
@@ -99,7 +99,7 @@
     <section class="flex">
 
       <!-- Right Side Hours -->
-      <div class="w-[70px] h-[100%] border-r">
+      <div class="w-[70px] h-[100%] border-r dark:border-gray-600">
 
         <!-- Hours -->
         <div class="w-[70px] h-[60px] flex justify-center text-sm relative"

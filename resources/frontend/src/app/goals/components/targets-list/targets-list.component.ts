@@ -40,7 +40,7 @@ export class TargetsListComponent {
     this.targetsList$ = this.store$.select(targetSelectors.selectTargetsList);
   }
 
-  ngOnChange(){
+  ngOnInit(){
     this.targetsList$.subscribe((targetList) => {
       this.totalTargets = targetList.length;
       let completed = 0;
@@ -51,6 +51,9 @@ export class TargetsListComponent {
       })
       this.targetsDone = completed;
     })
+  }
+
+  ngOnDestroy(){
   }
 
   addTargetFormHandler(addTargetFrom: NgForm) {

@@ -93,7 +93,7 @@ export class GoalDetailsComponent {
           left = Math.round((dueDateInMillis - startDateInMillis) / oneDay);
           this.daysLeft = left;
         }
-        this.dailyTarget = left <= 0 ? '100' : (100 / left).toFixed(2);
+        this.dailyTarget = left <= 0 ? '100' : (100 / left).toFixed(1);
       }
     });
   }

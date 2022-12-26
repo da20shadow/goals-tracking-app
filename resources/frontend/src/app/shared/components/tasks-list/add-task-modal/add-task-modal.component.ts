@@ -13,7 +13,6 @@ export class AddTaskModalComponent {
   classes = GlobalClasses;
   taskStatuses = Object.values(TaskStatus);
   taskPriority = Object.values(TaskPriority);
-  targetId = this.modalData.targetId;
 
   constructor(private dialogRef: MatDialogRef<AddTaskModalComponent>,
               @Inject(MAT_DIALOG_DATA) public modalData: any,) {

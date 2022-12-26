@@ -2,9 +2,16 @@
   <mat-icon class="text-[30px]">menu</mat-icon>
 </button>
 
-<!-- Public Nav Links -->
+<!-- BACK BUTTON -->
+<button (click)="goBack()"
+        class="md:hidden flex items-center dark:hover:bg-gray-800 cursor-pointer">
+  <mat-icon>arrow_back_ios_new</mat-icon>
+</button>
+<!-- BACK BUTTON -->
+
+<!-- Private Nav Links -->
 <app-nav-links class="hidden md:block" [navLinks]="privateNavLinks"></app-nav-links>
-<!-- Public Nav Links -->
+<!-- Private Nav Links -->
 
 <div class="md:hidden">
 
@@ -63,73 +70,127 @@
 </div>
 
 <!-- Sidenav -->
-<section [ngClass]="openSidenav ? 'sidenav-open' : 'sidenav-closed'"
-         class="p-0 z-50 w-1/2 md:w-48 overflow-y-auto h-screen container-light dark:bg-[#0b1727] fixed top-0 right-0 md:left-0 shadow-lg">
+<div class="bg-sidenav-open z-50 fixed top-0"
+     (click)="toggleSidenav()"
+     [ngClass]="openSidenav ? 'bg-sidenav-open' : 'bg-sidenav-hidden'">
 
-  <span (click)="openSidenav=!openSidenav" class="absolute top-2 right-2 cursor-pointer">
+  <section [ngClass]="openSidenav ? 'sidenav-open' : 'sidenav-closed'"
+           class="p-0 z-50 w-1/2 sm:w-48 overflow-y-auto h-screen container-light dark:bg-[#0b1727] fixed top-0 right-0 md:left-0 shadow-lg">
+
+  <button class="absolute top-2 right-2" >
     <mat-icon class="text-[24px]">close</mat-icon>
-  </span>
+  </button>
 
-  <ul class="my-8">
+    <ul class="my-8">
 
-    <li>
-      <h4 class="mx-1 text-sm uppercase font-extrabold text-gray-500">My Work</h4>
+      <li>
+        <h4 class="mx-1 text-sm uppercase font-extrabold text-gray-500">My Work</h4>
+        <nav>
+          <a [routerLink]="'agenda'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px'">star</mat-icon>
+            Favorite
+          </a>
+          <a [routerLink]="'calendar'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px'">calendar_month</mat-icon>
+            Calendar
+          </a>
+        </nav>
+      </li>
 
-      <nav>
-        <a [routerLink]="'agenda'" (click)="openSidenav=!openSidenav"
-           class="text-sm dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
-          Agenda
-        </a>
-        <a [routerLink]="'calendar'" (click)="openSidenav=!openSidenav"
-           class="text-sm dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
-          Calendar
-        </a>
-      </nav>
-    </li>
+      <li>
+        <h4 class="mx-1 text-sm uppercase font-extrabold text-gray-500">Goals</h4>
+        <nav>
+          <a [routerLink]="'goals'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px;'">apps</mat-icon>
+            All
+          </a>
+          <a [routerLink]="'personal'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px;'">self_improvement</mat-icon>
+            Personal
+          </a>
+          <a [routerLink]="'personal'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px;'">school</mat-icon>
+            Educational
+          </a>
+          <a [routerLink]="'relationship'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px;'">monetization_on</mat-icon>
+            Financial
+          </a>
+          <a [routerLink]="'business'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px;'">insights</mat-icon>
+            Business
+          </a>
+          <a [routerLink]="'financial'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px;'">volunteer_activism</mat-icon>
+            Relationship
+          </a>
+          <a [routerLink]="'other'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px;'">person</mat-icon>
+            Other
+          </a>
+        </nav>
+      </li>
 
-    <li>
-      <h4 class="mx-1 text-sm uppercase font-extrabold text-gray-500">Projects</h4>
+      <li>
+        <h4 class="mx-1 text-sm uppercase font-extrabold text-gray-500">Projects</h4>
+        <nav>
 
-      <nav>
+          <a [routerLink]="'goalsapp'"
+             class="text-sm dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            Goals App
+          </a>
 
-        <a [routerLink]="'goalsapp'" (click)="openSidenav=!openSidenav"
-           class="text-sm dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
-          Goals App
-        </a>
+          <a [routerLink]="'revshare'"
+             class="text-sm dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            Rev Share
+          </a>
 
-        <a [routerLink]="'revshare'" (click)="openSidenav=!openSidenav"
-           class="text-sm dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
-          Rev Share
-        </a>
+          <a [routerLink]="'revshare'"
+             class="text-sm dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            Blog Site
+          </a>
 
-        <a [routerLink]="'revshare'" (click)="openSidenav=!openSidenav"
-           class="text-sm dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
-          Blog Site
-        </a>
+        </nav>
+      </li>
 
-      </nav>
-    </li>
+      <li>
+        <h4 class="mx-1 text-sm uppercase font-extrabold text-gray-500">Other</h4>
+        <nav>
+          <a [routerLink]="'agenda'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px'">settings</mat-icon>
+            Settings
+          </a>
+          <a [routerLink]="'calendar'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px'">history</mat-icon>
+            History
+          </a>
+          <a [routerLink]="'calendar'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px'">auto_delete</mat-icon>
+            Trash
+          </a>
+          <a [routerLink]="'logout'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px'">logout</mat-icon>
+            Logout
+          </a>
+        </nav>
+      </li>
 
-    <li>
-      <h4 class="mx-1 text-sm uppercase font-extrabold text-gray-500">Goals</h4>
+    </ul>
 
-      <nav>
-        <a [routerLink]="'goals'" (click)="openSidenav=!openSidenav"
-           class="text-sm dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">All</a>
-        <a [routerLink]="'personal'" (click)="openSidenav=!openSidenav"
-           class="text-sm dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">Personal</a>
-        <a [routerLink]="'relationship'" (click)="openSidenav=!openSidenav"
-           class="text-sm dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">Financial</a>
-        <a [routerLink]="'financial'" (click)="openSidenav=!openSidenav"
-           class="text-sm dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">Relationship</a>
-        <a [routerLink]="'business'" (click)="openSidenav=!openSidenav"
-           class="text-sm dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">Business</a>
-        <a [routerLink]="'other'" (click)="openSidenav=!openSidenav"
-           class="text-sm dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">Other</a>
-      </nav>
-    </li>
+  </section>
 
-  </ul>
-
-</section>
+</div>
 <!-- Sidenav -->

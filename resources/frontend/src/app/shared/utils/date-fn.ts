@@ -15,7 +15,6 @@ export class DateFn {
     const year = inputDate.getFullYear(),
       month = inputDate.getMonth() + 1,
       day = inputDate.getDate();
-
     return `${year}-${month}-${day}`;
   }
 

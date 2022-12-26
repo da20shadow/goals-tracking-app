@@ -1,31 +1,3 @@
-<!-- Total/Completed Targets and daily % target -->
-<section class="flex justify-between gap-5 flex-wrap items-center">
-
-  <!-- Completed / total -->
-  <div class="flex gap-3">
-    <span>Targets:</span>
-    <span class="text-sm px-3 flex justify-center items-center border rounded-full">
-    <mat-icon class="text-sm">done</mat-icon>
-      {{targetsDone}} of {{totalTargets}}
-    </span>
-  </div>
-  <!-- Completed / total -->
-
-  <!-- daily target % -->
-  <div class="flex gap-3">
-    <p class="flex gap-1 justify-center items-center">
-      <mat-icon class="text-[24px]">playlist_add_check</mat-icon>
-        Today's target: <strong>{{dailyTarget}}%</strong>
-        <span class="text-sm"> /Day</span>
-    </p>
-  </div>
-  <!-- daily target % -->
-
-</section>
-<!-- Total/Completed Targets and daily % target -->
-
-<hr class="my-5">
-
 <!-- Add New Target Form & Button-->
 <section class="my-5 flex" [ngClass]="{'justify-end':!showAddTargetForm}">
 
@@ -33,7 +5,7 @@
   <ng-container *ngIf="showAddTargetForm">
 
     <form [@fadeInOut]
-          class="w-full my-2 flex items-center border dark:border-gray-300 container-light dark:container-dark shadow-sm dark:shadow-gray-300"
+          class="w-full my-2 flex items-center border dark:border-gray-300 shadow-sm dark:shadow-gray-300"
           (ngSubmit)="addTargetFormHandler(addTargetFrom)"
           #addTargetFrom="ngForm" ngForm>
       <div class="w-[85%] border-r dark:border-gray-300">

@@ -1,12 +1,12 @@
 .sidenav-open {
   transition: ease-in-out 400ms;
-  margin-right: -50%;
+  margin-right:0;
 }
 .sidenav-closed {
   transition: ease-in-out 400ms;
-  margin-right:0;
+  margin-right: -50%;
 }
-@media (min-width: 768px){
+@media (min-width: 640px){
   .sidenav-open {
     transition: ease-in-out 400ms;
     margin-left: 0;
@@ -15,4 +15,12 @@
     transition: ease-in-out 400ms;
     margin-left: -192px;
   }
+}
+.bg-sidenav-open{
+  padding: 100vh;
+  background-color: transparent;
+}
+.bg-sidenav-hidden{
+  padding: 0;
+  background-color: transparent;
 }

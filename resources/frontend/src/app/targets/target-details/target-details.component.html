@@ -4,7 +4,7 @@
 
   <!-- BACK BUTTON -->
   <button [routerLink]="['/goals',target.goal_id]"
-          class="m-5 flex gap-3 items-center dark:hover:bg-gray-800 px-3 py-2 cursor-pointer border rounded">
+          class="hidden md:flex m-5 gap-3 items-center dark:hover:bg-gray-800 px-3 py-2 cursor-pointer border rounded">
     <mat-icon>arrow_back_ios_new</mat-icon>
     <span>Goal</span>
   </button>
@@ -75,8 +75,8 @@
     <!-- Edit Target Form -->
     <form *ngIf="editTarget" [@fadeInOut] (ngSubmit)="editTargetFormHandler(editTargetForm)"
           #editTargetForm="ngForm"
-          class="bg-white dark:bg-gray-800 mt-8 space-y-6 shadow p-10 rounded-lg
-            shadow-2xl dark:shadow dark:shadow-gray-500">
+          class="bg-white dark:bg-gray-800 mt-5 space-y-6 md:shadow md:p-10 md:rounded-lg
+            dark:shadow-gray-500">
 
       <input type="hidden" [ngModel]="target.id" name="id" ngModel>
 
