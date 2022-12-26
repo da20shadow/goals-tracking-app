@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":[],"names":[],"mappings":"","file":"private-nav.component.css"}
+{"version":3,"sourceRoot":"","sources":["private-nav.component.scss"],"names":[],"mappings":"AAAA;EACE;EACA;;;AAEF;EACE;EACA;;;AAEF;EACE;IACE;IACA;;EAEF;IACE;IACA","file":"private-nav.component.css"}

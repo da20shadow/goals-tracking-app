@@ -9,7 +9,7 @@
   </button>
   <!-- BACK BUTTON -->
 
-  <article class="bg-white dark:bg-gray-800 relative m-5 p-5 border rounded">
+  <article class="bg-white dark:bg-gray-800 relative p-4 m-1 md:m-5 md:p-5 border rounded">
 
     <!-- Goal Details -->
     <section [@fadeGoalInOut] *ngIf="!editGoal">
@@ -116,84 +116,55 @@
 
       <input type="hidden" [ngModel]="goal.id" name="id" ngModel>
 
-      <!-- Goal Title Input Container-->
-      <div>
-        <div class="flex align-center border border-slate-600 rounded">
-          <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
-                 type="text"
-                 name="title"
-                 #title="ngModel"
-                 placeholder="Title..."
-                 minlength="10"
-                 required
-                 [ngModel]="goal.title"
-          />
-        </div>
-        <!-- Error messages -->
-        <ng-container *ngIf="title.touched">
+      <!-- Goal Title & Due Date Container-->
+      <section class="flex flex-wrap">
+
+        <!-- Goal Title Input-->
+        <div>
+          <label class="text-color-light dark:text-color-dark">Goal Title:</label>
+          <div class="flex align-center border border-slate-600 rounded">
+            <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
+                   type="text"
+                   name="title"
+                   #title="ngModel"
+                   placeholder="Title..."
+                   minlength="10"
+                   required
+                   [ngModel]="goal.title"
+            />
+          </div>
+          <!-- Title Error messages -->
+          <!-- Title Error messages -->
+          <ng-container *ngIf="title.touched">
             <span *ngIf="title.errors?.['required']"
                   class="text-sm text-red-600">
               Please enter Title!
             </span>
-          <span *ngIf="title.errors?.['minlength']"
-                class="text-sm text-red-600">
+            <span *ngIf="title.errors?.['minlength']"
+                  class="text-sm text-red-600">
               The goal title must be at least 10 characters long!
             </span>
-        </ng-container>
-
-      </div>
-      <!-- Goal Title Input Container-->
-
-      <!--Start and Due Dates Inputs Container-->
-      <section class="flex flex-wrap ">
-
-        <!-- Goal Start Date -->
-        <div class="w-[50%]">
-
-          <label class="text-color-light dark:text-color-dark">Start Date:</label>
-          <div class="flex align-center border border-slate-600 rounded">
-            <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
-                   type="date"
-                   name="start_date"
-                   #start_date="ngModel"
-                   ngModel/>
-          </div>
-
-          <!-- Error messages -->
-          <ng-container *ngIf="start_date.touched">
-            <span *ngIf="start_date.errors?.['required']"
-                  class="text-sm text-red-600">
-              Start Date can not be empty!
-            </span>
           </ng-container>
-          <!-- Error messages -->
-
         </div>
-        <!-- Goal Start Date -->
+        <!-- Goal Title Input-->
 
         <!-- Goal Due Date -->
-        <div class="w-[50%]">
+        <div class="w-[150px]">
           <label class="text-color-light dark:text-color-dark">Due Date:</label>
+
           <div class="flex align-center border border-slate-600 rounded">
             <input class="w-full py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
                    type="date"
                    name="due_date"
                    #due_date="ngModel"
-                   ngModel/>
+                   [ngModel]="dateFn.dateToInputDate(goal.due_date)"/>
           </div>
-          <!-- Error messages -->
-          <ng-container *ngIf="due_date.touched">
-            <span *ngIf="due_date.errors?.['required']"
-                  class="text-sm text-red-600">
-              Goal Due Date can not be empty!
-            </span>
-          </ng-container>
 
         </div>
         <!-- Goal Due Date -->
 
       </section>
-      <!--Start and Due Dates Inputs Container-->
+      <!-- Goal Title & Due Date Container-->
 
       <!-- Goal Description Input Container-->
       <div>
@@ -232,7 +203,6 @@
 
       </div>
       <!-- Save Button -->
-
 
     </form>
     <!-- Edit Goal Form -->

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { GoalsRoutingModule } from './goals-routing.module';
 import { GoalsListComponent } from './goals-list/goals-list.component';
 import { GoalDetailsComponent } from './goal-details/goal-details.component';
-import {SharedModule} from "../shared/shared.module";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatIconModule} from "@angular/material/icon";
@@ -13,6 +12,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import { TargetsListComponent } from './components/targets-list/targets-list.component';
 import {NgxEditorModule} from "ngx-editor";
+import {SharedModule} from "../shared/components/shared.module";
+import {ChartsModule} from "../shared/components/charts/charts.module";
 
 
 @NgModule({
@@ -31,8 +32,9 @@ import {NgxEditorModule} from "ngx-editor";
     ReactiveFormsModule,
     RouterModule,
     GoalsRoutingModule,
-    SharedModule,
     NgxEditorModule,
+    SharedModule,
+    ChartsModule,
   ]
 })
 export class GoalsModule { }

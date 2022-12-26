@@ -40,15 +40,17 @@
 
 
 
-<app-header></app-header>
-<router-outlet></router-outlet>
+<app-header class="w-full z-50 fixed top-0"></app-header>
+<main class="mt-16">
+  <router-outlet></router-outlet>
+</main>
 <app-footer></app-footer>
 
 
 
 <app-spinner></app-spinner>
 
-<div class="z-50 w-full bg-gray-700 flex gap-5 md:gap-10 justify-center fixed bottom-0 md:hidden border-t">
+<div class="z-40 w-full bg-gray-700 flex gap-5 md:gap-10 justify-center fixed bottom-0 md:hidden border-t">
 
   <div [routerLink]="'/'" class="text-sm py-1 px-3 self-center text-center active:bg-gray-800">
     <div class="w-full"><mat-icon>home</mat-icon></div>

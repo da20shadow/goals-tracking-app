@@ -25,6 +25,7 @@ export class AgendaComponent {
 
   today: any = new Date();
   hourNow!: string;
+  lineTopPx!: string;
   times = [
     {hour: '00:00'},
     {hour: '01:00'},
@@ -48,13 +49,19 @@ export class AgendaComponent {
     {hour: '19:00'},
     {hour: '20:00'},
   ]
+
   constructor(private store$: Store) {
     this.todayTasks$ = this.store$.select(agendaSelectors.selectTodayTasks);
   }
 
   ngOnInit(){
     this.store$.dispatch(AgendaPageActions.getTodayTasks());
+
     const date = new Date();
-    this.hourNow = `${date.getHours()}:${date.getMinutes()}`
+
+    console.log('min: ', date.getMinutes())
+
+    this.hourNow = `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}`
+    this.lineTopPx = `${(date.getHours() * 60) + date.getMinutes()}px`;
   }
 }

@@ -7,7 +7,7 @@ import {FormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
-import {SharedModule} from "../shared/shared.module";
+import {SharedModule} from "../shared/components/shared.module";
 import { CalendarComponent } from './calendar/calendar.component';
 
 

@@ -11,7 +11,7 @@
   <!-- BACK BUTTON -->
 
   <!-- Active Target Details -->
-  <article class="bg-white dark:bg-gray-800 relative m-5 p-5 border rounded">
+  <article class="bg-white dark:bg-gray-800 relative p-4 m-1 md:m-5 md:p-5 border rounded">
 
     <!-- Target Details -->
     <section [@fadeTargetInOut] *ngIf="!editTarget">
@@ -55,7 +55,7 @@
       <!-- Target Progress 0/2 Tasks done -->
 
       <!-- Target Description -->
-      <pre class="p-5 border bg-gray-50 dark:bg-gray-700">{{target.description}}</pre>
+      <p class="p-5 border bg-gray-50 dark:bg-gray-700">{{target.description}}</p>
       <!-- Target Description -->
 
       <!-- Created Date -->
@@ -150,7 +150,7 @@
   </article>
   <!-- Active Target Details -->
 
-  <section class="my-5" *ngIf="(targetTasksList$|async) as targetTasksList">
+  <section class="mb-40 md:my-5" *ngIf="(targetTasksList$|async) as targetTasksList">
 
     <app-tasks-list (taskEvent)="updateTargetProgress($event,target)" [targetId]="target.id"
                     [tasksList]="targetTasksList"></app-tasks-list>

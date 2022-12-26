@@ -14,7 +14,7 @@ import {AppStateModule} from "./Store/app.state";
 import {extModules} from "./build-specifics";
 import {CoreModule} from "./core/core.module";
 import {PagesModule} from "./pages/pages.module";
-import {SharedModule} from "./shared/shared.module";
+import {SharedModule} from "./shared/components/shared.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AuthModule} from "./auth/auth.module";
 import {UserApiEffects} from "./Store/user-store/user-api.effects";

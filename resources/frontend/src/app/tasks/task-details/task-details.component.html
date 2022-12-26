@@ -10,7 +10,7 @@
   </button>
   <!-- BACK BUTTON -->
 
-  <article class="bg-white dark:bg-gray-800 relative m-5 p-5 border rounded">
+  <article class="bg-white dark:bg-gray-800 relative p-2 m-1 md:m-5 md:p-5 border rounded">
 
     <!-- TASK Details -->
     <section [@fadeInOut] *ngIf="!editTask">
@@ -43,13 +43,13 @@
               class="dark:hover:text-gray-700">
 
           <ng-container [ngSwitch]="task.priority">
-              <mat-icon [style]="'color:darkred; padding: 3px 0 5px 4px; font-size:30px; height:38px; width:40px; border:1px solid; border-radius:50%;'"
+              <mat-icon [style]="'color:darkred; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
                         *ngSwitchCase="TaskPriorityNames.URGENT">flag</mat-icon>
-              <mat-icon [style]="'color:darkorange; padding: 3px 0 5px 4px; font-size:30px; height:38px; width:40px; border:1px solid; border-radius:50%;'"
+              <mat-icon [style]="'color:darkorange; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
                         *ngSwitchCase="TaskPriorityNames.HIGH">flag</mat-icon>
-              <mat-icon [style]="'color: darkblue; padding: 3px 0 5px 4px; font-size:30px; height:38px; width:40px; border:1px solid; border-radius:50%;'"
+              <mat-icon [style]="'color: darkblue; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
                         *ngSwitchCase="TaskPriorityNames.LOW">flag</mat-icon>
-              <mat-icon [style]="'color: darkgray; padding: 3px 0 5px 4px; font-size:30px; height:38px; width:40px; border:1px solid; border-radius:50%;'"
+              <mat-icon [style]="'color: darkgray; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
                         *ngSwitchCase="TaskPriorityNames.NO_PRIORITY">flag</mat-icon>
             </ng-container>
 
@@ -104,7 +104,7 @@
 
 
       <!-- task Description -->
-      <pre class="p-5 border bg-gray-50 dark:bg-gray-700">{{task.description}}</pre>
+      <p class="p-5 border bg-gray-50 dark:bg-gray-700">{{task.description}}</p>
       <!-- task Description -->
 
       <!-- Start and End Dates -->
@@ -171,7 +171,7 @@
                      type="date"
                      name="start_date"
                      #start_date="ngModel"
-                     [ngModel]="toInputDefaultDate(task.start_date)"/>
+                     [ngModel]="dateFn.dateToInputDate(task.start_date)"/>
             </div>
             <!-- Error messages -->
             <ng-container *ngIf="start_date.touched">

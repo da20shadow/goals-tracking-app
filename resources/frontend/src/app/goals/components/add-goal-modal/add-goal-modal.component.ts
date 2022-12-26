@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {NgForm} from "@angular/forms";
+import {FormBuilder, NgForm} from "@angular/forms";
 import {GlobalClasses} from "../../../shared/styles/global-classes";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {NotificationService} from "../../../core/services/notification.service";
@@ -12,22 +12,22 @@ import {NotificationService} from "../../../core/services/notification.service";
 export class AddGoalModalComponent {
 
   classes = GlobalClasses;
+  title = this.modalData.title;
 
-  title = this.data.title;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  constructor(@Inject(MAT_DIALOG_DATA) public modalData: any,
               public dialogRef: MatDialogRef<AddGoalModalComponent>,
-              private notificationService: NotificationService) {
-  }
-
-  ngOnInit(){
-    console.log('this.data',this.data);
-    console.log('this.data.title',this.data.title);
+              private notificationService: NotificationService,
+              private formBuilder: FormBuilder) {
   }
 
   addGoalFormHandler(addGoalForm: NgForm) {
 
+    console.log('addGoalForm: ',addGoalForm)
+    console.log('addGoalForm: ',addGoalForm.value)
+
     if (addGoalForm.invalid){
+      console.log('addGoalForm.invalid: ',addGoalForm)
       const today = new Date();
       if (!addGoalForm.value.title || addGoalForm.value.title.invalid){
         this.notificationService.showErrorNotification('Title must be between 5 and 255 characters long!')
@@ -66,5 +66,9 @@ export class AddGoalModalComponent {
     const day = date.getDate();
     const year = date.getFullYear();
     return `${year}-${month}-${day}`;
+  }
+
+  reactiveFormHandlerTest($event: any) {
+    console.log($event)
   }
 }

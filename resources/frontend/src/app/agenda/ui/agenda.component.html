@@ -30,7 +30,7 @@
 
       <li class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
           *ngFor="let task of todayTasks">
-        <p class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
+        <p [routerLink]="['/tasks',task.id]" class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
         <span class="text-sm absolute right-1">
           Today: {{task.start_date | date: 'H:mm'}} - {{task.end_date | date: 'H:mm'}}
         </span>
@@ -76,36 +76,65 @@
 
     <hr class="my-3">
 
-    <p class="text-sm mb-3">{{today | date: 'd MMM, EEEE'}}</p>
+    <!-- Today Date -->
+    <p class="mb-3">Today: {{today | date: 'd MMM, EEEE'}}</p>
+    <!-- Today Date -->
+
+    <!-- Today's Tasks without time -->
+    <div class="flex items-center gap-2 border-b dark:border-gray-600">
+
+      <span class="w-[70px] text-sm">All Day</span>
+      <div class="w-full">
+
+        <p [routerLink]="['/tasks',task.id]" class="p-2 m-1 text-sm text-ellipsis overflow-hidden ... cursor-pointer border bg-gray-800 hover:bg-gray-700 rounded "
+            *ngFor="let task of (todayTasks$ | async)">
+          {{task.title}}
+        </p>
+
+      </div>
+
+    </div>
+    <!-- Today's Tasks without time -->
 
     <section class="flex">
 
       <!-- Right Side Hours -->
-      <div class="w-fit border-r">
+      <div class="w-[70px] h-[100%] border-r">
 
-        <div class="flex gap-5 items-center pl-0 md:pl-2 p-2 text-sm relative"
+        <!-- Hours -->
+        <div class="w-[70px] h-[60px] flex justify-center text-sm relative"
            *ngFor="let time of times">
 
           <span>{{time.hour}}</span>
 
-          <div *ngIf="time.hour === '10:00'" class="flex items-center absolute z-10">
-
-            <span class="px-2 text-orange-900 bg-orange-400 rounded-lg" >{{hourNow}}</span>
-            <span class="h-[1px] w-[340px] bg-orange-400"></span>
-
-          </div>
-
-
         </div>
+        <!-- Hours -->
 
       </div>
       <!-- Right Side Hours -->
 
       <!-- Left Side Tasks By Hour -->
-      <div class="w-[90%] h-[75vh] ">
+      <div class="w-full relative">
 
-        <p  class="p-2 m-1 text-sm text-ellipsis overflow-hidden ... cursor-pointer border bg-gray-800 hover:bg-gray-700 rounded "
-           *ngFor="let task of (todayTasks$ | async)">{{task.title}}</p>
+        <!-- Hour Now Line -->
+        <div class="flex items-center absolute left-[-58px] z-10" [style]="'top:'+lineTopPx">
+
+          <span class="px-2 text-orange-900 bg-orange-400 rounded-lg" >{{hourNow}}</span>
+          <span class="h-[1px] w-[82vw] lg:w-[36vw] bg-orange-400"></span>
+
+        </div>
+        <!-- Hour Now Line -->
+
+        <!-- Task Per Hour -->
+        <div *ngFor="let hour of times" class="h-[59px] border-b dark:border-gray-600">
+
+        <!-- TODO: add tasks depending on the time! -->
+          <div class="cursor-pointer h-[29px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+          <div class="cursor-pointer h-[29px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+
+        </div>
+        <!-- Task Per Hour -->
+
 
       </div>
       <!-- Left Side Tasks By Hour -->

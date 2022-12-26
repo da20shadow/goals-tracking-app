@@ -9,6 +9,8 @@ import {Store} from "@ngrx/store";
 import {TaskAPIActions} from "../../../Store/task-store/task-api.actions";
 import {NgForm} from "@angular/forms";
 import {Operations} from "../../enums/Operations";
+import {ModalService} from "../../../core/services/modal.service";
+import {AddTaskModalComponent} from "./add-task-modal/add-task-modal.component";
 
 @Component({
   selector: 'app-tasks-list',
@@ -37,17 +39,13 @@ export class TasksListComponent {
   taskStatuses = Object.values(TaskStatus);
   taskPriority = Object.values(TaskPriority);
   classes = GlobalClasses;
-  tableHead = [
-    {name: 'Task Title', header: 'title'},
-    {name: 'Status', header: 'status'},
-    {name: 'Priority', header: 'priority'},
-    {name: 'Start date', header: 'startDate'},
-    {name: 'End date', header: 'endDate'},
-  ];
   showAddToDoTaskForm: boolean = false;
+  showAddTaskModalForm: boolean = false;
+  TaskPriorityNames = TaskPriority;
 
   constructor(private taskService:TaskService,
               private store$: Store,
+              private modalService: ModalService,
               private notificationService: NotificationService) {
   }
 
@@ -177,6 +175,16 @@ export class TasksListComponent {
     });
   }
 
+  showAddTaskModal() {
+    const dialog = this.modalService.openFormModal(AddTaskModalComponent,
+      {modalOpened: this.showAddTaskModalForm});
+    dialog.afterClosed().subscribe(result => {
+      if (result && result.data.taskForm){
+        this.addTaskFormHandler(result.data.taskForm)
+      }
+      this.showAddTaskModalForm = result.data.showModal;
+    })
+  }
 }
 
 function compare(a: number | TaskPriority | string | undefined|null,

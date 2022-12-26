@@ -73,6 +73,13 @@ module.exports = {
         '.btn-primary-disabled-dark': config('theme.buttons.btn'),
         '.btn-secondary': config('theme.buttons.btnTransform'),
         '.btn-secondary-dark': config('theme.buttons.btnTransform'),
+        '.container': config('theme.containers.box'),
+        '.container-light': config('theme.containers.box'),
+        '.container-dark': config('theme.containers.box'),
+        '.card': config('theme.containers.box'),
+        '.card-dark': config('theme.containers.box'),
+        '.card-scale': config('theme.containers.box-scale'),
+        '.card-scale-dark': config('theme.containers.box-scale'),
       })
 
       const classes = {
@@ -119,7 +126,22 @@ module.exports = {
         'btn-secondary-disabled': {},
         'btn-secondary-disabled-dark': {},
         'text-color-light': {color: '#5e6e82'},
-        'text-color-dark': {color: '#9da9bb'}
+        'text-color-dark': {color: '#9da9bb'},
+        '.container': {
+          backgroundColor: 'transparent'
+        },
+        '.container-light': {
+          backgroundColor: '#fff'
+        },
+        '.container-dark': {
+          backgroundColor: '#232e3c'
+        },
+        '.card': {
+          backgroundColor: '#c1cbda'
+        },
+        '.card-dark': {
+          backgroundColor: '#303f51'
+        }
       }
 
       addComponents(classes)

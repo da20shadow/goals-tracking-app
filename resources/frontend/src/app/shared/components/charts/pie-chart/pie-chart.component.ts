@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {ChartType} from "../../enums/ChartType";
+import {ChartType} from "../../../enums/ChartType";
 
 @Component({
   selector: 'app-pie-chart',

@@ -12,6 +12,7 @@ import {TaskAPIActions} from "../../Store/task-store/task-api.actions";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TargetPageActions} from "../../Store/tartgets-store/target-page.actions";
 import {Title} from "@angular/platform-browser";
+import {DateFn} from "../../shared/utils/date-fn";
 
 @Component({
   selector: 'app-task-details',
@@ -43,7 +44,8 @@ export class TaskDetailsComponent {
 
   constructor(private store$: Store, private taskService: TaskService,
               private notificationService: NotificationService,
-              private activatedRoute: ActivatedRoute, private title: Title) {
+              private activatedRoute: ActivatedRoute,
+              private title: Title, public dateFn: DateFn) {
     this.title.setTitle('Task Details - GoalsApp');
     this.activeTask$ = this.store$.select(taskSelectors.selectActiveTask);
     //TODO: implement subtasks!
@@ -88,20 +90,6 @@ export class TaskDetailsComponent {
     this.store$.dispatch(TaskPageActions.updateActiveTask({taskId:task.id,changedTask}))
 
     this.editTask = false;
-  }
-
-  toInputDefaultDate(start_date: any) {
-    let date;
-    if (start_date){
-      date = new Date(start_date);
-    }else {
-      date = new Date();
-    }
-    const year = date.getFullYear(),
-      month = date.getMonth() + 1,
-      day = date.getDate();
-
-    return `${year}-${month}-${day}`;
   }
 
   deleteTask(task: Task) {

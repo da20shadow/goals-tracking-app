@@ -1,3 +1,22 @@
+.sidenav-open {
+  transition: ease-in-out 400ms;
+  margin-right: -50%;
+}
 
+.sidenav-closed {
+  transition: ease-in-out 400ms;
+  margin-right: 0;
+}
+
+@media (min-width: 768px) {
+  .sidenav-open {
+    transition: ease-in-out 400ms;
+    margin-left: 0;
+  }
+  .sidenav-closed {
+    transition: ease-in-out 400ms;
+    margin-left: -192px;
+  }
+}
 
 /*# sourceMappingURL=private-nav.component.css.map */
