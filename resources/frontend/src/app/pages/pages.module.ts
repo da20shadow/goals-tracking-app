@@ -6,8 +6,8 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import {FormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
-import {SharedModule} from "../shared/components/shared.module";
 import { AboutComponent } from './about/about.component';
+import {SharedModule} from "../shared/components/shared.module";
 
 
 
