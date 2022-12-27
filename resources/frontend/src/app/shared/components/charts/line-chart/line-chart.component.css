@@ -1,0 +1,10 @@
+:host {
+  position: relative;
+  display: block;
+}
+
+svg {
+  position: absolute;
+}
+
+/*# sourceMappingURL=line-chart.component.css.map */

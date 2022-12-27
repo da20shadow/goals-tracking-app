@@ -47,7 +47,7 @@
                         *ngSwitchCase="TaskPriorityNames.URGENT">flag</mat-icon>
               <mat-icon [style]="'color:darkorange; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
                         *ngSwitchCase="TaskPriorityNames.HIGH">flag</mat-icon>
-              <mat-icon [style]="'color: darkblue; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
+              <mat-icon [style]="'color: lightblue; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
                         *ngSwitchCase="TaskPriorityNames.LOW">flag</mat-icon>
               <mat-icon [style]="'color: darkgray; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
                         *ngSwitchCase="TaskPriorityNames.NO_PRIORITY">flag</mat-icon>
@@ -72,7 +72,7 @@
 
         <!-- TASK STATUS -->
        <div mat-button [matMenuTriggerFor]="statusMenu"
-                class="dark:hover:bg-gray-700 px-2 py-1 cursor-pointer border rounded-full">
+                class="dark:hover:bg-gray-700 pl-3 pr-1 py-1 cursor-pointer border rounded-md">
           <div class="flex items-center">
             <span #selectorStatus>{{task.status}}</span>
             <mat-icon>arrow_right</mat-icon>
@@ -104,7 +104,7 @@
 
 
       <!-- task Description -->
-      <p class="p-5 border bg-gray-50 dark:bg-gray-700">{{task.description}}</p>
+      <div [innerHTML]="task.description" class="p-5 border bg-gray-50 dark:bg-gray-700"></div>
       <!-- task Description -->
 
       <!-- Start and End Dates -->
@@ -176,7 +176,7 @@
         </div>
         <!-- Start Date -->
 
-        <!-- Goal Due Date -->
+        <!-- Task End Date -->
         <div class="text-sm w-full md:w-1/2">
           <label class="text-color-light dark:text-color-dark">End Date:</label>
 
@@ -194,7 +194,7 @@
       </section>
       <!-- Start & Due Date Container-->
 
-      <!-- task Description Input Container-->
+      <!-- Task Description Input Container-->
       <div>
         <div class="flex align-center border border-slate-600 rounded">
             <textarea
@@ -202,18 +202,10 @@
               name="description"
               #description="ngModel"
               placeholder="Task Description..."
-              required
               [ngModel]="task.description"></textarea>
         </div>
-        <!-- Error messages -->
-        <ng-container *ngIf="title.touched">
-            <span *ngIf="description.errors?.['required']"
-                  class="text-sm text-red-600">
-              Description can not be empty!
-            </span>
-        </ng-container>
       </div>
-      <!-- task Description Input Container-->
+      <!-- Task Description Input Container-->
 
       <!-- Save Button -->
       <div>

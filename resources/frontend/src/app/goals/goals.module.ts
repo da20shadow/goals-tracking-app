@@ -13,7 +13,7 @@ import {RouterModule} from "@angular/router";
 import { TargetsListComponent } from './components/targets-list/targets-list.component';
 import {NgxEditorModule} from "ngx-editor";
 import {SharedModule} from "../shared/components/shared.module";
-import {ChartsModule} from "../shared/components/charts/charts.module";
+import {CircleProgressModule} from "../shared/components/progress-bars/circle-progress/circle-progress.module";
 
 
 @NgModule({
@@ -34,7 +34,7 @@ import {ChartsModule} from "../shared/components/charts/charts.module";
     GoalsRoutingModule,
     NgxEditorModule,
     SharedModule,
-    ChartsModule,
+    CircleProgressModule,
   ]
 })
 export class GoalsModule { }

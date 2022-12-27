@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {PageTitleComponent} from "./page-title/page-title.component";
+import {PageTitleComponent} from "./page-elements/page-title/page-title.component";
 
 
 @NgModule({

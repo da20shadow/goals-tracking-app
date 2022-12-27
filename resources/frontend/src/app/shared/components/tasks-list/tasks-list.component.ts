@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {GlobalClasses} from "../../styles/global-classes";
 import {Task, TaskPriority, TaskStatus} from "../../../core/models";
-import {Sort} from "@angular/material/sort";
+import {MatSort, Sort} from "@angular/material/sort";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TaskService} from "../../../tasks/services/task.service";
 import {NotificationService} from "../../../core/services/notification.service";
@@ -11,6 +11,8 @@ import {NgForm} from "@angular/forms";
 import {Operations} from "../../enums/Operations";
 import {ModalService} from "../../../core/services/modal.service";
 import {AddTaskModalComponent} from "./add-task-modal/add-task-modal.component";
+import {TaskPageActions} from "../../../Store/task-store/task-page.actions";
+import {taskSelectors} from "../../../Store/task-store/task-selectors";
 
 @Component({
   selector: 'app-tasks-list',
@@ -112,7 +114,6 @@ export class TasksListComponent {
         this.notificationService.showErrorNotification(er.error.message);
       }
     })
-
   }
 
   openEditTaskModal(task: Task) {

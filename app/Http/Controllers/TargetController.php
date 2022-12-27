@@ -27,6 +27,8 @@ class TargetController extends Controller
             $tasksList = DB::table('tasks')
                 ->where('target_id',$id)
                 ->where('user_id',$userId)
+                ->orderBy('priority','desc')
+                ->orderBy('end_date')
                 ->get();
         }catch (QueryException $exception){
             return response()->json([

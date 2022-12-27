@@ -19,6 +19,7 @@ const initialState: GoalsListState = {
 
 export const GoalsReducer = createReducer(
   initialState,
+  on(GoalPageActions.clear,() => initialState),
   on(GoalPageActions.loadGoals, (state) => {
     return ({
       ...state,

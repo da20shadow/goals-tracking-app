@@ -10,7 +10,7 @@ export class DateFn {
     if (date){
       inputDate = new Date(date);
     }else {
-      inputDate = new Date();
+      return null;
     }
     const year = inputDate.getFullYear(),
       month = inputDate.getMonth() + 1,

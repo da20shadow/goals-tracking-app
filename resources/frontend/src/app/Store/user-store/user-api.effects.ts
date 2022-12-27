@@ -7,6 +7,7 @@ import {UserPageActions} from "./user-page.actions";
 import {userSelectors} from "./user-selectors";
 import {UserAPIActions} from "./user-api.actions";
 import {Router} from "@angular/router";
+import {NotificationService} from "../../core/services/notification.service";
 
 @Injectable()
 export class UserApiEffects {
@@ -31,6 +32,15 @@ export class UserApiEffects {
     filter(([action, isLogged]) => {
       return isLogged === true
     }),
+    map(() => UserPageActions.loadUserProfile())
+  ));
+
+  loadProfile$ = createEffect(() => this.actions$.pipe(
+    ofType(UserPageActions.loadUserProfile),
+    concatLatestFrom(() => this.store$.select(userSelectors.selectUser)),
+    filter(([action, user]) => {
+      return user === null
+    }),
     switchMap(() => {
       return (from(this.userService.getUserProfileInfo()).pipe(
         map((user) => UserAPIActions.setUser({user})),
@@ -45,7 +55,8 @@ export class UserApiEffects {
     ofType(UserPageActions.logout),
     switchMap(() =>
       from(this.userService.logout()).pipe(
-        map((response) => {
+        map(() => {
+          this.notificationService.showSuccessNotification('Successfully Logged Out!');
           this.router.navigate(['login']);
           return UserAPIActions.logoutSuccess()
         }),
@@ -55,6 +66,7 @@ export class UserApiEffects {
   constructor(private userService: AuthService,
               private store$: Store,
               private actions$: Actions,
-              private router: Router) {
+              private router: Router,
+              private notificationService: NotificationService) {
   }
 }

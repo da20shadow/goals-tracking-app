@@ -25,8 +25,8 @@ class TaskController extends Controller
                 ->whereYear('start_date','=',$year)
                 ->whereMonth('start_date','=',$month)
                 ->whereDay('start_date','=',$day)
-                ->orderBy('start_date')
                 ->orderBy('priority','desc')
+                ->orderBy('end_date')
                 ->get();
         }catch (QueryException $exception){
             return response()->json([
@@ -138,7 +138,7 @@ class TaskController extends Controller
         $message = [];
 
         if (isset($fields['title'])){
-            $inputTitle = $request->validate(['title' => ['string','min:10','max:145']]);
+            $inputTitle = $request->validate(['title' => ['string','min:5','max:145']]);
             try {
                 Task::where('user_id',$user_id)->where('id',$id)
                     ->update(['title' => $inputTitle['title']]);

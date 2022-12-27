@@ -5,10 +5,12 @@
   <ng-container *ngIf="showAddTargetForm">
 
     <form [@fadeInOut]
-          class="w-full my-2 flex items-center border dark:border-gray-300 shadow-sm dark:shadow-gray-300"
+          class="w-full my-2 flex flex-wrap items-center md:border dark:border-gray-300 shadow-sm dark:shadow-gray-300"
           (ngSubmit)="addTargetFormHandler(addTargetFrom)"
           #addTargetFrom="ngForm" ngForm>
-      <div class="w-[85%] border-r dark:border-gray-300">
+
+      <!-- Target Title Input -->
+      <div class="md:w-[85%] md:border-r dark:border-gray-300">
         <input [ngClass]="classes.input"
                type="text"
                placeholder="Target Title..."
@@ -19,9 +21,10 @@
                required
                ngModel/>
       </div>
+      <!-- Target Title Input -->
 
+      <!-- Task Action Buttons -->
       <div class="flex mx-auto">
-
         <button type="submit" (click)="addTargetFormHandler(addTargetFrom);showAddTargetForm = false"
                 class="text-green-600 mr-2 ">
           <mat-icon>add_task</mat-icon>
@@ -31,8 +34,10 @@
                 class="text-[#a05e5e] ">
           <mat-icon>cancel</mat-icon>
         </button>
-
       </div>
+      <!-- Task Action Buttons -->
+
+
 
     </form>
 

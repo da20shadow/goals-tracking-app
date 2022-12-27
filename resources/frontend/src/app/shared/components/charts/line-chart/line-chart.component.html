@@ -1,0 +1,41 @@
+<svg
+  [attr.width]="width"
+  [attr.height]="height"
+  [style.left.px]="-margin"
+  [style.top.px]="-margin"
+  xmlns:svg="urn:oasis:names:tc:xliff:document:1.2">
+  <svg:g app-line-chart-area [points]="computedPoints"></svg:g>
+  <svg:g app-line-chart-line [points]="computedPoints"></svg:g>
+  <svg:g app-line-chart-dots [points]="computedPoints"></svg:g>
+</svg>
+
+<!--
+TODO: this below are my last trying to make it useful..
+TODO: if you want to test it just copy the code below and put it in app-component.html
+<app-line-chart [points]="points$ | async"></app-line-chart>
+-->
+<!--<div class="flex flex-col justify-center items-center mt-[150px] border">-->
+
+<!--  <section class="flex justify-center items-center border">-->
+
+<!--    <div class="w-[35px] flex flex-col justify-between h-[100px] mr-5">-->
+<!--      <p class="text-[10px] h-[10px] w-[535px]" [style]="'border-top: 1px solid lightblue;'" >100%</p>-->
+<!--      <p class="text-[10px] h-[10px]">80%</p>-->
+<!--      <p class="text-[10px] h-[10px]">60%</p>-->
+<!--      <p class="text-[10px] h-[10px]">40%</p>-->
+<!--      <p class="text-[10px] h-[10px]">20%</p>-->
+<!--      <p class="text-[10px] h-[10px] w-[535px]" [style]="'border-bottom: 1px solid lightblue;'" >0%</p>-->
+<!--    </div>-->
+
+<!--    <div>-->
+<!--      <app-line-chart [points]="points"></app-line-chart>-->
+<!--    </div>-->
+
+<!--  </section>-->
+
+<!--  <section class="flex justify-center items-center border">-->
+<!--    <span class="w-[35px] text-[10px]">Month</span>-->
+<!--    <p class="w-[10px] text-[10px] m-[10px]" *ngFor="let month of monthShortNames">{{month}}</p>-->
+<!--  </section>-->
+
+<!--</div>-->

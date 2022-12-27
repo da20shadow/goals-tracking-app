@@ -2,11 +2,11 @@ import {Component, Input} from '@angular/core';
 import {ChartType} from "../../../enums/ChartType";
 
 @Component({
-  selector: 'app-pie-chart',
-  templateUrl: './pie-chart.component.html',
-  styleUrls: ['./pie-chart.component.scss']
+  selector: 'app-circle-progress',
+  templateUrl: './circle-progress.component.html',
+  styleUrls: ['./circle-progress.component.scss']
 })
-export class PieChartComponent {
+export class CircleProgressComponent {
 
   niceColors: any[] = [
     {orange: '#9F5415BE'},

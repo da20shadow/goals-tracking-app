@@ -15,6 +15,7 @@ const removeActiveGoal = createAction('[GOAL DETAILS PAGE] Delete Active Goal', 
 const goalTargetCompleted = createAction('[GOAL DETAILS PAGE] Goal Target Completed');
 const goalTargetDeleted = createAction('[GOAL DETAILS PAGE] Goal Target Deleted');
 
+const clear = createAction('[GOAL DETAILS PAGE] Clear');
 
 export const GoalPageActions = {
   get,
@@ -26,5 +27,6 @@ export const GoalPageActions = {
   updateActiveGoal,
   removeActiveGoal,
   goalTargetCompleted,
-  goalTargetDeleted
+  goalTargetDeleted,
+  clear
 }

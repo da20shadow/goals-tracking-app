@@ -26,6 +26,7 @@ export class AgendaComponent {
   todayTasks$: Observable<Task[]>
 
   today: any = new Date();
+  interval: any;
   hourNow!: string;
   lineTopPx!: string;
   times = [
@@ -50,6 +51,9 @@ export class AgendaComponent {
     {hour: '18:00'},
     {hour: '19:00'},
     {hour: '20:00'},
+    {hour: '21:00'},
+    {hour: '22:00'},
+    {hour: '23:00'},
   ]
 
   constructor(private store$: Store, private modalService: ModalService) {
@@ -58,13 +62,21 @@ export class AgendaComponent {
 
   ngOnInit(){
     this.store$.dispatch(AgendaPageActions.getTodayTasks());
-
-    const date = new Date();
-
-    console.log('min: ', date.getMinutes())
-
+    let date = new Date();
     this.hourNow = `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}`
     this.lineTopPx = `${(date.getHours() * 60) + date.getMinutes()}px`;
+
+    this.interval = setInterval(() => {
+      date = new Date();
+      this.hourNow = `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}`
+      this.lineTopPx = `${(date.getHours() * 60) + date.getMinutes()}px`;
+    },1000)
+  }
+
+  ngOnDestroy(){
+    if (this.interval){
+      clearInterval(this.interval);
+    }
   }
 
   addNewTask(){

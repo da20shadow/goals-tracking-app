@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {GlobalClasses} from "../../styles/global-classes";
+import {GlobalClasses} from "../../../styles/global-classes";
 
 @Component({
   selector: 'app-page-title',

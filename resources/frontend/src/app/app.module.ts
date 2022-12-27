@@ -30,6 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
+import {LineChartModule} from "./shared/components/charts/line-chart/line-chart.module";
 
 
 
@@ -99,6 +100,7 @@ import {MatListModule} from "@angular/material/list";
         remove: 'Remove',
       },
     }),
+    LineChartModule,
   ],
   providers: [
     {

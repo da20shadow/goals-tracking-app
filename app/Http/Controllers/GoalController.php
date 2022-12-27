@@ -169,7 +169,7 @@ class GoalController extends Controller
         $fields = $request->all();
 
         if (isset($fields['title'])){
-            $inputTitle = $request->validate(['title' => ['string','min:10','max:145']]);
+            $inputTitle = $request->validate(['title' => ['string','min:5','max:145']]);
             try {
                 Goal::where('user_id',$user_id)->where('id',$id)
                     ->update(['title' => $inputTitle['title']]);

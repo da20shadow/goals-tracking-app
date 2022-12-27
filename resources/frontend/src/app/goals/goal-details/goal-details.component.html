@@ -26,7 +26,7 @@
 
       <!-- Goal TITLE -->
       <h1 class="dark:c-text-dark mt-5 md:mt-0 text-[25px] md:text-3xl font-bold tracking-tight">
-        🏆 {{goal.title}}
+        <span class="dark:text-orange-200">🏆 GOAL: </span>{{goal.title}}
       </h1>
       <!-- Goal TITLE -->
 
@@ -174,7 +174,7 @@
                  name="title"
                  #title="ngModel"
                  placeholder="Title..."
-                 minlength="10"
+                 minlength="5"
                  required
                  [ngModel]="goal.title"
           />
@@ -187,7 +187,7 @@
             </span>
           <span *ngIf="title.errors?.['minlength']"
                 class="text-sm text-red-600">
-              The goal title must be at least 10 characters long!
+              The goal title must be at least 5 characters long!
             </span>
         </ng-container>
         <!-- Title Error messages -->
