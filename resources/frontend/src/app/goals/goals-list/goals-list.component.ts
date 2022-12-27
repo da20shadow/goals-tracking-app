@@ -29,6 +29,7 @@ export class GoalsListComponent {
 
   $goalsList$!: Observable<Goal[]>;
   chartTypes = ChartType;
+
   constructor(private store$: Store,
               private title: Title,
               private modalService: ModalService,

@@ -141,18 +141,12 @@
     <!-- textAngular Editor -->
 
     <!-- TODO: Reactive Form With Rich Text Editor  -->
-<!--    <form (ngSubmit)="richEditHandler()"  [formGroup]="richEditGoalForm">-->
+<!--    <form (ngSubmit)="richEditHandler(richEditGoalForm)"  #richEditGoalForm="ngForm">-->
 
-
-<!--      <div class="NgxEditor__Wrapper">-->
-<!--        <ngx-editor-menu [editor]="editor"-->
-<!--                         [toolbar]="toolbar"></ngx-editor-menu>-->
-<!--        <ngx-editor [editor]="editor"-->
-<!--                    formControlName="editorContent">-->
-<!--        </ngx-editor>-->
-<!--      </div>-->
+<!--      <angular-editor [name]="'description'" [(ngModel)]="goal.description" [config]="config"></angular-editor>-->
 
 <!--      <button type="submit">Update</button>-->
+
 <!--    </form>-->
     <!-- TODO: Reactive Form With Rich Text Editor -->
 
@@ -276,7 +270,7 @@
   <!-- Goal Details -->
 
   <!-- Targets -->
-  <section class="m-5">
+  <section class="md:m-5">
 
     <app-targets-list (onTargetEvents)="onTargetEvent($event,goal)" [goalId]="goal.id" [dailyTarget]="dailyTarget"></app-targets-list>
 

@@ -19,7 +19,7 @@ import {MatMenuModule} from "@angular/material/menu";
     MatIconModule,
     MatMenuModule,
     TasksRoutingModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class TasksModule {

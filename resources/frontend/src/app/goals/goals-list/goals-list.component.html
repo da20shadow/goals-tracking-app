@@ -1,7 +1,7 @@
 <app-page-title title="My Goals 🏆"></app-page-title>
 
 <ng-container *ngIf="($goalsList$|async) as goals; else noGoalsYet">
-  <section class="my-5 p-1 md:p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+  <section class="mb-20 my-5 p-1 md:p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
 
     <article [@fadeInOut] *ngFor="let goal of goals"
              [routerLink]="['/goals',goal.id]" (click)="setActiveGoal(goal.id)"

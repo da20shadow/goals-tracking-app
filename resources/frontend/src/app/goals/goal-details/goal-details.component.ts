@@ -6,12 +6,11 @@ import {goalsListSelectors} from "../../Store/goals-store/goal-selectors";
 import {ActivatedRoute, Router} from "@angular/router";
 import {GoalService} from "../services/goal.service";
 import {GoalPageActions} from "../../Store/goals-store/goal-page.actions";
-import {FormControl, FormGroup, NgForm} from "@angular/forms";
+import {NgForm} from "@angular/forms";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TargetPageActions} from "../../Store/tartgets-store/target-page.actions";
 import {GoalsAPIActions} from "../../Store/goals-store/goal-api.actions";
 import {NotificationService} from "../../core/services/notification.service";
-import {Editor, toDoc, toHTML, Toolbar, Validators} from "ngx-editor";
 import {Title} from "@angular/platform-browser";
 import {DateFn} from "../../shared/utils/date-fn";
 
@@ -41,34 +40,15 @@ export class GoalDetailsComponent {
   daysLeft!: string | number;
   dailyTarget!: string;
 
-  goalDesc!: string | undefined;
-
-  editor!: Editor;
-  toolbar: Toolbar = [
-    ['bold', 'italic'],
-    ['underline', 'strike'],
-    ['code', 'blockquote'],
-    ['ordered_list', 'bullet_list'],
-    [{heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']}],
-    ['link', 'image'],
-    ['text_color', 'background_color'],
-    ['align_left', 'align_center', 'align_right', 'align_justify'],
-  ];
-  richEditGoalForm = new FormGroup({
-    editorContent: new FormControl(this.goalDesc, Validators.required()),
-  });
-
   constructor(private store$: Store, private activatedRoute: ActivatedRoute,
               private route: Router, private goalService: GoalService,
               private notificationService: NotificationService,
               private title: Title, public dateFn: DateFn) {
     this.activeGoal$ = this.store$.select(goalsListSelectors.selectActiveGoal);
-    this.activeGoal$.subscribe(goal => this.goalDesc = goal?.description);
     this.title.setTitle('Goal Details - GoalsApp');
   }
 
   ngOnInit() {
-    this.editor = new Editor();
     this.activatedRoute.params.subscribe(params => {
       const goalId = params['id'];
       this.store$.dispatch(GoalPageActions.getActiveGoal({goalId}));
@@ -100,7 +80,6 @@ export class GoalDetailsComponent {
 
   ngOnDestroy() {
     this.store$.dispatch(TargetPageActions.clear());
-    this.editor.destroy();
   }
 
   onTargetEvent(action: any, currentGoal: Goal) {
@@ -128,11 +107,6 @@ export class GoalDetailsComponent {
       this.notificationService.showErrorNotification('Invalid Form Fields!');
       return;
     }
-    this.editor.setContent(editGoalForm.value.description);
-    // const html = toHTML(jsonDoc);
-    const jsonDoc = toDoc(editGoalForm.value.description);
-    console.log('jsonDoc', jsonDoc)
-
     const changedGoal = editGoalForm.value;
     this.store$.dispatch(GoalPageActions.updateActiveGoal({goalId: changedGoal.id, changedGoal}))
     this.editGoal = false;
@@ -154,8 +128,8 @@ export class GoalDetailsComponent {
     }
   }
 
-  richEditHandler() {
-    console.log(this.richEditGoalForm.value)
-    console.log(this.richEditGoalForm.get('editorContent'))
+  richEditHandler(editorForm: NgForm) {
+    console.log(editorForm)
+    console.log(editorForm.value)
   }
 }
