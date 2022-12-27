@@ -13,8 +13,8 @@ export class DateFn {
       return null;
     }
     const year = inputDate.getFullYear(),
-      month = inputDate.getMonth() + 1,
-      day = inputDate.getDate();
+      month = inputDate.getMonth() < 9 ? '0' + (inputDate.getMonth() + 1) : inputDate.getMonth() + 1,
+      day = inputDate.getDate() < 9 ? '0' + inputDate.getDate() : inputDate.getDate();
     return `${year}-${month}-${day}`;
   }
 
