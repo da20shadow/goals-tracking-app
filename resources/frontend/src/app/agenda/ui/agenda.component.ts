@@ -24,6 +24,12 @@ import {AddTaskModalComponent} from "../../shared/components/tasks-list/add-task
 export class AgendaComponent {
 
   todayTasks$: Observable<Task[]>
+  overdueTasks$: Observable<Task[]>
+  showOverdueTasks: boolean = false;
+  nextTasks$: Observable<Task[]>
+  showNextTasks: boolean = false;
+  unscheduledTasks$: Observable<Task[]>
+  showUnscheduledTasks: boolean = false;
 
   today: any = new Date();
   interval: any;
@@ -58,10 +64,14 @@ export class AgendaComponent {
 
   constructor(private store$: Store, private modalService: ModalService) {
     this.todayTasks$ = this.store$.select(agendaSelectors.selectTodayTasks);
+    this.overdueTasks$ = this.store$.select(agendaSelectors.selectOverdueTasks);
+    this.nextTasks$ = this.store$.select(agendaSelectors.selectNextTasks);
+    this.unscheduledTasks$ = this.store$.select(agendaSelectors.selectUnscheduledTasks);
   }
 
   ngOnInit(){
     this.store$.dispatch(AgendaPageActions.getTodayTasks());
+
     let date = new Date();
     this.hourNow = `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}`
     this.lineTopPx = `${(date.getHours() * 60) + date.getMinutes()}px`;
@@ -86,6 +96,21 @@ export class AgendaComponent {
       alert('COMING SOON...');
     })
     //TODO: open modal for adding new task with option to select goal and target
+  }
+
+  getOverdueTasks(){
+    this.store$.dispatch(AgendaPageActions.getOverdueTasks());
+    console.log('Called Load overdue tasks')
+  }
+
+  getNextTasks(){
+    console.log('Called Load Next tasks')
+    this.store$.dispatch(AgendaPageActions.getNextTasks());
+  }
+
+  getUnscheduledTasks(){
+    console.log('Called Load Unscheduled tasks')
+    this.store$.dispatch(AgendaPageActions.getUnscheduledTasks());
   }
 
 }

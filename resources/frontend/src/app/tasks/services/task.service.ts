@@ -33,4 +33,16 @@ export class TaskService {
   getTodayTasks() {
     return this.http.get<Task[]>(ApiUrls.TASKS);
   }
+
+  getOverdueTasks() {
+    return this.http.get<Task[]>(ApiUrls.TASKS_OVERDUE);
+  }
+
+  getNextTasks() {
+    return this.http.get<Task[]>(ApiUrls.TASKS_NEXT);
+  }
+
+  getUnscheduledTasks() {
+    return this.http.get<Task[]>(ApiUrls.TASKS_UNSCHEDULED);
+  }
 }

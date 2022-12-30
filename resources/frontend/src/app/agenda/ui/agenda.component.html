@@ -39,32 +39,55 @@
     <!-- Today Tasks List -->
 
     <!-- Overdue Tasks List -->
-    <p (click)="showOverdueTasks.value='true'"
-       class="my-3 text-sm cursor-pointer">Overdue(2)</p>
+    <p (click)="getOverdueTasks(); showOverdueTasks=!showOverdueTasks"
+       class="my-3 text-sm cursor-pointer">Overdue({{(overdueTasks$ | async)?.length}})</p>
 
-    <input type="hidden" #showOverdueTasks value="false">
-    <ul *ngIf="showOverdueTasks.value==='true'">
+    <ul *ngIf="showOverdueTasks && (overdueTasks$ | async) as overdueTasks">
 
-      <li [@fadeInOut] class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700">
-        <p class="text-ellipsis overflow-hidden ...">Overdue Task Title...</p>
+      <li [@fadeInOut] class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
+        *ngFor="let task of overdueTasks">
+        <p [routerLink]="['/tasks',task.id]" class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
         <span class="text-[12px] text-rose-300 absolute right-1">
-          Due Date: 21/11/2022
+          {{task.end_date | date: 'MMM d, y'}}
         </span>
       </li>
-      <li [@fadeInOut] class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700">
-        <p class="text-ellipsis overflow-hidden ...">Overdue Task, To add this style in the global classes...</p>
-        <span class="text-[12px] text-rose-300 absolute right-1">Due Date: 22/11/2022</span>
-      </li>
+
     </ul>
     <!-- Overdue Tasks List -->
 
     <!-- Next Tasks List -->
-    <p class="my-3 text-sm cursor-pointer">Next(5)</p>
+    <p (click)="getNextTasks();showNextTasks=!showNextTasks"
+       class="my-3 text-sm cursor-pointer">Next(2)todo</p>
+
+    <ul *ngIf="showNextTasks && (nextTasks$ | async) as nextTasks">
+
+      <li [@fadeInOut] class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
+          *ngFor="let task of nextTasks">
+        <p [routerLink]="['/tasks',task.id]" class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
+        <span class="text-[12px] text-cyan-300 absolute right-1">
+          {{task.start_date | date: 'E, dd MMM, y'}}
+        </span>
+      </li>
+
+    </ul>
     <!-- Next Tasks List -->
 
-    <!-- Next Tasks List -->
-    <p class="my-3 text-sm cursor-pointer">Unscheduled(2)</p>
-    <!-- Next Tasks List -->
+    <!-- Unscheduled Tasks List -->
+    <p (click)="getUnscheduledTasks();showUnscheduledTasks=!showUnscheduledTasks"
+       class="my-3 text-sm cursor-pointer">Unscheduled(2)todo</p>
+
+    <ul *ngIf="showUnscheduledTasks && (unscheduledTasks$ | async) as unscheduledTasks">
+
+      <li [@fadeInOut] class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
+          *ngFor="let task of unscheduledTasks">
+        <p [routerLink]="['/tasks',task.id]" class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
+        <span class="text-[12px] text-cyan-300 absolute right-1">
+          {{task.end_date | date: 'H:mm'}}
+        </span>
+      </li>
+
+    </ul>
+    <!-- Unscheduled Tasks List -->
 
   </div>
   <!-- Today's Tasks -->

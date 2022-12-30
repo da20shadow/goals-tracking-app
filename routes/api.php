@@ -39,6 +39,9 @@ Route::group(['middleware' => ['auth:sanctum']],function () {
 
     /** ---------TASKS--------- */
     Route::get('tasks',[TaskController::class,'index']);
+    Route::get('tasks/overdue',[TaskController::class,'getOverdueTasks']);
+    Route::get('tasks/next',[TaskController::class,'getNextTasks']);
+    Route::get('tasks/unscheduled',[TaskController::class,'getUnscheduledTasks']);
     Route::get('tasks/{id}',[TaskController::class,'show']);
     Route::post('tasks/add',[TaskController::class,'store']);
     Route::patch('tasks/update/{id}',[TaskController::class,'update']);

@@ -5,9 +5,21 @@ const selectAgendaState = createSelector(
   selectAppState,
   (state) => state.agendaState
 );
-const selectAgendaStateStatus = createSelector(
+const selectTodayTasksStatus = createSelector(
   selectAgendaState,
-  (state) => state.status
+  (state) => state.todayTasksStatus
+);
+const selectOverdueTasksStatus = createSelector(
+  selectAgendaState,
+  (state) => state.overdueTasksStatus
+);
+const selectNextTasksStatus = createSelector(
+  selectAgendaState,
+  (state) => state.nextTasksStatus
+);
+const selectUnscheduledTasksStatus = createSelector(
+  selectAgendaState,
+  (state) => state.unscheduledTasksStatus
 );
 const selectTodayTasks = createSelector(
   selectAgendaState,
@@ -23,7 +35,7 @@ const selectOverdueTasks = createSelector(
 );
 const selectUnscheduledTasks = createSelector(
   selectAgendaState,
-  (state) => state.unscheduled
+  (state) => state.unscheduledTasks
 );
 
 export const agendaSelectors = {
@@ -32,5 +44,8 @@ export const agendaSelectors = {
   selectNextTasks,
   selectOverdueTasks,
   selectUnscheduledTasks,
-  selectAgendaStateStatus
+  selectTodayTasksStatus,
+  selectOverdueTasksStatus,
+  selectNextTasksStatus,
+  selectUnscheduledTasksStatus
 }

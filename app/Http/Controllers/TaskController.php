@@ -14,31 +14,113 @@ class TaskController extends Controller
     {
         $user_id = auth()->user()->getAuthIdentifier();
 
-        $year = date('Y');
-        $month = date('m');
-        $day = date('d');
+        $today = date('Y-m-d');
 
         try {
             $tasksList = DB::table('tasks')
                 ->where(['user_id' => $user_id])
-                ->where('status','!=','Completed')
-                ->whereYear('start_date','=',$year)
-                ->whereMonth('start_date','=',$month)
-                ->whereDay('start_date','=',$day)
-                ->orderBy('priority','desc')
+                ->where('status', '!=', 'Completed')
+                ->whereDate('start_date', '=', $today)
+                ->orWhereDate('end_date', '=', $today)
+                ->orderBy('priority', 'desc')
                 ->orderBy('end_date')
                 ->get();
-        }catch (QueryException $exception){
+        } catch (QueryException $exception) {
             return response()->json([
                 'message' => 'An Error Occur! Please, try again!',
                 'error' => $exception->getMessage(),
-            ],400);
+            ], 400);
         }
 
-        if (count($tasksList) < 1){
+        if (count($tasksList) < 1) {
             return response()->json([
                 'message' => 'No Tasks Yet!'
-            ],204);
+            ], 204);
+        }
+        return response()->json($tasksList);
+    }
+
+    public function getOverdueTasks(): JsonResponse
+    {
+        $user_id = auth()->user()->getAuthIdentifier();
+
+        $today = date('Y-m-d');
+
+        try {
+            $tasksList = DB::table('tasks')
+                ->where(['user_id' => $user_id])
+                ->where('status', '!=', 'Completed')
+                ->whereDate('end_date', '<', $today)
+                ->orderBy('priority', 'desc')
+                ->orderBy('end_date')
+                ->get();
+        } catch (QueryException $exception) {
+            return response()->json([
+                'message' => 'An Error Occur! Please, try again!',
+                'error' => $exception->getMessage(),
+            ], 400);
+        }
+
+        if (count($tasksList) < 1) {
+            return response()->json([
+                'message' => 'No Tasks Yet!'
+            ], 204);
+        }
+        return response()->json($tasksList);
+    }
+
+    public function getNextTasks(): JsonResponse
+    {
+        $user_id = auth()->user()->getAuthIdentifier();
+
+        $today = date('Y-m-d');
+
+        try {
+            $tasksList = DB::table('tasks')
+                ->where(['user_id' => $user_id])
+                ->where('status', '!=', 'Completed')
+                ->whereDate('start_date', '>', $today)
+                ->orderBy('priority', 'desc')
+                ->orderBy('end_date')
+                ->get();
+        } catch (QueryException $exception) {
+            return response()->json([
+                'message' => 'An Error Occur! Please, try again!',
+                'error' => $exception->getMessage(),
+            ], 400);
+        }
+
+        if (count($tasksList) < 1) {
+            return response()->json([
+                'message' => 'No Tasks Yet!'
+            ], 204);
+        }
+        return response()->json($tasksList);
+    }
+
+    public function getUnscheduledTasks(): JsonResponse
+    {
+        $user_id = auth()->user()->getAuthIdentifier();
+
+        try {
+            $tasksList = DB::select(DB::raw("SELECT *
+                                        from `tasks`
+                                        where `user_id` = $user_id
+                                        and `status` != 'Completed'
+                                        and `start_date` is NULL
+                                        and `end_date` is NULL
+                                        order by `priority` desc"));
+        } catch (QueryException $exception) {
+            return response()->json([
+                'message' => 'An Error Occur! Please, try again!',
+                'error' => $exception->getMessage(),
+            ], 400);
+        }
+
+        if (count($tasksList) < 1) {
+            return response()->json([
+                'message' => 'No Tasks Yet!'
+            ], 204);
         }
         return response()->json($tasksList);
     }
@@ -46,8 +128,8 @@ class TaskController extends Controller
     public function store(Request $request): JsonResponse
     {
         $fields = $request->validate([
-            'title' => ['required','string','min:5','max:145'],
-            'description' => ['string','min:5'],
+            'title' => ['required', 'string', 'min:5', 'max:145'],
+            'description' => ['string', 'min:5'],
             'start_date' => ['date'],
             'end_date' => ['date'],
             'status' => ['string'],
@@ -58,65 +140,65 @@ class TaskController extends Controller
         $user_id = auth()->user()->getAuthIdentifier();
 
         //Check if target ID exist
-        if (isset($fields['target_id'])){
+        if (isset($fields['target_id'])) {
             try {
                 $targetExist = DB::table('targets')
-                    ->where('user_id',$user_id)
-                    ->where('id',$fields['target_id'])
+                    ->where('user_id', $user_id)
+                    ->where('id', $fields['target_id'])
                     ->first();
-            }catch (QueryException $exception){
+            } catch (QueryException $exception) {
                 return response()->json([
                     'message' => 'An Error Occur! Please, try again!',
                     'error' => $exception->getMessage()
-                ],400);
+                ], 400);
             }
 
-            if (!$targetExist){
-                return response()->json(['message' => 'There is no target with this ID!'],400);
+            if (!$targetExist) {
+                return response()->json(['message' => 'There is no target with this ID!'], 400);
             }
         }
 
         //Check if task title exist already in this target
         $target_id = $fields['target_id'];
         try {
-            $taskTitleExist = Task::where('user_id',$user_id)
-                ->where('target_id',$target_id)
-                ->where('title',$fields['title'])->first();
-        }catch (QueryException $exception){
+            $taskTitleExist = Task::where('user_id', $user_id)
+                ->where('target_id', $target_id)
+                ->where('title', $fields['title'])->first();
+        } catch (QueryException $exception) {
             return response()->json([
                 'message' => 'An Error Occur! Please, try again!',
                 'error' => $exception->getMessage()
-            ],400);
+            ], 400);
         }
 
         if ($taskTitleExist !== null) {
-            return response()->json(['message' => 'Task with the same title already added! Just set it recur!'],400);
+            return response()->json(['message' => 'Task with the same title already added! Just set it recur!'], 400);
         }
 
         $fields['user_id'] = $user_id;
 
         try {
             Task::create($fields);
-        }catch (QueryException $exception){
+        } catch (QueryException $exception) {
             return response()->json([
                 'message' => 'An Error Occur! Please, try again!',
                 'error' => $exception->getMessage()
-            ],400);
+            ], 400);
         }
-        $task = Task::where('user_id',$user_id)
-            ->where('title',$fields['title'])->first();
+        $task = Task::where('user_id', $user_id)
+            ->where('title', $fields['title'])->first();
 
         return response()->json([
             'message' => 'Successfully added new task!',
             'task' => $task,
-        ],201);
+        ], 201);
     }
 
     public function show($id): JsonResponse
     {
         $user_id = auth()->user()->getAuthIdentifier();
         $result = self::chekIfExist($user_id, $id);
-        if ($result['error'] === true){
+        if ($result['error'] === true) {
             return response()->json([
                 'message' => $result['message']
             ], 400);
@@ -129,7 +211,7 @@ class TaskController extends Controller
         $user_id = auth()->user()->getAuthIdentifier();
 
         $result = self::chekIfExist($user_id, $id);
-        if ($result['error'] === true){
+        if ($result['error'] === true) {
             return response()->json(['message' => $result['message']], 400);
         }
 
@@ -137,100 +219,100 @@ class TaskController extends Controller
 
         $message = [];
 
-        if (isset($fields['title'])){
-            $inputTitle = $request->validate(['title' => ['string','min:5','max:145']]);
+        if (isset($fields['title'])) {
+            $inputTitle = $request->validate(['title' => ['string', 'min:5', 'max:145']]);
             try {
-                Task::where('user_id',$user_id)->where('id',$id)
+                Task::where('user_id', $user_id)->where('id', $id)
                     ->update(['title' => $inputTitle['title']]);
-            }catch (QueryException $exception){
+            } catch (QueryException $exception) {
                 return response()->json([
                     'message' => 'An Error Occur! Please, try again!',
                     'error' => $exception->getMessage()
-                ],400);
+                ], 400);
             }
-            array_push($message,'Successfully updated task title!');
+            array_push($message, 'Successfully updated task title!');
         }
 
-        if (isset($fields['description'])){
+        if (isset($fields['description'])) {
             $inputDesc = $request->validate(['description' => ['string']]);
 
             try {
-                Task::where('user_id',$user_id)->where('id',$id)
+                Task::where('user_id', $user_id)->where('id', $id)
                     ->update(['description' => $inputDesc['description']]);
-            }catch (QueryException $exception ){
+            } catch (QueryException $exception) {
                 return response()->json([
                     'message' => 'An Error Occur! Please, try again!',
                     'error' => $exception->getMessage()
-                ],400);
+                ], 400);
             }
-            array_push($message,'Successfully updated task description!');
+            array_push($message, 'Successfully updated task description!');
         }
 
-        if (isset($fields['status'])){
+        if (isset($fields['status'])) {
             $inputStatus = $request->validate(['status' => ['string']]);
 
             try {
-                Task::where('user_id',$user_id)->where('id',$id)
+                Task::where('user_id', $user_id)->where('id', $id)
                     ->update(['status' => $inputStatus['status']]);
-            }catch (QueryException $exception){
+            } catch (QueryException $exception) {
                 return response()->json([
                     'message' => 'An Error Occur! Please, try again!',
                     'error' => $exception->getMessage()
-                ],400);
+                ], 400);
             }
-            array_push($message,'Successfully updated task status!');
+            array_push($message, 'Successfully updated task status!');
         }
 
-        if (isset($fields['end_date'])){
+        if (isset($fields['end_date'])) {
             $inputDueDate = $request->validate(['end_date' => ['Date']]);
 
             try {
-                Task::where('user_id',$user_id)->where('id',$id)
+                Task::where('user_id', $user_id)->where('id', $id)
                     ->update(['end_date' => $inputDueDate['end_date']]);
-            }catch (QueryException $exception){
+            } catch (QueryException $exception) {
                 return response()->json([
                     'message' => 'An Error Occur! Please, try again!',
                     'error' => $exception->getMessage()
-                ],400);
+                ], 400);
                 //TODO: log the error!
             }
-            array_push($message,'Successfully updated task End Date!');
+            array_push($message, 'Successfully updated task End Date!');
         }
 
-        if (isset($fields['start_date'])){
+        if (isset($fields['start_date'])) {
             $inputDueDate = $request->validate(['start_date' => ['Date']]);
 
             try {
-                Task::where('user_id',$user_id)->where('id',$id)
+                Task::where('user_id', $user_id)->where('id', $id)
                     ->update(['start_date' => $inputDueDate['start_date']]);
-            }catch (QueryException $exception){
+            } catch (QueryException $exception) {
                 return response()->json([
                     'message' => 'An Error Occur! Please, try again!',
                     'error' => $exception->getMessage()
-                ],400);
+                ], 400);
                 //TODO: log the error!
             }
-            array_push($message,'Successfully updated task Start Date!');
+            array_push($message, 'Successfully updated task Start Date!');
         }
 
-        if (isset($fields['priority'])){
+        if (isset($fields['priority'])) {
             $inputDesc = $request->validate(['priority' => ['string']]);
 
             try {
-                Task::where('user_id',$user_id)->where('id',$id)
+                Task::where('user_id', $user_id)->where('id', $id)
                     ->update(['priority' => $inputDesc['priority']]);
-            }catch (QueryException $exception){
+            } catch (QueryException $exception) {
                 return response()->json([
                     'message' => 'An Error Occur! Please, try again!',
                     'error' => $exception->getMessage()
-                ],400);
+                ], 400);
                 //TODO: log the error!
             }
-            array_push($message,'Successfully updated task priority!');
+            array_push($message, 'Successfully updated task priority!');
         }
 
-        $task = Task::where('user_id',$user_id)
-            ->where('id',$id)->first();
+        $task = Task::where('user_id', $user_id)
+            ->where('id', $id)->first();
 
         return response()->json([
             'message' => $message,
@@ -243,19 +325,19 @@ class TaskController extends Controller
         $user_id = auth()->user()->getAuthIdentifier();
 
         $result = self::chekIfExist($user_id, $id);
-        if ($result['error'] === true){
+        if ($result['error'] === true) {
             return response()->json(['message' => $result['message']], 400);
         }
 
         $result = DB::table('tasks')
-            ->where('id',$id)
-            ->where('user_id',$user_id)
+            ->where('id', $id)
+            ->where('user_id', $user_id)
             ->delete();
 
-        if (!$result){
+        if (!$result) {
             return response()->json([
                 'message' => 'Error! Such task not exist!'
-            ],400);
+            ], 400);
         }
         return response()->json([
             'message' => 'Successfully deleted task!',
@@ -270,14 +352,14 @@ class TaskController extends Controller
             $taskExist = DB::table('tasks')
                 ->where(['id' => $task_id, 'user_id' => $user_id])
                 ->first();
-        }catch (QueryException $exception){
+        } catch (QueryException $exception) {
             $result['error'] = true;
             $result['message'] = $exception->getMessage();
             return $result;
             //TODO: log the error!
         }
 
-        if (null === $taskExist){
+        if (null === $taskExist) {
             $result['error'] = true;
             $result['message'] = 'Such task not exist!';
         }
