@@ -12,6 +12,7 @@
              #title="ngModel"
              placeholder="Goal Title..."
              minlength="5"
+             maxlength="145"
              required
              ngModel/>
     </div>
@@ -21,9 +22,13 @@
                   class="text-sm text-red-600">
               Goal Title can not be empty!
             </span>
-      <span *ngIf="title.errors?.['minlength']"
+            <span *ngIf="title.errors?.['minlength']"
             class="text-sm text-red-600">
-              Goal must be at least 5 characters long!
+              Goal Title must be at least 5 characters long!
+            </span>
+      <span *ngIf="title.errors?.['maxlength']"
+            class="text-sm text-red-600">
+              Goal Title must be max 145 characters long!
             </span>
     </ng-container>
 
