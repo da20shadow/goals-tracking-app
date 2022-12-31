@@ -157,12 +157,12 @@
     <tr [@fadeInOut] *ngFor="let task of tasksList" [ngClass]="classes.tableBodyRow">
 
       <!-- Task Title START -->
-      <td class="py-3 relative dark:hover:bg-[#4b5563] cursor-pointer">
+      <td class="py-3 flex gap-1 dark:hover:bg-[#4b5563] cursor-pointer">
 
         <span [routerLink]="['/tasks/',task.id]">{{task.title}}</span>
 
         <!-- Task description Popup -->
-        <button class="hidden md:inline-block absolute right-[7px] ml-2"
+        <button class="hidden md:inline-block"
                 matTooltip="Show Task Description"
                 matTooltipPosition="above"
                 mat-button [matMenuTriggerFor]="description">
