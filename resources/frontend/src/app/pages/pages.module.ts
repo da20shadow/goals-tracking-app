@@ -8,6 +8,7 @@ import {FormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import { AboutComponent } from './about/about.component';
 import {SharedModule} from "../shared/components/shared.module";
+import {RichTextEditorModule} from "../shared/components/rich-text-editor/rich-text-editor.module";
 
 
 
@@ -19,11 +20,12 @@ import {SharedModule} from "../shared/components/shared.module";
     NotFoundComponent,
     AboutComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    SharedModule,
-  ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        SharedModule,
+        RichTextEditorModule,
+    ]
 })
 export class PagesModule { }

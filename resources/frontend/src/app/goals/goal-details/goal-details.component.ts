@@ -39,6 +39,7 @@ export class GoalDetailsComponent {
   editGoal: boolean = false;
   daysLeft!: string | number;
   dailyTarget!: string;
+  htmlDescription: string = '';
 
   constructor(private store$: Store, private activatedRoute: ActivatedRoute,
               private route: Router, private goalService: GoalService,
@@ -108,6 +109,10 @@ export class GoalDetailsComponent {
       return;
     }
     const changedGoal = editGoalForm.value;
+    if (this.htmlDescription !== ''){
+      changedGoal.description = this.htmlDescription;
+    }
+
     this.store$.dispatch(GoalPageActions.updateActiveGoal({goalId: changedGoal.id, changedGoal}))
     this.editGoal = false;
   }
@@ -131,5 +136,10 @@ export class GoalDetailsComponent {
   richEditHandler(editorForm: NgForm) {
     console.log(editorForm)
     console.log(editorForm.value)
+  }
+
+  getHtml($event: any) {
+    console.log($event)
+    this.htmlDescription = $event
   }
 }

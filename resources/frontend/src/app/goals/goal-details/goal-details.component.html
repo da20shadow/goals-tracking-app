@@ -229,21 +229,23 @@
       <div>
         <div class="flex align-center border border-slate-600 rounded">
 
-            <textarea
-              class="w-full min-h-[175px] py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"
-              name="description"
-              #description="ngModel"
-              placeholder="Goal Description..."
-              required
-              [ngModel]="goal.description"></textarea>
+          <app-rich-text-editor class="w-full" (html)="getHtml($event)" [defaultText]="goal.description" ></app-rich-text-editor>
+<!--            <textarea-->
+<!--              class="w-full min-h-[175px] py-2 px-3 dark:bg-gray-800 dark:focus:bg-gray-900 dark:active:bg-gray-700"-->
+<!--              name="description"-->
+<!--              #description="ngModel"-->
+<!--              placeholder="Goal Description..."-->
+<!--              required-->
+<!--              [ngModel]="goal.description"></textarea>-->
         </div>
         <!-- Error messages -->
-        <ng-container *ngIf="title.touched">
-            <span *ngIf="description.errors?.['required']"
-                  class="text-sm text-red-600">
-              Description can not be empty!
-            </span>
-        </ng-container>
+<!--        <ng-container *ngIf="title.touched">-->
+<!--            <span *ngIf="description.errors?.['required']"-->
+<!--                  class="text-sm text-red-600">-->
+<!--              Description can not be empty!-->
+<!--            </span>-->
+<!--        </ng-container>-->
+
       </div>
       <!-- Goal Description Input Container-->
 

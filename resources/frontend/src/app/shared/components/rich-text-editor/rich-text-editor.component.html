@@ -1,0 +1,39 @@
+<div class="p-5 border rounded-md">
+  <div class="flex gap-1">
+    <button type="button" (click)="modifyText('bold'); sendContent(editorContent.innerHTML)" class="p-1 pb-0 bg-gray-800" #bold><mat-icon>format_bold</mat-icon></button>
+    <button type="button" (click)="modifyText('italic'); sendContent(editorContent.innerHTML)" class="p-1 pb-0 bg-gray-800" #italic><mat-icon>format_italic</mat-icon></button>
+    <button type="button" (click)="modifyText('underline'); sendContent(editorContent.innerHTML)" class="p-1 pb-0 bg-gray-800" #underline><mat-icon>format_underlined</mat-icon></button>
+    <button type="button" (click)="modifyText('strikethrough'); sendContent(editorContent.innerHTML)" class="p-1 pb-0 bg-gray-800" #strikethrough><mat-icon>format_strikethrough</mat-icon></button>
+<!--    <button (click)="modifyText(list,'list',editorContent.innerHTML)" class="p-1 pb-0 bg-gray-800" #list><mat-icon>format_list_bulleted</mat-icon></button>-->
+<!--    <button (click)="modifyText(checklist,'checklist',editorContent.innerHTML)" class="p-1 pb-0 bg-gray-800" #checklist><mat-icon>checklist</mat-icon></button>-->
+    <button type="button" (click)="modifyText('undo'); sendContent(editorContent.innerHTML)" class="p-1 pb-0 bg-gray-800" #undo><mat-icon>undo</mat-icon></button>
+    <button type="button" (click)="modifyText('redo'); sendContent(editorContent.innerHTML)" class="p-1 pb-0 bg-gray-800" #redo><mat-icon>redo</mat-icon></button>
+    <button type="button" (click)="modifyText('createLink'); sendContent(editorContent.innerHTML)" class="p-1 pb-0 bg-gray-800" #link><mat-icon>link</mat-icon></button>
+    <button type="button" (click)="modifyText('unlink'); sendContent(editorContent.innerHTML)" class="p-1 pb-0 bg-gray-800" #link_off><mat-icon>link_off</mat-icon></button>
+<!--    <button type="button" (click)="modifyText('justifyLeft'); sendContent(editorContent.innerHTML)" class="p-1 pb-0 bg-gray-800" #left><mat-icon>format_align_left</mat-icon></button>-->
+<!--    <button type="button" (click)="modifyText('justifyCenter'); sendContent(editorContent.innerHTML)" class="p-1 pb-0 bg-gray-800" #center><mat-icon>format_align_center</mat-icon></button>-->
+<!--    <button type="button" (click)="modifyText('justifyRight'); sendContent(editorContent.innerHTML)" class="p-1 pb-0 bg-gray-800" #right><mat-icon>format_align_right</mat-icon></button>-->
+<!--    <button type="button" (click)="modifyText('justifyFull'); sendContent(editorContent.innerHTML)" class="p-1 pb-0 bg-gray-800" #full><mat-icon>format_align_justify</mat-icon></button>-->
+
+    <!-- Headings -->
+    <select (change)="modifyText('formatBlock',formatBlock.value); sendContent(editorContent.innerHTML)"
+            class="p-1 pb-0 bg-gray-800" #formatBlock>
+      <option value="">Heading</option>
+      <option value="H1">Heading 1</option>
+      <option value="H2">Heading 2</option>
+      <option value="H3">Heading 3</option>
+      <option value="P">Paragraph</option>
+    </select>
+
+  </div>
+
+  <div class="p-5 border rounded bg-gray-800 w-full"
+       #editorContent
+       [contentEditable]="true"
+       [innerHTML]="defaultText"
+       (keyup)="sendContent(editorContent.innerHTML)"
+  ></div>
+
+</div>
+
+

@@ -14,6 +14,7 @@ import { TargetsListComponent } from './components/targets-list/targets-list.com
 import {NgxEditorModule} from "ngx-editor";
 import {SharedModule} from "../shared/components/shared.module";
 import {CircleProgressModule} from "../shared/components/progress-bars/circle-progress/circle-progress.module";
+import {RichTextEditorModule} from "../shared/components/rich-text-editor/rich-text-editor.module";
 
 
 @NgModule({
@@ -23,18 +24,19 @@ import {CircleProgressModule} from "../shared/components/progress-bars/circle-pr
     AddGoalModalComponent,
     TargetsListComponent
   ],
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    MatMenuModule,
-    MatIconModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    GoalsRoutingModule,
-    NgxEditorModule,
-    SharedModule,
-    CircleProgressModule,
-  ]
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatMenuModule,
+        MatIconModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        GoalsRoutingModule,
+        NgxEditorModule,
+        SharedModule,
+        CircleProgressModule,
+        RichTextEditorModule,
+    ]
 })
 export class GoalsModule { }

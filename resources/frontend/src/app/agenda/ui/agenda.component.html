@@ -44,9 +44,10 @@
 
     <ul *ngIf="showOverdueTasks && (overdueTasks$ | async) as overdueTasks">
 
-      <li [@fadeInOut] class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
+      <li [@fadeInOut] [routerLink]="['/tasks',task.id]"
+          class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
         *ngFor="let task of overdueTasks">
-        <p [routerLink]="['/tasks',task.id]" class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
+        <p class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
         <span class="text-[12px] text-rose-300 absolute right-1">
           {{task.end_date | date: 'MMM d, y'}}
         </span>
@@ -61,9 +62,10 @@
 
     <ul *ngIf="showNextTasks && (nextTasks$ | async) as nextTasks">
 
-      <li [@fadeInOut] class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
+      <li [@fadeInOut] [routerLink]="['/tasks',task.id]"
+          class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
           *ngFor="let task of nextTasks">
-        <p [routerLink]="['/tasks',task.id]" class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
+        <p class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
         <span class="text-[12px] text-cyan-300 absolute right-1">
           {{task.start_date | date: 'E, dd MMM, y'}}
         </span>
@@ -78,9 +80,10 @@
 
     <ul *ngIf="showUnscheduledTasks && (unscheduledTasks$ | async) as unscheduledTasks">
 
-      <li [@fadeInOut] class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
+      <li [@fadeInOut] [routerLink]="['/tasks',task.id]"
+          class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
           *ngFor="let task of unscheduledTasks">
-        <p [routerLink]="['/tasks',task.id]" class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
+        <p class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
         <span class="text-[12px] text-cyan-300 absolute right-1">
           {{task.end_date | date: 'H:mm'}}
         </span>

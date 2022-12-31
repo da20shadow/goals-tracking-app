@@ -8,10 +8,11 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {RouterModule} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import { AddTaskModalComponent } from './add-task-modal/add-task-modal.component';
+import { ViewTaskModalComponent } from './view-task-modal/view-task-modal.component';
 
 
 @NgModule({
-  declarations: [TasksListComponent, AddTaskModalComponent],
+  declarations: [TasksListComponent, AddTaskModalComponent, ViewTaskModalComponent],
   imports: [
     CommonModule,
     MatMenuModule,

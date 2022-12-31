@@ -11,6 +11,14 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+a {
+  color: #2563eb;
+}
+a:hover {
+  color: #1b51c9;
+  text-decoration: underline;
+}
+
 h1 {
   font-size: 2rem;
 }
