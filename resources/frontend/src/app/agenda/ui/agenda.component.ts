@@ -7,6 +7,8 @@ import {AgendaPageActions} from "../../Store/agenda-store/agenda-page.actions";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ModalService} from "../../core/services/modal.service";
 import {AddTaskModalComponent} from "../../shared/components/tasks-list/add-task-modal/add-task-modal.component";
+import {MatDialog} from "@angular/material/dialog";
+import {ViewTaskModalComponent} from "../../shared/components/tasks-list/view-task-modal/view-task-modal.component";
 
 @Component({
   selector: 'app-agenda',
@@ -71,6 +73,9 @@ export class AgendaComponent {
 
   ngOnInit(){
     this.store$.dispatch(AgendaPageActions.getTodayTasks());
+    this.store$.dispatch(AgendaPageActions.getOverdueTasks());
+    this.store$.dispatch(AgendaPageActions.getNextTasks());
+    this.store$.dispatch(AgendaPageActions.getUnscheduledTasks());
 
     let date = new Date();
     this.hourNow = `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}`
@@ -113,4 +118,7 @@ export class AgendaComponent {
     this.store$.dispatch(AgendaPageActions.getUnscheduledTasks());
   }
 
+  openViewTaskModal(task: Task) {
+    this.modalService.openFormModal(ViewTaskModalComponent,{task})
+  }
 }

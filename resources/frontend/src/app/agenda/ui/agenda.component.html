@@ -28,9 +28,9 @@
     </div>
     <ul *ngIf="(todayTasks$ | async) as todayTasks">
 
-      <li class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
+      <li (click)="openViewTaskModal(task)" class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
           *ngFor="let task of todayTasks">
-        <p [routerLink]="['/tasks',task.id]" class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
+        <p class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
         <span class="text-sm absolute right-1">
           Today: {{task.start_date | date: 'H:mm'}} - {{task.end_date | date: 'H:mm'}}
         </span>
@@ -40,11 +40,11 @@
 
     <!-- Overdue Tasks List -->
     <p (click)="getOverdueTasks(); showOverdueTasks=!showOverdueTasks"
-       class="my-3 text-sm cursor-pointer">Overdue({{(overdueTasks$ | async)?.length}})</p>
+       class="my-3 text-sm cursor-pointer">Overdue({{(overdueTasks$ | async)?.length ? (overdueTasks$ | async)?.length : '0'}})</p>
 
     <ul *ngIf="showOverdueTasks && (overdueTasks$ | async) as overdueTasks">
 
-      <li [@fadeInOut] [routerLink]="['/tasks',task.id]"
+      <li [@fadeInOut] (click)="openViewTaskModal(task)"
           class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
         *ngFor="let task of overdueTasks">
         <p class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
@@ -58,11 +58,11 @@
 
     <!-- Next Tasks List -->
     <p (click)="getNextTasks();showNextTasks=!showNextTasks"
-       class="my-3 text-sm cursor-pointer">Next(2)todo</p>
+       class="my-3 text-sm cursor-pointer">Next({{(nextTasks$ | async)?.length ? (nextTasks$ | async)?.length : '0' }})</p>
 
     <ul *ngIf="showNextTasks && (nextTasks$ | async) as nextTasks">
 
-      <li [@fadeInOut] [routerLink]="['/tasks',task.id]"
+      <li [@fadeInOut] (click)="openViewTaskModal(task)"
           class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
           *ngFor="let task of nextTasks">
         <p class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
@@ -76,11 +76,11 @@
 
     <!-- Unscheduled Tasks List -->
     <p (click)="getUnscheduledTasks();showUnscheduledTasks=!showUnscheduledTasks"
-       class="my-3 text-sm cursor-pointer">Unscheduled(2)todo</p>
+       class="my-3 text-sm cursor-pointer">Unscheduled({{(unscheduledTasks$ | async)?.length ? (unscheduledTasks$ | async)?.length : '0'}})</p>
 
     <ul *ngIf="showUnscheduledTasks && (unscheduledTasks$ | async) as unscheduledTasks">
 
-      <li [@fadeInOut] [routerLink]="['/tasks',task.id]"
+      <li [@fadeInOut] (click)="openViewTaskModal(task)"
           class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
           *ngFor="let task of unscheduledTasks">
         <p class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
