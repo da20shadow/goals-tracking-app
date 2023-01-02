@@ -11,12 +11,11 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-a {
+.link {
   color: #2563eb;
 }
-a:hover {
+.link:hover {
   color: #1b51c9;
-  text-decoration: underline;
 }
 
 h1 {
