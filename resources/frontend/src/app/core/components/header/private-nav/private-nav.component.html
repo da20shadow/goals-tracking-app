@@ -92,19 +92,42 @@
             <mat-icon [style]="'font-size:21px'">star</mat-icon>
             Favorite
           </a>
-          <a [routerLink]="'calendar'"
-             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
-            <mat-icon [style]="'font-size:21px'">calendar_month</mat-icon>
-            Calendar
-          </a>
           <a [routerLink]="'agenda'"
              class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
             <mat-icon [style]="'font-size:21px'">tips_and_updates</mat-icon>
             Ideas
           </a>
+          <a [routerLink]="'calendar'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px'">calendar_month</mat-icon>
+            Calendar
+          </a>
         </nav>
       </li>
       <!-- MY WORK -->
+
+      <!-- TASKS -->
+      <li>
+        <h4 class="mx-1 text-sm uppercase font-extrabold text-gray-500">Tasks</h4>
+        <nav>
+          <a [routerLink]="'tasks/all'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px'">task_alt</mat-icon>
+            All Tasks
+          </a>
+          <a [routerLink]="'agenda'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px'">local_fire_department</mat-icon>
+            Urgent
+          </a>
+          <a [routerLink]="'calendar'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px'">priority_high</mat-icon>
+            Important
+          </a>
+        </nav>
+      </li>
+      <!-- TASKS -->
 
       <!-- GOALS -->
       <li>
@@ -112,8 +135,8 @@
         <nav>
           <a [routerLink]="'goals'"
              class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
-            <mat-icon [style]="'font-size:21px;'">flag</mat-icon>
-            All
+            <mat-icon [style]="'font-size:21px;'">sports_score</mat-icon>
+            All Goals
           </a>
           <a [routerLink]="'personal'"
              class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
