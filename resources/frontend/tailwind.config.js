@@ -34,7 +34,7 @@ module.exports = {
     },
     containers: {
       box: {
-        width: '100%',
+        width: '96vw',
         padding: '21px',
         borderRadius: '0.375rem',
         boxShadow: '0 7px 14px 0rgba(65, 69, 88, 0.1), 0 3px 6px 0rgba(0, 0, 0, 0.07)',
