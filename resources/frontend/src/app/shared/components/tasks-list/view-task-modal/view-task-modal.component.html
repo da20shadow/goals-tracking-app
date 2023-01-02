@@ -1,1 +1,126 @@
-<p>view-task-modal works!</p>
+<section class="container-light dark:container-dark w-[96vw] md:w-[85vw]" >
+
+  <!-- Status, Priority, Edit button -->
+  <div class="flex justify-between">
+    <!-- Status & Priority -->
+      <!-- TODO: add colors for status and priority depending on status and priority type green red orange -->
+    <section class="mb-5 flex gap-3 items-center">
+
+      <!-- TASK PRIORITY TODO: make it possible to change the priority also! -->
+      <span #selectorPriority mat-button
+            class="dark:hover:text-gray-700">
+
+          <ng-container [ngSwitch]="task.priority">
+              <mat-icon [style]="'color:darkred; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
+                        *ngSwitchCase="TaskPriorityNames.URGENT">flag</mat-icon>
+              <mat-icon [style]="'color:darkorange; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
+                        *ngSwitchCase="TaskPriorityNames.HIGH">flag</mat-icon>
+              <mat-icon [style]="'color: lightblue; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
+                        *ngSwitchCase="TaskPriorityNames.LOW">flag</mat-icon>
+              <mat-icon [style]="'color: darkgray; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
+                        *ngSwitchCase="TaskPriorityNames.NO_PRIORITY">flag</mat-icon>
+            </ng-container>
+
+        <!--        <mat-menu class="example-mat-menu" #priorityMenu="matMenu" xPosition="after">-->
+        <!--          <button (click)="updateTaskId(task.id,task.status,'priority',priority);-->
+        <!--                  selectorPriority.innerText = priority"-->
+        <!--                  *ngFor="let priority of taskPriority" mat-menu-item>-->
+
+        <!--            <ng-container [ngSwitch]="priority">-->
+        <!--             <span class="text-rose-500" *ngSwitchCase="TaskPriorityNames.URGENT"><mat-icon style="color:darkred">flag_circle</mat-icon>{{priority}}</span>-->
+        <!--             <span class="text-orange-500" *ngSwitchCase="TaskPriorityNames.HIGH"><mat-icon style="color:darkorange">flag_circle</mat-icon>{{priority}}</span>-->
+        <!--             <span class="text-blue-500" *ngSwitchCase="TaskPriorityNames.LOW"><mat-icon style="color: darkblue">flag_circle</mat-icon>{{priority}}</span>-->
+        <!--             <span class="text-gray-500" *ngSwitchCase="TaskPriorityNames.NO_PRIORITY"><mat-icon style="color: darkgray" >flag_circle</mat-icon>{{priority}}</span>-->
+        <!--            </ng-container>-->
+
+        <!--          </button>-->
+        <!--        </mat-menu>-->
+        </span>
+      <!-- TASK PRIORITY -->
+
+      <!-- TASK STATUS -->
+      <div mat-button [matMenuTriggerFor]="statusMenu"
+           class="dark:hover:bg-gray-700 pl-3 pr-1 py-1 cursor-pointer border rounded-md">
+        <div class="flex items-center">
+          <span #selectorStatus>{{task.status}}</span>
+          <mat-icon>arrow_right</mat-icon>
+        </div>
+
+        <mat-menu class="example-mat-menu dark:example-mat-menu-dark" #statusMenu="matMenu" xPosition="after">
+
+          <button (click)="updateTaskId(task.id,task.status,'status',status);
+                selectorStatus.innerText = status"
+                  *ngFor="let status of taskStatuses" mat-menu-item>
+            {{status}}
+          </button>
+        </mat-menu>
+
+      </div>
+      <!-- TASK STATUS -->
+
+    </section>
+    <!-- Status & Priority -->
+
+    <!-- Edit task Icon -->
+    <div class="absolute top-3 right-3">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="task menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>trending_flat</mat-icon>
+          <span>Move</span>
+        </button>
+        <button (click)="deleteTask(task)" mat-menu-item>
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+
+    </div>
+    <!-- Edit task Icon -->
+
+  </div>
+  <!-- Status, Priority, Edit button -->
+
+  <!-- Task Tags -->
+  <div class="flex items-center text-sm">
+    <span>tag</span>
+    <span>another_tag</span>
+    <span>one_more</span>
+    <button (click)="addTag()">
+      <mat-icon style="font-size: 17px; padding-top:9px;">sell</mat-icon>
+    </button>
+  </div>
+  <!-- Task Tags -->
+
+  <!-- Task Title -->
+  <h1 class="dark:c-text-dark mt-5 md:mt-0 text-[25px] md:text-3xl font-bold tracking-tight">
+    <span class="dark:text-orange-200">✔ Task: </span>{{task.title}}
+  </h1>
+  <!-- Task Title -->
+
+  <!-- HTML Description -->
+  <h3 class="flex text-xl font-bold border-b my-3">
+    <mat-icon>description</mat-icon> Task Description
+  </h3>
+  <div class="border-b pb-5 mb-5" [innerHTML]="task.description"></div>
+  <!-- HTML Description -->
+
+  <!-- Checklist -->
+  <section>
+    <p>Subtasks</p>
+    <ul>
+      <li>
+        <mat-checkbox [color]="'darkgreen'">Is this needed?</mat-checkbox>
+        Sub Task title
+      </li>
+      <li>Sub Task title 2</li>
+      <li>Sub Task title 3</li>
+      <li>Input New subtask</li>
+    </ul>
+  </section>
+  <!-- Checklist -->
+
+
+</section>

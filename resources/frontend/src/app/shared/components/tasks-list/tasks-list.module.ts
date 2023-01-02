@@ -9,6 +9,7 @@ import {RouterModule} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import { AddTaskModalComponent } from './add-task-modal/add-task-modal.component';
 import { ViewTaskModalComponent } from './view-task-modal/view-task-modal.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { ViewTaskModalComponent } from './view-task-modal/view-task-modal.compon
     MatIconModule,
     MatSortModule,
     MatTooltipModule,
+    MatCheckboxModule,
     RouterModule,
     FormsModule,
   ],
