@@ -35,7 +35,7 @@ export class GlobalClasses {
 
   /** ----------Tables style---------- */
   static readonly tableBodyRow = `text-center border border-transparent dark:hover:border-gray-600 dark:hover:text-[#f0f8ff] dark:bg-[#252f3f] dark:hover:bg-gray-900 dark:odd:bg-gray-800`;
-  static readonly tableBodyRowTD = `py-3 whitespace-nowrap dark:hover:bg-[#4b5563] w-[13%] max-w-[75px] border-l dark:border-gray-600 cursor-pointer text-sm`;
+  static readonly tableBodyRowTD = `whitespace-nowrap dark:hover:bg-[#4b5563] w-[13%] max-w-[75px] border-l dark:border-gray-600 cursor-pointer text-sm`;
   static readonly editTableBodyTD = `p-0 m-0 w-[13%] max-w-[75px] bg-[#4b5563] dark:bg-slate-900 border-l dark:border-gray-600`;
 
 
