@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import {Observable} from "rxjs";
-import { Task } from 'src/app/core/models';
+import {Task, TaskStatus} from 'src/app/core/models';
 import {Store} from "@ngrx/store";
 import {taskSelectors} from "../../Store/task-store/task-selectors";
+import {TaskService} from "../services/task.service";
 
 @Component({
   selector: 'app-all-tasks',
@@ -11,20 +12,30 @@ import {taskSelectors} from "../../Store/task-store/task-selectors";
 })
 export class AllTasksComponent {
   // inProgressTasks$: Observable<Task[]>;
-  todoTasks = [
-    {id:1,start_date:'', created_at:'', updated_at: '', user_id:1, description: '',target_id:0, title: 'Task title 1',status: 'To Do', priority: 'Low', end_date: '2022-19-12'},
-    {id:1,start_date:'', created_at:'', updated_at: '', user_id:1, description: '',target_id:0, title: 'Task title 2',status: 'To Do', priority: 'Low', end_date: '2022-19-12'},
-    {id:1,start_date:'', created_at:'', updated_at: '', user_id:1, description: '',target_id:0, title: 'Task title 3',status: 'To Do', priority: 'High', end_date: '2022-19-12'},
-    {id:1,start_date:'', created_at:'', updated_at: '', user_id:1, description: '',target_id:0, title: 'Task title 4',status: 'To Do', priority: 'Urgent', end_date: '2022-19-12'},
-    {id:1,start_date:'', created_at:'', updated_at: '', user_id:1, description: '',target_id:0, title: 'Task title 5',status: 'To Do', priority: 'Low', end_date: '2022-19-12'},
-  ]
-  inProgressTasks = [
-    {id:1,start_date:'', created_at:'', updated_at: '', user_id:1, description: '',target_id:0, title: 'Task title 1',status: 'In Progress', priority: 'Low', end_date: '2022-19-12'},
-    {id:1,start_date:'', created_at:'', updated_at: '', user_id:1, description: '',target_id:0, title: 'Task title 2',status: 'In Progress', priority: 'High', end_date: '2022-19-12'},
-    {id:1,start_date:'', created_at:'', updated_at: '', user_id:1, description: '',target_id:0, title: 'Task title 3',status: 'In Progress', priority: 'High', end_date: '2022-19-12'},
-    {id:1,start_date:'', created_at:'', updated_at: '', user_id:1, description: '',target_id:0, title: 'Task title 4',status: 'In Progress', priority: 'Low', end_date: '2022-19-12'},
-    {id:1,start_date:'', created_at:'', updated_at: '', user_id:1, description: '',target_id:0, title: 'Task title 5',status: 'In Progress', priority: 'Urgent', end_date: '2022-19-12'},
-  ];
+  inProgressTasks: Task[] = [];
+  todoTasks: Task[] = [];
+  inRevisionTasks: Task[] = [];
+  completedTasks: Task[] = [];
+
+  constructor(private taskService: TaskService) {
+    this.taskService.getAll().subscribe({
+      next: (tasks) => {
+        if (tasks){
+          this.inProgressTasks = tasks.filter(t =>
+            t.status === TaskStatus.IN_PROGRESS);
+          this.todoTasks = tasks.filter(t =>
+            t.status === TaskStatus.TO_DO);
+          this.inRevisionTasks = tasks.filter(t =>
+            t.status === TaskStatus.IN_Revision);
+          this.completedTasks = tasks.filter(t =>
+            t.status === TaskStatus.COMPLETED);
+        }
+      },
+      error: (err) => {
+
+      }
+    })
+  }
 
   // constructor(private store$: Store) {
   //   this.store$.dispatch(getTasksInProgress());

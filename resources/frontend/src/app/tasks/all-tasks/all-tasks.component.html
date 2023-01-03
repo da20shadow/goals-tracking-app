@@ -1,8 +1,37 @@
+<app-page-title title="All Tasks"></app-page-title>
+
 <!--IN PROGRESS-->
-<section class="md:p-5">
-  <h2 class="px-3 py-2 bg-white dark:bg-gray-700 border-b">IN PROGRESS</h2>
+<section class="my-5 bg-[#f4433617]">
+  <h2 class="bg-[#f4433617] px-3 py-2 text-center border-b">IN PROGRESS</h2>
 <!--  <ng-container *ngIf="(inProgressTasks$ | async) as inProgressTasks">-->
     <app-tasks-list [tasksList]="inProgressTasks"></app-tasks-list>
 <!--  </ng-container>-->
 </section>
 <!--IN PROGRESS-->
+
+<!--TO DO-->
+<section class="my-5 bg-[#c2c6ce2b]">
+  <h2 class="bg-[#c2c6ce2b] px-3 py-2 text-center border-b">STATUS TO DO</h2>
+  <!--  <ng-container *ngIf="(inProgressTasks$ | async) as inProgressTasks">-->
+  <app-tasks-list [tasksList]="todoTasks"></app-tasks-list>
+  <!--  </ng-container>-->
+</section>
+<!--TO DO-->
+
+<!--IN Revision-->
+<section class="my-5 bg-[#00c3cc17]">
+  <h2 class="bg-[#00c3cc17] px-3 py-2 text-center border-b">STATUS: IN REVISION</h2>
+  <!--  <ng-container *ngIf="(inProgressTasks$ | async) as inProgressTasks">-->
+  <app-tasks-list [tasksList]="inProgressTasks"></app-tasks-list>
+  <!--  </ng-container>-->
+</section>
+<!--IN Revision-->
+
+<!--COMPLETED-->
+<section class="mb-20 md:mb-5 my-5 bg-[#09311d3d]">
+  <h2 class="bg-[#0942175e] px-3 py-2 text-center border-b">STATUS: COMPLETED</h2>
+  <!--  <ng-container *ngIf="(inProgressTasks$ | async) as inProgressTasks">-->
+  <app-tasks-list [tasksList]="completedTasks"></app-tasks-list>
+  <!--  </ng-container>-->
+</section>
+<!--COMPLETED-->
