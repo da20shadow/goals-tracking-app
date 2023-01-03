@@ -11,8 +11,8 @@ import {GlobalClasses} from "../../../../shared/styles/global-classes";
 export class PrivateNavComponent {
 
   privateNavLinks = [
-    {url: 'goals', name: 'Goals'},
-    {url: 'agenda', name: 'Agenda'},
+    {url: 'goals', navName: 'Goals'},
+    {url: 'agenda', navName: 'Agenda'},
   ]
   darkMode: boolean;
   openSidenav: boolean = false;
