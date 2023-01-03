@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Observable} from "rxjs";
 import { Task } from 'src/app/core/models';
 import {Store} from "@ngrx/store";
@@ -7,7 +7,6 @@ import {AgendaPageActions} from "../../Store/agenda-store/agenda-page.actions";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ModalService} from "../../core/services/modal.service";
 import {AddTaskModalComponent} from "../../shared/components/tasks-list/add-task-modal/add-task-modal.component";
-import {MatDialog} from "@angular/material/dialog";
 import {ViewTaskModalComponent} from "../../shared/components/tasks-list/view-task-modal/view-task-modal.component";
 
 @Component({
@@ -25,18 +24,19 @@ import {ViewTaskModalComponent} from "../../shared/components/tasks-list/view-ta
 })
 export class AgendaComponent {
 
-  todayTasks$: Observable<Task[]>
-  overdueTasks$: Observable<Task[]>
+  todayTasks$: Observable<Task[]>;
+  overdueTasks$: Observable<Task[]>;
   showOverdueTasks: boolean = false;
-  nextTasks$: Observable<Task[]>
+  nextTasks$: Observable<Task[]>;
   showNextTasks: boolean = false;
-  unscheduledTasks$: Observable<Task[]>
+  unscheduledTasks$: Observable<Task[]>;
   showUnscheduledTasks: boolean = false;
 
   today: any = new Date();
   interval: any;
   hourNow!: string;
   lineTopPx!: string;
+  @ViewChild('calendarView') calendarView!: ElementRef;
   times = [
     {hour: '00:00'},
     {hour: '01:00'},
@@ -88,6 +88,11 @@ export class AgendaComponent {
     },1000)
   }
 
+  ngAfterViewInit(){
+    let date = new Date();
+    this.calendarView.nativeElement.scrollTop = (date.getHours() * 60) + date.getMinutes();
+  }
+
   ngOnDestroy(){
     if (this.interval){
       clearInterval(this.interval);
@@ -120,5 +125,9 @@ export class AgendaComponent {
 
   openViewTaskModal(task: Task) {
     this.modalService.openFormModal(ViewTaskModalComponent,{task})
+  }
+
+  logScroll(scrollTop: number) {
+    console.log(scrollTop)
   }
 }
