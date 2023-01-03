@@ -28,10 +28,13 @@ export class ApiUrls {
 
   //Tasks API urls
   static readonly TASKS = `${BASE_URL}/tasks`; //Return Today's tasks
+  static readonly TASKS_ALL = `${BASE_URL}/tasks/all`;
   static readonly TASKS_OVERDUE = `${BASE_URL}/tasks/overdue`;
   static readonly TASKS_NEXT = `${BASE_URL}/tasks/next`;
   static readonly TASKS_UNSCHEDULED = `${BASE_URL}/tasks/unscheduled`;
-  static readonly TASK_LISTS = `${BASE_URL}/tasks/lists`;
+  static readonly TASKS_URGENT = `${BASE_URL}/tasks/urgent`;
+  static readonly TASKS_IMPORTANT = `${BASE_URL}/tasks/important`;
+  static readonly TASK_LISTS = `${BASE_URL}/tasks/lists`; //TODO:
   static readonly TASK_ADD = `${BASE_URL}/tasks/add`;
   static readonly TASK_UPDATE = `${BASE_URL}/tasks/update`;
   static readonly TASK_DELETE = `${BASE_URL}/tasks/delete`;
