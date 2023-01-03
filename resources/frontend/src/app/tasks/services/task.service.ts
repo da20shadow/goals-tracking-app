@@ -45,4 +45,16 @@ export class TaskService {
   getUnscheduledTasks() {
     return this.http.get<Task[]>(ApiUrls.TASKS_UNSCHEDULED);
   }
+
+  getUrgentTasks() {
+    return this.http.get<Task[]>(ApiUrls.TASKS_URGENT);
+  }
+
+  getImportantTasks() {
+    return this.http.get<Task[]>(ApiUrls.TASKS_IMPORTANT);
+  }
+
+  getAll() {
+    return this.http.get<Task[]>(ApiUrls.TASKS_ALL);
+  }
 }
