@@ -13,13 +13,13 @@ export class PublicNavComponent {
   darkMode: boolean;
 
   publicNavLinks = [
-    {url: '/', name: 'Home'},
-    {url: 'faq', name: 'FAQ'},
-    {url: 'about', name: 'About'},
-    {url: 'contact-us', name: 'Contact us'},
-    {url: 'login', name: 'Login'},
-    {url: 'register', name: 'Register'},
-    {url: 'invalid-url', name: 'Invalid URL'},
+    {url: '/', navName: 'Home'},
+    {url: 'faq', navName: 'FAQ'},
+    {url: 'about', navName: 'About'},
+    {url: 'contact-us', navName: 'Contact us'},
+    {url: 'login', navName: 'Login'},
+    {url: 'register', navName: 'Register'},
+    {url: 'invalid-url', navName: 'Invalid URL'},
   ]
 
   constructor(private darkModeService: DarkLightModeService) {

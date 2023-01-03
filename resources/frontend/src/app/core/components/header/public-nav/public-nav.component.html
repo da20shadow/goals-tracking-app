@@ -1,8 +1,15 @@
 <h2 class="font-semibold text-[#2563eb] dark:text-gray-400 drop-shadow">GoalsAPP</h2>
 
 <!-- Public Nav Links -->
-<app-nav-links [ngClass]="classes.nav" [navLinks]="publicNavLinks"></app-nav-links>
+<nav [ngClass]="classes.nav">
+  <a [ngClass]="classes.navLink"
+     [routerLink]="link.url"
+     *ngFor="let link of publicNavLinks">
+    {{link.navName}}
+  </a>
+</nav>
 <!-- Public Nav Links -->
+
 <div class="hidden md:block">
   <div class="ml-4 flex items-center md:ml-6">
   <!-- Dark/Light Mode Button -->
