@@ -39,6 +39,9 @@ Route::group(['middleware' => ['auth:sanctum']],function () {
 
     /** ---------TASKS--------- */
     Route::get('tasks',[TaskController::class,'index']);
+    Route::get('tasks/all',[TaskController::class,'getAll']);
+    Route::get('tasks/urgent',[TaskController::class,'getUrgentTasks']);
+    Route::get('tasks/important',[TaskController::class,'getImportantTasks']);
     Route::get('tasks/overdue',[TaskController::class,'getOverdueTasks']);
     Route::get('tasks/next',[TaskController::class,'getNextTasks']);
     Route::get('tasks/unscheduled',[TaskController::class,'getUnscheduledTasks']);
