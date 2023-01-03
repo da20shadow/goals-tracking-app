@@ -5,46 +5,45 @@
 <!-- Public Navigation -->
 
 <!-- Private Navigation -->
-<ng-container *ngIf="isLogged$ |async; else publicNavigation">
+<ng-container *ngIf="(isLogged$ | async) as isLogged; else publicNavigation">
+    <!-- Top Nav -->
+    <app-private-nav class="justify-between" [ngClass]="classes.header"></app-private-nav>
+    <!-- Top Nav -->
 
-  <!-- Top Nav -->
-  <app-private-nav class="justify-between" [ngClass]="classes.header"></app-private-nav>
-  <!-- Top Nav -->
+    <!-- Fixed Mobile Bottom Nav -->
+    <div class="z-40 w-full bg-gray-700 flex gap-5 md:gap-10 justify-center fixed bottom-0 md:hidden border-t">
 
-  <!-- Fixed Mobile Bottom Nav -->
-  <div class="z-40 w-full bg-gray-700 flex gap-5 md:gap-10 justify-center fixed bottom-0 md:hidden border-t">
-
-    <div [routerLink]="'/'" class="text-sm py-1 px-3 self-center text-center active:bg-gray-800">
-      <div class="w-full">
-        <mat-icon>home</mat-icon>
+      <div [routerLink]="'/'" class="text-sm py-1 px-3 self-center text-center active:bg-gray-800">
+        <div class="w-full">
+          <mat-icon>home</mat-icon>
+        </div>
+        <span>Home</span>
       </div>
-      <span>Home</span>
-    </div>
 
-    <div [routerLink]="'/goals'" class="text-sm py-1 px-3 self-center text-center active:bg-gray-800">
-      <div class="w-full">
-        <mat-icon>sports_score</mat-icon>
+      <div [routerLink]="'/goals'" class="text-sm py-1 px-3 self-center text-center active:bg-gray-800">
+        <div class="w-full">
+          <mat-icon>sports_score</mat-icon>
+        </div>
+        <span>Goals</span>
       </div>
-      <span>Goals</span>
-    </div>
 
-    <div [routerLink]="'/agenda'" class="text-sm py-1 px-3 self-center text-center active:bg-gray-800">
-      <div class="w-full">
-        <mat-icon>view_agenda</mat-icon>
+      <div [routerLink]="'/agenda'" class="text-sm py-1 px-3 self-center text-center active:bg-gray-800">
+        <div class="w-full">
+          <mat-icon>view_agenda</mat-icon>
+        </div>
+        <span>Agenda</span>
       </div>
-      <span>Agenda</span>
-    </div>
 
-    <div [routerLink]="'/profile'" class="text-sm py-1 px-3 self-center text-center active:bg-gray-800">
-      <div class="w-full">
-        <mat-icon>account_circle</mat-icon>
+      <div [routerLink]="'/profile'" class="text-sm py-1 px-3 self-center text-center active:bg-gray-800">
+        <div class="w-full">
+          <mat-icon>account_circle</mat-icon>
+        </div>
+        <span>Account</span>
       </div>
-      <span>Account</span>
+
     </div>
-
-  </div>
-  <!-- Fixed Mobile Bottom Nav -->
-
+    <!-- Fixed Mobile Bottom Nav -->
 </ng-container>
+<!-- Private Navigation -->
 
 
