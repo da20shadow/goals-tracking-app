@@ -1,0 +1,5 @@
+<app-page-title [title]="title"></app-page-title>
+<ng-container *ngIf="(urgentTasks$|async) as urgentTasks">
+  <app-tasks-list [tasksList]="urgentTasks"
+                  [tasksListPriority]="TaskPriority.URGENT"></app-tasks-list>
+</ng-container>
