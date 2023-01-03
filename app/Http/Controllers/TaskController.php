@@ -40,6 +40,93 @@ class TaskController extends Controller
         return response()->json($tasksList);
     }
 
+    public function getAll(): JsonResponse
+    {
+        $user_id = auth()->user()->getAuthIdentifier();
+
+        try {
+            $tasksList = DB::table('tasks')
+                ->where(['user_id' => $user_id])
+                ->orderBy('priority', 'desc')
+                ->get();
+        } catch (QueryException $exception) {
+            return response()->json([
+                'message' => 'An Error Occur! Please, try again!',
+                'error' => $exception->getMessage(),
+            ], 400);
+        }
+
+        if (count($tasksList) < 1) {
+            return response()->json([
+                'message' => 'No Tasks Yet!'
+            ], 204);
+        }
+        return response()->json($tasksList);
+    }
+
+    public function getUrgentTasks(): JsonResponse
+    {
+        $user_id = auth()->user()->getAuthIdentifier();
+
+        try {
+            $tasksList = DB::table('tasks')
+                ->where(['user_id' => $user_id])
+                ->where('status', '!=', 'Completed')
+                ->where('priority', '=', 'Urgent')
+                ->where('end_date', '!=', 'null')
+                ->orderBy('status')
+                ->orderBy('end_date')
+                ->get();
+        } catch (QueryException $exception) {
+            return response()->json([
+                'message' => 'An Error Occur! Please, try again!',
+                'error' => $exception->getMessage(),
+            ], 400);
+        }
+
+        if (count($tasksList) < 1) {
+            return response()->json([
+                'message' => 'No Tasks Yet!'
+            ], 204);
+        }
+        return response()->json($tasksList);
+    }
+
+    public function getImportantTasks(): JsonResponse
+    {
+        $user_id = auth()->user()->getAuthIdentifier();
+        try {
+            $tasksList = DB::table('tasks')
+                ->where(['user_id' => $user_id])
+                ->where([
+                    ['user_id', '=', $user_id],
+                    ['status', '!=', 'Completed'],
+                    ['priority', '=', 'High'],
+                ])
+                ->orWhere([
+                    ['user_id', '=', $user_id],
+                    ['status', '!=', 'Completed'],
+                    ['priority', '=', 'Urgent'],
+                ])
+                ->orderBy('priority', 'desc')
+                ->orderBy('end_date')
+                ->orderBy('status')
+                ->get();
+        } catch (QueryException $exception) {
+            return response()->json([
+                'message' => 'An Error Occur! Please, try again!',
+                'error' => $exception->getMessage(),
+            ], 400);
+        }
+
+        if (count($tasksList) < 1) {
+            return response()->json([
+                'message' => 'No Tasks Yet!'
+            ], 204);
+        }
+        return response()->json($tasksList);
+    }
+
     public function getOverdueTasks(): JsonResponse
     {
         $user_id = auth()->user()->getAuthIdentifier();
@@ -156,23 +243,23 @@ class TaskController extends Controller
             if (!$targetExist) {
                 return response()->json(['message' => 'There is no target with this ID!'], 400);
             }
-        }
 
-        //Check if task title exist already in this target
-        $target_id = $fields['target_id'];
-        try {
-            $taskTitleExist = Task::where('user_id', $user_id)
-                ->where('target_id', $target_id)
-                ->where('title', $fields['title'])->first();
-        } catch (QueryException $exception) {
-            return response()->json([
-                'message' => 'An Error Occur! Please, try again!',
-                'error' => $exception->getMessage()
-            ], 400);
-        }
+            //Check if task title exist already in this target
+            $target_id = $fields['target_id'];
+            try {
+                $taskTitleExist = Task::where('user_id', $user_id)
+                    ->where('target_id', $target_id)
+                    ->where('title', $fields['title'])->first();
+            } catch (QueryException $exception) {
+                return response()->json([
+                    'message' => 'An Error Occur! Please, try again!',
+                    'error' => $exception->getMessage()
+                ], 400);
+            }
 
-        if ($taskTitleExist !== null) {
-            return response()->json(['message' => 'Task with the same title already added! Just set it recur!'], 400);
+            if ($taskTitleExist !== null) {
+                return response()->json(['message' => 'Task with the same title already added! Just set it recur!'], 400);
+            }
         }
 
         $fields['user_id'] = $user_id;
