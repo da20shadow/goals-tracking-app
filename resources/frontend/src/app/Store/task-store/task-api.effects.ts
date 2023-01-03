@@ -61,7 +61,7 @@ export class TaskApiEffects {
     )
   });
 
-  getTasksListState$ = createEffect(()=> {
+  getTargetTasksList$ = createEffect(()=> {
     return this.actions$.pipe(
       ofType(TargetPageActions.getActiveTargetTasks),
       concatMap((action) => {
@@ -92,6 +92,67 @@ export class TaskApiEffects {
     )
   });
 
+  getUrgentTasksList$ = createEffect(()=> {
+    return this.actions$.pipe(
+      ofType(TaskPageActions.getUrgentTasks),
+      concatMap((action) => {
+        return of(action).pipe(
+          withLatestFrom(this.store$.select(taskSelectors.selectUrgentTasksStateStatus)),
+          filter(([_,status])=> {
+            return status === 'pending'
+          }),
+          map(() => TaskPageActions.loadUrgentTasks())
+        )
+      })
+    )
+  });
+
+  loadUrgentTasks$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TaskPageActions.loadUrgentTasks),
+      switchMap(() => {
+        return from(this.taskService.getUrgentTasks()).pipe(
+          map((tasks) => {
+            return TaskAPIActions.loadUrgentTasksSuccess({tasks})
+          }),
+          catchError(err => {
+            return of(TaskAPIActions.loadUrgentTasksFailure({error: err.error.message}))
+          })
+        )
+      })
+    )
+  });
+
+  getImportantTasksList$ = createEffect(()=> {
+    return this.actions$.pipe(
+      ofType(TaskPageActions.getImportantTasks),
+      concatMap((action) => {
+        return of(action).pipe(
+          withLatestFrom(this.store$.select(taskSelectors.selectImportantTasksStateStatus)),
+          filter(([_,status])=> {
+            return status === 'pending'
+          }),
+          map(() => TaskPageActions.loadImportantTasks())
+        )
+      })
+    )
+  });
+
+  loadImportantTasks$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TaskPageActions.loadImportantTasks),
+      switchMap(() => {
+        return from(this.taskService.getImportantTasks()).pipe(
+          map((tasks) => {
+            return TaskAPIActions.loadImportantTasksSuccess({tasks})
+          }),
+          catchError(err => {
+            return of(TaskAPIActions.loadImportantTasksFailure({error: err.error.message}))
+          })
+        )
+      })
+    )
+  });
 
   constructor(private actions$: Actions,
               private store$: Store,
