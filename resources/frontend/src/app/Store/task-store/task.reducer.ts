@@ -4,17 +4,25 @@ import {TaskAPIActions} from "./task-api.actions";
 import {TaskPageActions} from "./task-page.actions";
 
 export interface TasksState {
-  tasksList: Task[];
+  targetTasksList: Task[];
+  urgentTasksList: Task[];
+  importantTasksList: Task[];
   activeTask: Task|null;
   error: string|null;
-  status: 'pending'|'loading'|'error'|'success';
+  targetTasksListStatus: 'pending'|'loading'|'error'|'success';
+  urgentTasksListStatus: 'pending'|'loading'|'error'|'success';
+  importantTasksListStatus: 'pending'|'loading'|'error'|'success';
 }
 
 const initialState: TasksState = {
-  tasksList: [],
+  targetTasksList: [],
+  urgentTasksList: [],
+  importantTasksList: [],
   activeTask: null,
   error: null,
-  status: 'pending',
+  targetTasksListStatus: 'pending',
+  urgentTasksListStatus: 'pending',
+  importantTasksListStatus: 'pending',
 }
 
 export const TaskReducer = createReducer(
@@ -32,25 +40,43 @@ export const TaskReducer = createReducer(
     return ({...state,error})
   }),
   on(TaskAPIActions.loadTargetTasksSuccess, (state,{tasks}) => {
-    return ({...state,tasksList: tasks,status:'success'})
+    return ({...state,targetTasksList: tasks,targetTasksListStatus:'success'})
   }),
   on(TaskAPIActions.addTaskSuccess, (state,{task})=> {
-    return ({...state,tasksList: [task,...state.tasksList]})
+    return ({...state,targetTasksList: [task,...state.targetTasksList]})
   }),
   on(TaskAPIActions.AddTaskFailure, (state,{error})=> {
     return ({...state,error})
   }),
+  on(TaskAPIActions.addUrgentTaskSuccess, (state,{task})=> {
+    return ({...state,urgentTasksList: [...state.urgentTasksList,task]})
+  }),
   on(TaskAPIActions.updateTaskSuccess,(state,{changedTask})=> {
-    return ({...state, tasksList: state.tasksList.map(t => t.id === changedTask.id ? changedTask : t)})
+    console.log(changedTask)
+    if (changedTask.target_id){
+      return ({...state, targetTasksList: state.targetTasksList.map(t => t.id === changedTask.id ? changedTask : t)})
+    }else if (changedTask.priority === 'Urgent' && changedTask.end_date){
+      return ({...state, urgentTasksList: state.urgentTasksList.map(t => t.id === changedTask.id ? changedTask : t)})
+    }else if (changedTask.priority === 'High'){
+      return ({...state, importantTasksList: state.urgentTasksList.map(t => t.id === changedTask.id ? changedTask : t)})
+    }
+    console.log('NOTHING!')
+    return state;
   }),
   on(TaskAPIActions.updateTaskFailure, (state,{error})=> {
     return ({...state,error})
   }),
   on(TaskAPIActions.deleteTaskSuccess,(state,{taskId})=>{
-    return ({...state,tasksList: state.tasksList.filter(t => t.id !== taskId)})
+    return ({...state,targetTasksList: state.targetTasksList.filter(t => t.id !== taskId)})
   }),
   on(TaskAPIActions.deleteTaskFailure, (state,{error})=>{
     return ({...state,error})
+  }),
+  on(TaskAPIActions.loadUrgentTasksSuccess, (state,{tasks}) => {
+    return ({...state,urgentTasksList: tasks,urgentTasksListStatus:'success'})
+  }),
+  on(TaskAPIActions.loadImportantTasksSuccess, (state,{tasks}) => {
+    return ({...state,importantTasksList: tasks,importantTasksListStatus:'success'})
   }),
   on(TaskPageActions.clear, () => initialState)
 )
