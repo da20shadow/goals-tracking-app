@@ -7,7 +7,6 @@ import {SharedModule} from "../shared/components/shared.module";
 import {FormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
-import {TasksListModule} from "../shared/components/tasks-list/tasks-list.module";
 
 
 @NgModule({
@@ -21,7 +20,6 @@ import {TasksListModule} from "../shared/components/tasks-list/tasks-list.module
         MatMenuModule,
         TasksRoutingModule,
         SharedModule,
-        TasksListModule,
     ]
 })
 export class TasksModule {

@@ -6,6 +6,10 @@ import {TaskDetailsComponent} from "./task-details/task-details.component";
 const routes: Routes = [
   {path: 'all',loadChildren: () =>
   import('./all-tasks/all-tasks.module').then(m => m.AllTasksModule)},
+  {path: 'urgent',loadChildren: () =>
+      import('./urgent-tasks/urgent-tasks.module').then(m => m.UrgentTasksModule)},
+  {path: 'important',loadChildren: () =>
+      import('./important-tasks/important-tasks.module').then(m => m.ImportantTasksModule)},
   {path: ':id', component: TaskDetailsComponent},
 ];
 
