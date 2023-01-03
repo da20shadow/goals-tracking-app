@@ -11,15 +11,35 @@ const selectActiveTask = createSelector(
 );
 const selectTargetTasksList = createSelector(
   selectTasksState,
-  state => state.tasksList
+  state => state.targetTasksList
 );
-const selectTasksStateStatus = createSelector(
+const selectUrgentTasksList = createSelector(
   selectTasksState,
-  state => state.status
+  state => state.urgentTasksList
+);
+const selectImportantTasksList = createSelector(
+  selectTasksState,
+  state => state.importantTasksList
+);
+const selectTargetTasksStateStatus = createSelector(
+  selectTasksState,
+  state => state.targetTasksListStatus
+);
+const selectUrgentTasksStateStatus = createSelector(
+  selectTasksState,
+  state => state.urgentTasksListStatus
+);
+const selectImportantTasksStateStatus = createSelector(
+  selectTasksState,
+  state => state.importantTasksListStatus
 );
 export const taskSelectors = {
   selectTasksState,
   selectActiveTask,
   selectTargetTasksList,
-  selectTasksStateStatus,
+  selectUrgentTasksList,
+  selectImportantTasksList,
+  selectTargetTasksStateStatus,
+  selectUrgentTasksStateStatus,
+  selectImportantTasksStateStatus
 }
