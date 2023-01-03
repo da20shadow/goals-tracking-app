@@ -13,6 +13,7 @@ import {TargetApiActions} from "../../Store/tartgets-store/target-api.actions";
 import {TaskPageActions} from "../../Store/task-store/task-page.actions";
 import {Operations} from "../../shared/enums/Operations";
 import { Title } from '@angular/platform-browser';
+import {GoalPageActions} from "../../Store/goals-store/goal-page.actions";
 
 @Component({
   selector: 'app-target-details',
@@ -115,6 +116,7 @@ export class TargetDetailsComponent {
       total_completed_tasks
     };
     this.store$.dispatch(TargetApiActions.updateActiveTargetSuccess({target}))
+    this.store$.dispatch(GoalPageActions.clear())
   }
 }
 
