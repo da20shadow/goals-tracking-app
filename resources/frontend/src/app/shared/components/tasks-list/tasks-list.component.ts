@@ -13,6 +13,7 @@ import {ModalService} from "../../../core/services/modal.service";
 import {AddTaskModalComponent} from "./add-task-modal/add-task-modal.component";
 import {TaskPageActions} from "../../../Store/task-store/task-page.actions";
 import {taskSelectors} from "../../../Store/task-store/task-selectors";
+import {ViewTaskModalComponent} from "./view-task-modal/view-task-modal.component";
 
 @Component({
   selector: 'app-tasks-list',
@@ -35,6 +36,7 @@ import {taskSelectors} from "../../../Store/task-store/task-selectors";
 })
 export class TasksListComponent {
 
+  @Input() tasksListPriority!: any;
   @Input() tasksList: Task[] = [];
   @Input() targetId!: number;
   @Output() taskEvent = new EventEmitter();
@@ -53,18 +55,21 @@ export class TasksListComponent {
 
   addTaskFormHandler(addTaskFrom: NgForm) {
     if (addTaskFrom.invalid){
-      this.notificationService.showErrorNotification('Title Must be between 5 and 255 characters long!');
+      this.notificationService.showErrorNotification('Title Must be between 5 and 145 characters long!');
       return;}
-    if (!this.targetId){
-      this.notificationService.showErrorNotification('Target ID not set!');
-      return;
-    }
+
     const formData = addTaskFrom.value;
-    formData.target_id = this.targetId
 
     let task;
     task = {...state,title: formData.title}
-    task = {...task,target_id: this.targetId}
+
+    if (this.targetId){
+      task = {...task,target_id: this.targetId}
+    }
+
+    if (this.tasksListPriority === TaskPriority.URGENT){
+      task = {...task,priority: TaskPriority.URGENT}
+    }
 
     if (formData.priority !== ""){
       task = {...task,priority: formData.priority}
@@ -82,7 +87,13 @@ export class TasksListComponent {
     this.taskService.saveTask(task).subscribe({
       next: (response) => {
         this.notificationService.showSuccessNotification(response.message);
-        this.store$.dispatch(TaskAPIActions.addTaskSuccess({targetId:this.targetId, task:response.task}));
+        switch (this.tasksListPriority) {
+          case TaskPriority.URGENT:
+            this.store$.dispatch(TaskAPIActions.addUrgentTaskSuccess({task:response.task}));
+            break;
+          default:
+          this.store$.dispatch(TaskAPIActions.addTaskSuccess({targetId:this.targetId, task:response.task}));
+        }
         this.taskEvent.emit({operation: Operations.ADDED});
       },
       error: (err) => this.notificationService.showErrorNotification(err.error.message)
@@ -185,6 +196,10 @@ export class TasksListComponent {
       }
       this.showAddTaskModalForm = result.data.showModal;
     })
+  }
+
+  openTaskViewModal(task: Task) {
+    this.modalService.openFormModal(ViewTaskModalComponent,{task});
   }
 }
 

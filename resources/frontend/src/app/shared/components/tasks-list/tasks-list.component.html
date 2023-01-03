@@ -1,5 +1,168 @@
+<!--Tasks List Table -->
+<section [style]="'overflow-x:auto;'" class="overflow-x-auto md:p-5">
+
+  <table matSort (matSortChange)="sortData($event)" *ngIf="tasksList"
+         style="width:100%;"
+         class="w-full container-light dark:container-dark dark:shadow-gray-500">
+
+    <!--Table Header START-->
+    <thead>
+
+    <tr class="bg-[#364962] dark:bg-[#364962]">
+
+      <th class="mx-auto text-sm whitespace-nowrap px-2 py-3 uppercase"
+          mat-sort-header="title">
+        Task Title
+      </th>
+
+      <th class="mx-auto text-sm whitespace-nowrap px-2 py-3 uppercase"
+          mat-sort-header="status">
+        Status
+      </th>
+
+      <th class="hidden md:table-cell mx-auto text-sm whitespace-nowrap px-2 py-3 uppercase"
+          mat-sort-header="priority">
+        Priority
+      </th>
+
+      <th class="hidden md:table-cell mx-auto text-sm whitespace-nowrap px-2 py-3 uppercase"
+          mat-sort-header="endDate">
+        End Date
+      </th>
+
+      <th class="mx-auto text-sm whitespace-nowrap px-2 py-3 uppercase"></th>
+
+    </tr>
+
+    </thead>
+    <!--Table Header END-->
+
+    <tbody>
+
+    <!--Table Body Row START-->
+    <tr [@fadeInOut] *ngFor="let task of tasksList" [ngClass]="classes.tableBodyRow">
+
+      <!-- Task Title START -->
+      <td
+          class="relative p-2 flex gap-1 justify-between items-center dark:hover:bg-[#4b5563] cursor-pointer">
+
+        <span class="md:hidden" [routerLink]="['/tasks',task.id]">{{task.title}}</span>
+        <span class="hidden md:inline-block" (click)="openTaskViewModal(task)">{{task.title}}</span>
+        <input #showDescription type="hidden" value="false">
+
+        <!-- Task description Popup -->
+
+        <button class="hidden md:inline-block"
+                (mouseover)="showDescription.value='true'"
+                (mouseleave)="showDescription.value='false'">
+          <mat-icon>subject</mat-icon>
+        </button>
+
+        <ng-container *ngIf="showDescription.value === 'true'">
+          <div [innerHTML]="task.description"
+               class="w-[96vw] md:w-[80vw] absolute bottom-[40px] left-[20px] z-10 min-w-40 p-5 bg-white dark:text-gray-400 dark:bg-gray-900 border"></div>
+        </ng-container>
+
+        <!-- Task description Popup -->
+
+      </td>
+      <!-- Task Title END -->
+
+      <!-- Task Status -->
+      <td #selectorStatus mat-button [matMenuTriggerFor]="statusMenu"
+          [ngClass]="classes.tableBodyRowTD">
+        {{task.status}}
+        <mat-menu class="example-mat-menu dark:example-mat-menu-dark" #statusMenu="matMenu" xPosition="after">
+          <button (click)="updateTaskId(task.id,task.status,'status',status);
+                selectorStatus.innerText = status"
+                  *ngFor="let status of taskStatuses" mat-menu-item>
+            {{status}}
+          </button>
+        </mat-menu>
+      </td>
+      <!-- Task Status -->
+
+      <!-- Task Priority START -->
+      <td #selectorPriority mat-button [matMenuTriggerFor]="priorityMenu"
+          class="hidden md:table-cell dark:hover:bg-[#4b5563] w-[20px] border-l dark:border-gray-600 cursor-pointer">
+        <!--        {{task.priority}}-->
+        <ng-container [ngSwitch]="task.priority">
+          <mat-icon [style]="'color:darkred; padding: 3px 2px 0 3px; font-size:23px; height:31px; width:31px;'"
+                    *ngSwitchCase="TaskPriorityNames.URGENT">flag
+          </mat-icon>
+          <mat-icon [style]="'color:darkorange; padding: 3px 2px 0 3px; font-size:23px; height:31px; width:31px;'"
+                    *ngSwitchCase="TaskPriorityNames.HIGH">flag
+          </mat-icon>
+          <mat-icon [style]="'color: lightblue; padding: 3px 2px 0 3px; font-size:23px; height:31px; width:31px;'"
+                    *ngSwitchCase="TaskPriorityNames.LOW">flag
+          </mat-icon>
+          <mat-icon [style]="'color: darkgray; padding: 3px 2px 0 3px; font-size:23px; height:31px; width:31px;'"
+                    *ngSwitchCase="TaskPriorityNames.NO_PRIORITY">flag
+          </mat-icon>
+        </ng-container>
+        <mat-menu class="example-mat-menu" #priorityMenu="matMenu" xPosition="after">
+          <button (click)="updateTaskId(task.id,task.status,'priority',priority);
+                  selectorPriority.innerText = priority"
+                  *ngFor="let priority of taskPriority" mat-menu-item>
+            {{priority}}
+          </button>
+        </mat-menu>
+      </td>
+      <!-- Task Priority END -->
+
+      <!-- Task End Date START-->
+      <td #endDateSelector (click)="showEndDateInput.value = 'true'"
+          [ngClass]="showEndDateInput.value === 'true' ? classes.editTableBodyTD : classes.tableBodyRowTD"
+          class="hidden md:table-cell">
+        <input type="hidden" #showEndDateInput value="false"/>
+        <ng-container *ngIf="showEndDateInput.value === 'false'; else editEndDateInput">
+
+          <ng-container *ngIf="task.end_date; else noEndDateTemplate">
+            {{task?.end_date | date: 'd MMM, y H:mm'}}
+          </ng-container>
+
+          <ng-template #noEndDateTemplate>
+            <mat-icon>event_available</mat-icon>
+          </ng-template>
+
+        </ng-container>
+
+        <ng-template #editEndDateInput>
+          <input [ngClass]="classes.input"
+                 type="date"
+                 #endDate
+                 (change)="updateTaskId(task.id,task.status,'end_date',endDate.value);
+                  showEndDateInput.value='false';
+                  endDateSelector.innerText = toDate(endDate.value)"/>
+        </ng-template>
+      </td>
+      <!-- Task End Date END-->
+
+      <!-- Task Action Buttons START -->
+      <td class="w-[50px] max-w-[50px] border-l dark:border-gray-600">
+        <button class="text-gray-500 cursor-pointer text-[#a05e5e]"
+                (click)="openDeleteTaskModal(task)"
+                mat-raised-button
+                matTooltip="Delete Task"
+                matTooltipPosition="above"
+                matTooltipHideDelay="150">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+      <!-- Task Action Buttons END -->
+
+    </tr>
+    <!--Table Body Row END-->
+
+    </tbody>
+
+  </table>
+
+</section>
+<!--Tasks List Table -->
+
 <!-- Add New Task Form & Button -->
-<section class="m-5 flex" [ngClass]="{'justify-end':!showAddToDoTaskForm}">
+<section class="mx-5 flex" [ngClass]="{'justify-end':!showAddToDoTaskForm}">
 
   <!-- Add task Form -->
   <ng-container *ngIf="showAddToDoTaskForm">
@@ -105,190 +268,6 @@
 
 </section>
 <!-- Add New Task Form & Button -->
-
-<!--Tasks List Table -->
-<section [style]="'overflow-x:auto;'" class="overflow-x-auto">
-
-  <table matSort (matSortChange)="sortData($event)" *ngIf="tasksList"
-         style="width:100%;"
-         class="w-full container-light dark:container-dark dark:shadow-gray-500">
-
-    <!--Table Header START-->
-    <thead>
-
-    <tr class="bg-[#364962] dark:bg-[#364962]">
-
-      <th class="text-center whitespace-nowrap px-2 py-3 uppercase"
-          mat-sort-header="title">
-        Task Title
-      </th>
-
-      <th class="text-center whitespace-nowrap px-2 py-3 uppercase"
-          mat-sort-header="status">
-        Status
-      </th>
-
-      <th class="hidden md:table-cell text-center whitespace-nowrap px-2 py-3 uppercase"
-          mat-sort-header="priority">
-        Priority
-      </th>
-
-      <th class="hidden md:table-cell text-center whitespace-nowrap px-2 py-3 uppercase"
-          mat-sort-header="startDate">
-        Start Date
-      </th>
-
-      <th class="hidden md:table-cell text-center whitespace-nowrap px-2 py-3 uppercase"
-          mat-sort-header="endDate">
-        End Date
-      </th>
-
-      <th class="text-center whitespace-nowrap px-2 py-3 uppercase">
-        Action
-      </th>
-
-    </tr>
-
-    </thead>
-    <!--Table Header END-->
-
-    <tbody>
-
-    <!--Table Body Row START-->
-    <tr [@fadeInOut] *ngFor="let task of tasksList" [ngClass]="classes.tableBodyRow">
-
-      <!-- Task Title START -->
-      <td class="py-4 flex gap-1 justify-between dark:hover:bg-[#4b5563] cursor-pointer">
-
-        <span [routerLink]="['/tasks/',task.id]">{{task.title}}</span>
-
-        <!-- Task description Popup -->
-        <button class="hidden md:inline-block"
-                matTooltip="Show Task Description"
-                matTooltipPosition="above"
-                mat-button [matMenuTriggerFor]="description">
-          <mat-icon>subject</mat-icon>
-        </button>
-        <mat-menu #description="matMenu">
-          <p class="p-5 bg-white dark:text-gray-400 dark:bg-gray-900">
-            {{task.description}}
-          </p>
-        </mat-menu>
-        <!-- Task description Popup -->
-
-      </td>
-      <!-- Task Title END -->
-
-      <!-- Task Status START -->
-      <td #selectorStatus mat-button [matMenuTriggerFor]="statusMenu"
-          [ngClass]="classes.tableBodyRowTD">
-        {{task.status}}
-        <mat-menu class="example-mat-menu dark:example-mat-menu-dark" #statusMenu="matMenu" xPosition="after">
-          <button (click)="updateTaskId(task.id,task.status,'status',status);
-                selectorStatus.innerText = status"
-                  *ngFor="let status of taskStatuses" mat-menu-item>
-            {{status}}
-          </button>
-        </mat-menu>
-      </td>
-      <!-- Task Status END -->
-
-      <!-- Task Priority START -->
-      <td #selectorPriority mat-button [matMenuTriggerFor]="priorityMenu"
-          class="hidden md:table-cell py-3 dark:hover:bg-[#4b5563] w-[20px] border-l dark:border-gray-600 cursor-pointer">
-        <!--        {{task.priority}}-->
-        <ng-container [ngSwitch]="task.priority">
-          <mat-icon [style]="'color:darkred; padding: 3px 2px 0 3px; font-size:23px; height:31px; width:31px;'"
-                    *ngSwitchCase="TaskPriorityNames.URGENT">flag
-          </mat-icon>
-          <mat-icon [style]="'color:darkorange; padding: 3px 2px 0 3px; font-size:23px; height:31px; width:31px;'"
-                    *ngSwitchCase="TaskPriorityNames.HIGH">flag
-          </mat-icon>
-          <mat-icon [style]="'color: lightblue; padding: 3px 2px 0 3px; font-size:23px; height:31px; width:31px;'"
-                    *ngSwitchCase="TaskPriorityNames.LOW">flag
-          </mat-icon>
-          <mat-icon [style]="'color: darkgray; padding: 3px 2px 0 3px; font-size:23px; height:31px; width:31px;'"
-                    *ngSwitchCase="TaskPriorityNames.NO_PRIORITY">flag
-          </mat-icon>
-        </ng-container>
-        <mat-menu class="example-mat-menu" #priorityMenu="matMenu" xPosition="after">
-          <button (click)="updateTaskId(task.id,task.status,'priority',priority);
-                  selectorPriority.innerText = priority"
-                  *ngFor="let priority of taskPriority" mat-menu-item>
-            {{priority}}
-          </button>
-        </mat-menu>
-      </td>
-      <!-- Task Priority END -->
-
-      <!-- Task Start Date START-->
-      <td #startDateData (click)="showStartDateEditInput.value = 'true'"
-          [ngClass]="showStartDateEditInput.value === 'true' ? classes.editTableBodyTD : classes.tableBodyRowTD "
-          class="hidden md:table-cell">
-        <input type="hidden" #showStartDateEditInput value="false"/>
-        <ng-container *ngIf="showStartDateEditInput.value === 'false'; else editStartDate">
-          {{task?.start_date | date: 'MMM d, y, H:mm'}}
-        </ng-container>
-        <ng-template #editStartDate>
-          <input [ngClass]="classes.input"
-                 type="date"
-                 #startDate
-                 (change)="updateTaskId(task.id,task.status,'start_date',startDate.value);
-                  showStartDateEditInput.value='false';
-                  startDateData.innerText = toDate(startDate.value)"/>
-        </ng-template>
-      </td>
-      <!-- Task Start Date END-->
-
-      <!-- Task End Date START-->
-      <td #endDateSelector (click)="showEndDateInput.value = 'true'"
-          [ngClass]="showEndDateInput.value === 'true' ? classes.editTableBodyTD : classes.tableBodyRowTD"
-          class="hidden md:table-cell">
-        <input type="hidden" #showEndDateInput value="false"/>
-        <ng-container *ngIf="showEndDateInput.value === 'false'; else editEndDateInput">
-          {{task?.end_date | date: 'MMM d, y, H:mm'}}
-        </ng-container>
-        <ng-template #editEndDateInput>
-          <input [ngClass]="classes.input"
-                 type="date"
-                 #endDate
-                 (change)="updateTaskId(task.id,task.status,'end_date',endDate.value);
-                  showEndDateInput.value='false';
-                  endDateSelector.innerText = toDate(endDate.value)"/>
-        </ng-template>
-      </td>
-      <!-- Task End Date END-->
-
-      <!-- Task Action Buttons START -->
-      <td class="py-3 w-[50px] max-w-[50px] border-l dark:border-gray-600">
-        <button class="hidden md:inline-block text-gray-500 mr-2 cursor-pointer text-[#3174d3]"
-                (click)="openEditTaskModal(task)"
-                mat-raised-button
-                matTooltip="Edit Task"
-                matTooltipPosition="above"
-                matTooltipHideDelay="150">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button class="text-gray-500 cursor-pointer text-[#a05e5e]"
-                (click)="openDeleteTaskModal(task)"
-                mat-raised-button
-                matTooltip="Delete Task"
-                matTooltipPosition="above"
-                matTooltipHideDelay="150">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-      <!-- Task Action Buttons END -->
-
-    </tr>
-    <!--Table Body Row END-->
-
-    </tbody>
-
-  </table>
-
-</section>
-<!--Tasks List Table -->
 
 <!-- Add Task Button -->
 <div *ngIf="!showAddToDoTaskForm"
