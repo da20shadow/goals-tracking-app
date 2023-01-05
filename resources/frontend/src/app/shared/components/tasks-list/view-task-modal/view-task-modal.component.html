@@ -87,6 +87,7 @@
         </p>
 
         <div *ngIf="editStartDate" class="absolute top-1 z-10 bg-gray-100 dark:bg-gray-800 border px-3 py-2">
+          <span class="text-sm">Start Date</span>
           <app-date-time-picker [defaultDate]="task.start_date"
                                 (dateValueOutput)="updateTaskStartDate($event,task)"></app-date-time-picker>
           <button (click)="editStartDate=false">Close</button>
@@ -118,6 +119,7 @@
         </p>
 
         <div *ngIf="editEndDate" class="absolute top-1 z-10 bg-gray-100 dark:bg-gray-800 border px-3 py-2">
+          <span class="text-sm">End Date</span>
           <app-date-time-picker [defaultDate]="task.end_date"
                                 (dateValueOutput)="updateTaskEndDate($event,task)"></app-date-time-picker>
           <button class="text-sm px-2 py-1 border rounded-lg" (click)="editEndDate=false">Close</button>
