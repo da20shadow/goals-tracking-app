@@ -1,0 +1,15 @@
+<div class="flex my-2 border p-1">
+  <input class="bg-transparent pr-1 outline-0"
+         (change)="editDate(date.value,time.value)"
+         #date
+         type="date">
+
+  <span><mat-icon style="font-size: 21px;padding-top:5px;">schedule</mat-icon></span>
+
+  <select class="bg-transparent outline-0"
+          (change)="editDate(date.value,time.value)"
+          #time >
+    <option *ngFor="let hour of times" [value]="hour">{{hour}}</option>
+  </select>
+
+</div>
