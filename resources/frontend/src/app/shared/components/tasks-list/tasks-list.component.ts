@@ -60,8 +60,8 @@ export class TasksListComponent {
 
     const formData = addTaskFrom.value;
 
-    let task;
-    task = {...state,title: formData.title}
+    let task = {};
+    task = {...task,title: formData.title}
 
     if (this.targetId){
       task = {...task,target_id: this.targetId}
