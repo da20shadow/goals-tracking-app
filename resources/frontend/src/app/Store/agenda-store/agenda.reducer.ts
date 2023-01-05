@@ -1,4 +1,4 @@
-import {Task} from "src/app/core/models";
+import {Task, TaskStatus} from "src/app/core/models";
 import {createReducer, on} from "@ngrx/store";
 import {AgendaAPIActions} from "./agenda-api.actions";
 import {AgendaPageActions} from "./agenda-page.actions";
@@ -37,6 +37,15 @@ export const AgendaReducer = createReducer(
   }),
   on(AgendaAPIActions.loadTodayTasksFailure, (state,{error})=>{
     return({...state,error,todayTasksStatus: 'error'})
+  }),
+  on(AgendaAPIActions.updateTodayTaskSuccess, (state,{changedTask})=>{
+    if (changedTask.status === TaskStatus.COMPLETED){
+      return({...state,todayTasks: state.todayTasks.filter(t => t.id !== changedTask.id)})
+    }
+    return({...state,todayTasks: state.todayTasks.map(t => t.id === changedTask.id ? changedTask : t)})
+  }),
+  on(AgendaAPIActions.addTodayTaskSuccess, (state,{task})=>{
+    return({...state,todayTasks: [...state.todayTasks,task]})
   }),
   on(AgendaPageActions.loadOverdueTasks,(state) => {
     return ({...state,overdueTasksStatus:'loading'})
