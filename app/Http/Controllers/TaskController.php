@@ -14,20 +14,35 @@ class TaskController extends Controller
     {
         $user_id = auth()->user()->getAuthIdentifier();
 
-        $today = date('Y-m-d');
+        $year = date('Y');
+        $month = date('m');
+        $day = date('d');
 
         try {
-            $tasksList = DB::table('tasks')
-                ->where([
-                    ['user_id','=',$user_id],
-                    ['status','!=','Completed'],
-                    ['start_date','=',$today],
-                ])
-                ->orWhere([
-                    ['user_id','=',$user_id],
-                    ['status','!=','Completed'],
-                    ['end_date','=',$today],
-                ])->get();
+            $tasksList = DB::select(DB::raw("
+            SELECT *
+            FROM tasks
+            WHERE (user_id = $user_id
+                       AND YEAR(start_date) = $year
+                       AND MONTH(start_date) = $month
+                       AND DAY(start_date) = $day)
+	            OR (user_id = $user_id
+	                    AND YEAR(end_date) = $year
+	                    AND MONTH(end_date) = $month
+	                    AND DAY(end_date) = $day)
+            ORDER BY end_date, priority DESC;
+            "));
+//            $tasksList = DB::table('tasks')
+//                ->where([
+//                    ['user_id','=',$user_id],
+//                    ['status','!=','Completed'],
+//                    ['start_date','=',$today],
+//                ])
+//                ->orWhere([
+//                    ['user_id','=',$user_id],
+//                    ['status','!=','Completed'],
+//                    ['end_date','=',$today],
+//                ])->get();
         } catch (QueryException $exception) {
             return response()->json([
                 'message' => 'An Error Occur! Please, try again!',
