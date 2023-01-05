@@ -18,13 +18,16 @@ class TaskController extends Controller
 
         try {
             $tasksList = DB::table('tasks')
-                ->where(['user_id' => $user_id])
-                ->where('status', '!=', 'Completed')
-                ->whereDate('start_date', '=', $today)
-                ->orWhereDate('end_date', '=', $today)
-                ->orderBy('priority', 'desc')
-                ->orderBy('end_date')
-                ->get();
+                ->where([
+                    ['user_id','=',$user_id],
+                    ['status','!=','Completed'],
+                    ['start_date','=',$today],
+                ])
+                ->orWhere([
+                    ['user_id','=',$user_id],
+                    ['status','!=','Completed'],
+                    ['end_date','=',$today],
+                ])->get();
         } catch (QueryException $exception) {
             return response()->json([
                 'message' => 'An Error Occur! Please, try again!',
