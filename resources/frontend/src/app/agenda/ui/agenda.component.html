@@ -28,9 +28,12 @@
     </div>
     <ul *ngIf="(todayTasks$ | async) as todayTasks">
 
-      <li (click)="openViewTaskModal(task)" class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
+      <li class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative dark:bg-gray-800 dark:hover:bg-gray-700"
           *ngFor="let task of todayTasks">
-        <p class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
+        <p class="text-ellipsis overflow-hidden ...">
+          <span class="cursor-pointer hidden md:inline-block" (click)="openViewTaskModal(task)">{{task.title}}</span>
+          <span class="cursor-pointer inline-block md:hidden" [routerLink]="['/tasks',task.id]">{{task.title}}</span>
+        </p>
         <span class="text-sm absolute right-1">
           Today: {{task.start_date | date: 'H:mm'}} - {{task.end_date | date: 'H:mm'}}
         </span>
@@ -44,10 +47,13 @@
 
     <ul *ngIf="showOverdueTasks && (overdueTasks$ | async) as overdueTasks">
 
-      <li [@fadeInOut] (click)="openViewTaskModal(task)"
-          class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
+      <li [@fadeInOut]
+          class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative dark:bg-gray-800 dark:hover:bg-gray-700"
         *ngFor="let task of overdueTasks">
-        <p class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
+        <p class="text-ellipsis overflow-hidden ...">
+          <span class="cursor-pointer hidden md:inline-block" (click)="openViewTaskModal(task)">{{task.title}}</span>
+          <span class="cursor-pointer inline-block md:hidden" [routerLink]="['/tasks',task.id]">{{task.title}}</span>
+        </p>
         <span class="text-[12px] text-rose-300 absolute right-1">
           {{task.end_date | date: 'MMM d, y'}}
         </span>
@@ -62,10 +68,13 @@
 
     <ul *ngIf="showNextTasks && (nextTasks$ | async) as nextTasks">
 
-      <li [@fadeInOut] (click)="openViewTaskModal(task)"
-          class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
+      <li [@fadeInOut]
+          class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative dark:bg-gray-800 dark:hover:bg-gray-700"
           *ngFor="let task of nextTasks">
-        <p class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
+        <p class="text-ellipsis overflow-hidden ...">
+          <span class="cursor-pointer hidden md:inline-block" (click)="openViewTaskModal(task)">{{task.title}}</span>
+          <span class="cursor-pointer inline-block md:hidden" [routerLink]="['/tasks',task.id]">{{task.title}}</span>
+        </p>
         <span class="text-[12px] text-cyan-300 absolute right-1">
           {{task.start_date | date: 'E, dd MMM, y'}}
         </span>
@@ -80,10 +89,13 @@
 
     <ul *ngIf="showUnscheduledTasks && (unscheduledTasks$ | async) as unscheduledTasks">
 
-      <li [@fadeInOut] (click)="openViewTaskModal(task)"
-          class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700"
+      <li [@fadeInOut]
+          class="p-2 bg-gray-50 hover:bg-gray-100 border border-gray-50 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-500 text-sm flex items-center relative dark:bg-gray-800 dark:hover:bg-gray-700"
           *ngFor="let task of unscheduledTasks">
-        <p class="text-ellipsis overflow-hidden ...">{{task.title}}</p>
+        <p class="text-ellipsis overflow-hidden ...">
+          <span class="cursor-pointer hidden md:inline-block" (click)="openViewTaskModal(task)">{{task.title}}</span>
+          <span class="cursor-pointer inline-block md:hidden" [routerLink]="['/tasks',task.id]">{{task.title}}</span>
+        </p>
         <span class="text-[12px] text-cyan-300 absolute right-1">
           {{task.end_date | date: 'H:mm'}}
         </span>
@@ -113,10 +125,10 @@
       <span class="pl-5 md:pl-0 w-[70px] text-sm whitespace-nowrap">All Day</span>
       <div class="w-full">
 
-        <p class="p-2 m-1 text-sm text-ellipsis overflow-hidden ... cursor-pointer border bg-gray-800 hover:bg-gray-700 rounded "
+        <p class="p-2 m-1 text-sm text-ellipsis overflow-hidden ... border bg-gray-800 hover:bg-gray-700 rounded "
             *ngFor="let task of (todayTasks$ | async)">
-          <span class="hidden md:inline-block" (click)="openViewTaskModal(task)">{{task.title}}</span>
-          <span class="inline-block md:hidden" [routerLink]="['/tasks',task.id]">{{task.title}}</span>
+          <span class="cursor-pointer hidden md:inline-block" (click)="openViewTaskModal(task)">{{task.title}}</span>
+          <span class="cursor-pointer inline-block md:hidden" [routerLink]="['/tasks',task.id]">{{task.title}}</span>
 
         </p>
 
@@ -132,9 +144,9 @@
 
         <!-- Hours -->
         <div class="w-[70px] h-[60px] flex justify-center text-sm relative"
-           *ngFor="let time of times">
+           *ngFor="let hour of times">
 
-          <span>{{time.hour}}</span>
+          <span>{{hour}}</span>
 
         </div>
         <!-- Hours -->
