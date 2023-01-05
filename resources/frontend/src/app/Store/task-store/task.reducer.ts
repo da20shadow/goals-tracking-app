@@ -60,7 +60,6 @@ export const TaskReducer = createReducer(
     }else if (changedTask.priority === 'High'){
       return ({...state, importantTasksList: state.urgentTasksList.map(t => t.id === changedTask.id ? changedTask : t)})
     }
-    console.log('NOTHING!')
     return state;
   }),
   on(TaskAPIActions.updateTaskFailure, (state,{error})=> {
