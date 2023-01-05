@@ -15,6 +15,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {DateTimePickerModule} from "../date-time-picker/date-time-picker.module";
 
 @NgModule({
   declarations: [
@@ -22,22 +23,23 @@ import {MatNativeDateModule} from "@angular/material/core";
     AddTaskModalComponent,
     ViewTaskModalComponent
   ],
-  imports: [
-    CommonModule,
-    MatMenuModule,
-    MatIconModule,
-    MatSortModule,
-    MatTooltipModule,
-    MatCheckboxModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    RouterModule,
-    FormsModule,
-    RichTextEditorModule,
-  ],
+    imports: [
+        CommonModule,
+        MatMenuModule,
+        MatIconModule,
+        MatSortModule,
+        MatTooltipModule,
+        MatCheckboxModule,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        RouterModule,
+        FormsModule,
+        RichTextEditorModule,
+        DateTimePickerModule,
+    ],
   providers:[MatDatepickerModule],
   exports: [TasksListComponent]
 })

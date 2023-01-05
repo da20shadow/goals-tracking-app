@@ -1,4 +1,4 @@
-<section class="container-light dark:container-dark w-[96vw] md:w-[85vw]" >
+<section class="container-light dark:container-dark w-[96vw] md:w-[85vw]">
 
   <!-- Status, Priority, Edit button -->
   <div class="flex justify-between border-b">
@@ -66,22 +66,31 @@
     <div class="flex gap-2">
 
       <div class="border-r px-2">
+
         <p class="text-[11px] text-center uppercase">Created: </p>
         <p class="flex text-[11px] whitespace-nowrap py-1">
           <mat-icon style="font-size:13px;">calendar_today</mat-icon>
           {{task.created_at | date: 'd MMM, y HH:mm' }}
         </p>
+
       </div>
 
-      <div class="border-r px-2">
+      <div class="relative border-r px-2">
+
         <p class="text-[11px] text-center uppercase">Start Date</p>
-        <p class="flex text-[11px] whitespace-nowrap py-1">
+        <p class="flex text-[11px] whitespace-nowrap py-1 cursor-pointer" (click)="editStartDate=true">
           <mat-icon style="font-size:13px;">calendar_today</mat-icon>
           <span *ngIf="task.start_date">
             {{task.start_date | date: 'd MMM, y HH:mm' }}
           </span>
           <span *ngIf="!task.start_date">No Start Date</span>
         </p>
+
+        <div *ngIf="editStartDate" class="absolute top-1 z-10 bg-gray-100 dark:bg-gray-800 border px-3 py-2">
+          <app-date-time-picker [defaultDate]="task.start_date"
+                                (dateValueOutput)="updateTaskStartDate($event,task)"></app-date-time-picker>
+          <button (click)="editStartDate=false">Close</button>
+        </div>
 
 <!--        <mat-form-field (change)="updateTaskDates(task)" appearance="fill">-->
 <!--          <mat-label>Enter a date range</mat-label>-->
@@ -99,15 +108,23 @@
 
       </div>
 
-      <div class=" px-2">
+      <!-- End Date -->
+      <div class="relative px-2">
         <p class="text-[11px] text-center uppercase">End Date</p>
-        <p class="flex text-[11px] whitespace-nowrap py-1">
+        <p class="flex text-[11px] whitespace-nowrap py-1 cursor-pointer" (click)="editEndDate=true">
           <mat-icon style="font-size:13px;">event</mat-icon>
-          <span *ngIf="task.end_date">{{task.end_date | date: 'd MMM, y HH:mm' }}</span>
+          <span *ngIf="task.end_date">{{task.end_date | date: 'd MMM, y HH:mm'}}</span>
           <span *ngIf="!task.end_date">No End Date</span>
-
         </p>
+
+        <div *ngIf="editEndDate" class="absolute top-1 z-10 bg-gray-100 dark:bg-gray-800 border px-3 py-2">
+          <app-date-time-picker [defaultDate]="task.end_date"
+                                (dateValueOutput)="updateTaskEndDate($event,task)"></app-date-time-picker>
+          <button class="text-sm px-2 py-1 border rounded-lg" (click)="editEndDate=false">Close</button>
+        </div>
+
       </div>
+      <!-- End Date -->
 
     </div>
     <!--Created,Start and End Dates -->
@@ -146,13 +163,23 @@
   <!-- Task Tags -->
 
   <!-- Task Title -->
+<!--  <h1 class="dark:c-text-dark my-5 md:mt-0 text-[25px] md:text-3xl tracking-tight">-->
+<!--    <span class="dark:text-orange-200 font-bold">✔ </span>-->
+<!--    <span #title class="px-2"-->
+<!--          [contentEditable]="editTitle"-->
+<!--          [innerText]="task.title"-->
+<!--          (click)="editTitle=true"-->
+<!--          (focusout)="updateTaskId(task.id,task.status,'title',title.innerText);editTitle=false"></span>-->
+<!--  </h1>-->
   <h1 class="dark:c-text-dark my-5 md:mt-0 text-[25px] md:text-3xl tracking-tight">
-    <span class="dark:text-orange-200 font-bold">✔ </span>
-    <span #title class="px-2"
-          [contentEditable]="editTitle"
-          [innerText]="task.title"
-          (click)="editTitle=true"
-          (focusout)="updateTaskId(task.id,task.status,'title',title.innerText);editTitle=false"></span>
+    <span *ngIf="!editTitle" class="dark:text-orange-200 font-bold">✔ </span>
+    <span *ngIf="!editTitle"
+          (click)="editTitle=true">{{task.title}}</span>
+
+    <span *ngIf="editTitle" class="w-[5%] dark:text-orange-200 font-bold">✏️</span>
+    <input *ngIf="editTitle" class="w-[95%] bg-transparent border px-3"
+           #title type="text" [value]="task.title"
+           (focusout)="updateTaskId(task.id,task.status,'title',title.value);editTitle=false">
   </h1>
   <!-- Task Title -->
 
@@ -160,12 +187,20 @@
   <h3 class="flex text-xl font-bold mt-3">
     <mat-icon>description</mat-icon> Task Description
   </h3>
-  <div class="border p-3 mb-5 dark:focus:bg-gray-800" #taskDescription
-       [contentEditable]="editDescription"
+  <div *ngIf="!editDescription" class="border p-3 mb-5 dark:focus:bg-gray-800"
        [innerHTML]="task.description"
-       (click)="editDescription=true"
-       (focusout)="updateTaskId(task.id,task.status,'description',taskDescription.innerHTML);editDescription=false"></div>
-<!--  <app-rich-text-editor (html)="updateTaskDesc($event,task)" [defaultText]="task.description"></app-rich-text-editor>-->
+       (click)="editDescription=true"></div>
+  <ng-container *ngIf="editDescription">
+    <app-rich-text-editor class="mb-5"
+                          [defaultText]="task.description"
+                          (html)="updateTaskDescription($event)"
+    ></app-rich-text-editor>
+    <button class="px-3 py-1 my-5 mr-1 border hover:bg-gray-100 dark:hover:bg-gray-700 dark:active:bg-gray-800"
+            (click)="updateTaskId(task.id,task.status,'description',taskDescription);
+            editDescription=false">Save</button>
+    <button class="px-3 py-1 my-5 border hover:bg-gray-100 dark:hover:bg-gray-700 dark:active:bg-gray-800"
+      (click)="editDescription=false">Cancel</button>
+  </ng-container>
   <!-- HTML Description -->
 
   <!-- Checklist -->
