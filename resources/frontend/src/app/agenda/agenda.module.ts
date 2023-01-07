@@ -1,14 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { AgendaRoutingModule } from './agenda-routing.module';
-import { AgendaComponent } from './ui/agenda.component';
+import {AgendaRoutingModule} from './agenda-routing.module';
+import {AgendaComponent} from './ui/agenda.component';
 import {FormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
 import {SharedModule} from "../shared/components/shared.module";
-import { CalendarComponent } from './calendar/calendar.component';
+import {CalendarComponent} from './calendar/calendar.component';
 
 
 @NgModule({
@@ -26,4 +26,5 @@ import { CalendarComponent } from './calendar/calendar.component';
     SharedModule,
   ]
 })
-export class AgendaModule { }
+export class AgendaModule {
+}
