@@ -23,17 +23,16 @@ import {TargetEffects} from "./Store/tartgets-store/target.effects";
 import {TaskApiEffects} from "./Store/task-store/task-api.effects";
 import {LoadingInterceptor} from "./core/interceptors/loading.interceptor";
 import {AgendaApiEffects} from "./Store/agenda-store/agenda-api.effects";
-import { RouterModule } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
+import {RouterModule} from '@angular/router';
+import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 
 
-
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +74,8 @@ import {MatListModule} from "@angular/material/list";
       multi: true
     },
     {provide: APP_BASE_HREF, useValue: '/'}
+  ],
+  exports: [
   ],
   bootstrap: [AppComponent]
 })
