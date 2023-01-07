@@ -14,8 +14,8 @@ export class TaskService {
     return this.http.get<Task[]>(ApiUrls.TARGET_TASKS+`/${targetId}`);
   }
 
-  updateTask(taskId: number, changedTask: any) {
-  return this.http.patch<TaskApiResponse>(ApiUrls.TASK_UPDATE+`/${taskId}`,changedTask);
+  updateTask(taskId: number, changedTaskFields: any) {
+  return this.http.patch<TaskApiResponse>(ApiUrls.TASK_UPDATE+`/${taskId}`,changedTaskFields);
   }
 
   saveTask(task: any) {
