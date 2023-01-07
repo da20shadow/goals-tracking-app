@@ -23,10 +23,12 @@ class TaskController extends Controller
             SELECT *
             FROM tasks
             WHERE (user_id = $user_id
+                       AND status != 'Completed'
                        AND YEAR(start_date) = $year
                        AND MONTH(start_date) = $month
                        AND DAY(start_date) = $day)
 	            OR (user_id = $user_id
+	                    AND status != 'Completed'
 	                    AND YEAR(end_date) = $year
 	                    AND MONTH(end_date) = $month
 	                    AND DAY(end_date) = $day)
