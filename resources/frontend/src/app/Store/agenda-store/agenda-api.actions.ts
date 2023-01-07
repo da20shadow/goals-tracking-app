@@ -14,7 +14,9 @@ const loadUnscheduledTasksSuccess = createAction("[AGENDA PAGE] Load Unscheduled
 const loadUnscheduledTasksFailure = createAction("[AGENDA PAGE] Load Unscheduled Tasks Failure",props<{error: string}>());
 
 const addTodayTaskSuccess = createAction("[AGENDA PAGE] ADD TODAY'S TASK Success",props<{task:Task}>())
-const updateTodayTaskSuccess = createAction("[AGENDA PAGE] UPDATE TODAY'S TASK Success",props<{changedTask:Task}>())
+
+const updateTaskSuccess = createAction("[AGENDA PAGE] UPDATE TASK Success",props<{oldTaskState:Task,changedTask:Task}>())
+const updateTaskFailure = createAction("[AGENDA PAGE] UPDATE TASK Failure",props<{error: string}>())
 
 export const AgendaAPIActions = {
   loadTodayTasksSuccess,
@@ -26,5 +28,6 @@ export const AgendaAPIActions = {
   loadUnscheduledTasksSuccess,
   loadUnscheduledTasksFailure,
   addTodayTaskSuccess,
-  updateTodayTaskSuccess,
+  updateTaskSuccess,
+  updateTaskFailure,
 }
