@@ -34,9 +34,8 @@
           <span class="cursor-pointer hidden md:inline-block" (click)="openViewTaskModal(task)">{{task.title}}</span>
           <span class="cursor-pointer inline-block md:hidden" [routerLink]="['/tasks',task.id]">{{task.title}}</span>
         </p>
-        <span class="text-sm absolute right-1">
-          Today: {{task.start_date | date: 'H:mm'}} - {{task.end_date | date: 'H:mm'}}
-        </span>
+        <!-- TODO: if end date is tomorrow to show tomorrow 14:00 or Fri 13:30 etc -->
+        <span class="text-[0.75rem] absolute right-1">{{task.start_date | taskTime: task.end_date}}</span>
       </li>
     </ul>
     <!-- Today Tasks List -->
