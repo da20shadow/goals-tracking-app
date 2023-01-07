@@ -135,6 +135,22 @@ export class AgendaApiEffects {
     )
   });
 
+  updateTask$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AgendaPageActions.updateTask),
+      switchMap(({oldTaskState,changedFieldsTask}) => {
+        return from(this.taskService.updateTask(oldTaskState.id,changedFieldsTask)).pipe(
+          map((response) => {
+            return AgendaAPIActions.updateTaskSuccess({oldTaskState, changedTask: response.task})
+          }),
+          catchError(err => {
+            return of(AgendaAPIActions.updateTaskFailure({error: err.error.message}))
+          })
+        )
+      })
+    )
+  });
+
   constructor(private actions$: Actions,
               private store$: Store,
               private taskService: TaskService,
