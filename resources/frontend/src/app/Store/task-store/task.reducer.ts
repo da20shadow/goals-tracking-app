@@ -40,6 +40,7 @@ export const TaskReducer = createReducer(
     return ({...state,error})
   }),
   on(TaskAPIActions.loadTargetTasksSuccess, (state,{tasks}) => {
+    if (!tasks){tasks = []}
     return ({...state,targetTasksList: tasks,targetTasksListStatus:'success'})
   }),
   on(TaskAPIActions.addTaskSuccess, (state,{task})=> {
@@ -72,9 +73,11 @@ export const TaskReducer = createReducer(
     return ({...state,error})
   }),
   on(TaskAPIActions.loadUrgentTasksSuccess, (state,{tasks}) => {
+    if (!tasks){tasks=[]}
     return ({...state,urgentTasksList: tasks,urgentTasksListStatus:'success'})
   }),
   on(TaskAPIActions.loadImportantTasksSuccess, (state,{tasks}) => {
+    if (!tasks){tasks=[]}
     return ({...state,importantTasksList: tasks,importantTasksListStatus:'success'})
   }),
   on(TaskPageActions.clear, () => initialState)
