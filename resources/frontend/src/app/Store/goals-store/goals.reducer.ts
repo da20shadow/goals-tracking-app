@@ -27,19 +27,12 @@ export const GoalsReducer = createReducer(
     })
   }),
   on(GoalsAPIActions.loadGoalsSuccess, (state, {goals}) => {
-    if (goals && goals.length > 0){
-      return ({
-        ...state,
-        goals: goals,
-        error: null,
-        status: 'success'
-      })
-    }
+    if (!goals){goals=[]}
     return ({
       ...state,
       goals: goals,
       error: null,
-      status: 'pending'
+      status: 'success'
     })
   }),
   on(GoalsAPIActions.loadGoalsFailure, (state,{error})=>{
