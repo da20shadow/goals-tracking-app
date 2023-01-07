@@ -24,6 +24,7 @@ export const TargetReducer = createReducer(
   initialState,
   on(TargetPageActions.clear,()=>initialState),
   on(TargetApiActions.loadTargetsListSuccess, (state,{targets}) => {
+    if (!targets){targets = []}
     return ({...state, targets, error: null, status: 'success'})
   }),
   on(TargetApiActions.addTargetSuccess, (state,{target}) => {
