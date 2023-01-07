@@ -60,22 +60,10 @@ export class ViewTaskModalComponent {
     this.taskService.updateTask(id, changedTask).subscribe({
       next: (response) => {
         const changedTask = response.task;
-        let startDate;
-        if (changedTask.start_date) {
-          startDate = new Date(changedTask.start_date);
-        }
-        let endDate;
-        if (changedTask.end_date) {
-          endDate = new Date(changedTask.end_date);
-        }
-        const today = new Date();
-        if (startDate && startDate.getDate() === today.getDate() && startDate.getMonth() === today.getMonth() && startDate.getFullYear() === today.getFullYear()
-          || endDate && endDate.getDate() === today.getDate() && endDate.getMonth() === today.getMonth() && endDate.getFullYear() === today.getFullYear()) {
-          this.store$.dispatch(AgendaAPIActions.updateTodayTaskSuccess({changedTask}));
-          if (changedTask.priority === TaskPriority.URGENT) {
-            this.store$.dispatch(TaskAPIActions.updateTaskSuccess({changedTask}))
-          }
-        }
+        this.store$.dispatch(AgendaAPIActions.updateTaskSuccess({oldTaskState:taskState,changedTask}));
+        // if (changedTask.priority === TaskPriority.URGENT) {
+        //   this.store$.dispatch(TaskAPIActions.updateTaskSuccess({changedTask}))
+        // }
       },
       error: err => {
         this.notificationService.showSuccessNotification(err.error.message);
