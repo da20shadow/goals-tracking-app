@@ -9,7 +9,6 @@ import {ModalService} from "../../core/services/modal.service";
 import {AddTaskModalComponent} from "../../shared/components/tasks-list/add-task-modal/add-task-modal.component";
 import {ViewTaskModalComponent} from "../../shared/components/tasks-list/view-task-modal/view-task-modal.component";
 import {TaskAPIActions} from "../../Store/task-store/task-api.actions";
-import {Operations} from "../../shared/enums/Operations";
 import {TaskService} from "../../tasks/services/task.service";
 import {NotificationService} from "../../core/services/notification.service";
 import {AgendaAPIActions} from "../../Store/agenda-store/agenda-api.actions";
@@ -62,11 +61,18 @@ export class AgendaComponent {
     this.hourNow = `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}`
     this.lineTopPx = `${(date.getHours() * 60) + date.getMinutes()}px`;
 
-    this.interval = setInterval(() => {
-      date = new Date();
-      this.hourNow = `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}`
-      this.lineTopPx = `${(date.getHours() * 60) + date.getMinutes()}px`;
-    },1000)
+    const secondsRemaining = (60 - date.getSeconds()) * 1000;
+
+    setTimeout(() => {
+
+      this.interval = setInterval(() => {
+        date = new Date();
+        this.hourNow = `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}`
+        this.lineTopPx = `${(date.getHours() * 60) + date.getMinutes()}px`;
+      },60 *1000)
+
+    }, secondsRemaining);
+
   }
 
   ngAfterViewInit(){
@@ -120,16 +126,13 @@ export class AgendaComponent {
 
   getOverdueTasks(){
     this.store$.dispatch(AgendaPageActions.getOverdueTasks());
-    console.log('Called Load overdue tasks')
   }
 
   getNextTasks(){
-    console.log('Called Load Next tasks')
     this.store$.dispatch(AgendaPageActions.getNextTasks());
   }
 
   getUnscheduledTasks(){
-    console.log('Called Load Unscheduled tasks')
     this.store$.dispatch(AgendaPageActions.getUnscheduledTasks());
   }
 
@@ -139,5 +142,33 @@ export class AgendaComponent {
 
   logScroll(scrollTop: number) {
     console.log(scrollTop)
+  }
+
+  calculateTopPx(task: Task) {
+    if (task.start_date){
+      const startDate = new Date(task.start_date);
+      return (startDate.getHours() * 60) + startDate.getMinutes();
+    }
+    return null;
+  }
+  calculateTaskHeight(task: Task){
+    if (task.start_date && task.end_date){
+      const startDate = new Date(task.start_date);
+      const startPx = (startDate.getHours() * 60) + startDate.getMinutes();
+      const endDate = new Date(task.end_date);
+      const endPx = (endDate.getHours() * 60) + endDate.getMinutes();
+      const height = endPx - startPx;
+      const max = 1440 - endPx
+      return height >= max ? max : height;
+    }
+    return null;
+  }
+
+  isAllDayTask(task: Task) {
+    const startDate = task.start_date ?new Date(task.start_date) : null;
+    const endDate = task.end_date ? new Date(task.end_date) : null;
+
+    return !!(startDate && startDate.getHours() === 0 && startDate.getMinutes() === 0
+      && endDate && endDate.getHours() === 0 && endDate.getMinutes() === 0);
   }
 }
