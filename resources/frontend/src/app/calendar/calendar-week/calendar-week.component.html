@@ -1,0 +1,228 @@
+<section class="h-[90vh] bg-white dark:bg-gray-900 overflow-auto">
+
+  <!-- Week Day Names -->
+  <section class="pt-2 ml-[3px] flex sticky top-0 z-30 dark:bg-gray-900 border-b dark:border-gray-600">
+
+    <div class="w-[70px]"></div>
+
+    <div class="px-5 w-[14%] border-l dark:border-gray-600">
+      <h4 class="text-sm md:text-lg">Monday</h4>
+      <p class="text-[10px] md:text-sm">2 Jan</p>
+    </div>
+
+    <div class="px-5 w-[14%] border-l dark:border-gray-600">
+      <h4 class="text-sm md:text-lg">Tuesday</h4>
+      <p class="text-[10px] md:text-sm">3 Jan</p>
+    </div>
+
+    <div class="px-5 w-[14%] border-l dark:border-gray-600">
+      <h4 class="text-sm md:text-lg">Wednesday</h4>
+      <p class="text-[10px] md:text-sm">4 Jan</p>
+    </div>
+
+    <div class="px-5 w-[14%] border-l dark:border-gray-600">
+      <h4 class="text-sm md:text-lg">Thursday</h4>
+      <p class="text-[10px] md:text-sm">5 Jan</p>
+    </div>
+
+    <div class="px-5 w-[14%] border-l dark:border-gray-600">
+      <h4 class="text-sm md:text-lg">Friday</h4>
+      <p class="text-[10px] md:text-sm">6 Jan</p>
+    </div>
+
+    <div class="px-5 w-[14%] border-l dark:border-gray-600">
+      <h4 class="text-sm md:text-lg">Saturday</h4>
+      <p class="text-[10px] md:text-sm">7 Jan</p>
+    </div>
+
+    <div class="px-5 w-[14%] border-l dark:border-gray-600">
+      <h4 class="text-sm md:text-lg">Sunday</h4>
+      <p class="text-[10px] md:text-sm">8 Jan</p>
+    </div>
+
+  </section>
+  <!-- Week Day Names -->
+
+  <section class="flex ">
+
+    <!-- Left Side Hours -->
+    <div class="w-[70px] h-[100%] border-r dark:border-gray-600">
+
+      <!-- Hours -->
+      <div class="w-[70px] h-[60px] flex justify-center text-sm relative"
+           *ngFor="let hour of times">
+
+        <span>{{hour}}</span>
+
+      </div>
+      <!-- Hours -->
+
+    </div>
+    <!-- Left Side Hours -->
+
+    <!-- Monday Tasks By Hour -->
+    <div class="w-[14%] relative border-r dark:border-gray-600">
+
+      <!-- Task Per Hour -->
+      <div *ngFor="let hour of times" class="h-[60px] border-b dark:border-gray-600">
+
+        <div class="cursor-pointer h-[30px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+        <div class="cursor-pointer h-[30px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+
+      </div>
+      <!-- Task Per Hour -->
+
+      <!-- Hour Now Line -->
+      <div class="flex items-center absolute left-[-58px] z-20" [style]="'top:'+lineTopPx">
+
+        <span class="px-2 text-orange-900 bg-orange-400 rounded-lg">{{hourNow}}</span>
+        <span class="h-[1px] w-[19vw] bg-orange-400"></span>
+
+      </div>
+      <!-- Hour Now Line -->
+
+    </div>
+    <!-- Monday Tasks By Hour -->
+
+    <!-- Tuesday Tasks By Hour -->
+    <div class="w-[14%] relative border-r dark:border-gray-600">
+
+      <!-- Task Per Hour -->
+      <div *ngFor="let hour of times" class="h-[60px] border-b dark:border-gray-600">
+
+        <div class="cursor-pointer h-[30px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+        <div class="cursor-pointer h-[30px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+
+      </div>
+      <!-- Task Per Hour -->
+
+      <!-- Hour Now Line -->
+      <div class="h-[24px] flex items-center absolute w-[100%] z-20" [style]="'top:'+lineTopPx">
+
+        <span class="h-[1px] w-[82vw] lg:w-[36vw] bg-orange-400"></span>
+
+      </div>
+      <!-- Hour Now Line -->
+
+    </div>
+    <!-- Tuesday Tasks By Hour -->
+
+    <!-- Wednesday Tasks By Hour -->
+    <div class="w-[14%] relative border-r dark:border-gray-600">
+
+      <!-- Task Per Hour -->
+      <div *ngFor="let hour of times" class="h-[60px] border-b dark:border-gray-600">
+
+        <div class="cursor-pointer h-[30px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+        <div class="cursor-pointer h-[30px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+
+      </div>
+      <!-- Task Per Hour -->
+
+      <!-- Hour Now Line -->
+      <div class="h-[24px] flex items-center absolute w-full z-20" [style]="'top:'+lineTopPx">
+
+        <span class="h-[1px] w-[82vw] lg:w-[36vw] bg-orange-400"></span>
+
+      </div>
+      <!-- Hour Now Line -->
+
+    </div>
+    <!-- Wednesday Tasks By Hour -->
+
+    <!-- Thursday Tasks By Hour -->
+    <div class="w-[14%] relative border-r dark:border-gray-600">
+
+      <!-- Task Per Hour -->
+      <div *ngFor="let hour of times" class="h-[60px] border-b dark:border-gray-600">
+
+        <div class="cursor-pointer h-[30px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+        <div class="cursor-pointer h-[30px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+
+      </div>
+      <!-- Task Per Hour -->
+
+      <!-- Hour Now Line -->
+      <div class="h-[24px] flex items-center absolute w-full z-20" [style]="'top:'+lineTopPx">
+
+        <span class="h-[1px] w-[82vw] lg:w-[36vw] bg-orange-400"></span>
+
+      </div>
+      <!-- Hour Now Line -->
+
+    </div>
+    <!-- Thursday Tasks By Hour -->
+
+    <!-- Friday Tasks By Hour -->
+    <div class="w-[14%] relative border-r dark:border-gray-600">
+
+      <!-- Task Per Hour -->
+      <div *ngFor="let hour of times" class="h-[60px] border-b dark:border-gray-600">
+
+        <div class="cursor-pointer h-[30px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+        <div class="cursor-pointer h-[30px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+
+      </div>
+      <!-- Task Per Hour -->
+
+      <!-- Hour Now Line -->
+      <div class="h-[24px] flex items-center absolute w-full z-20" [style]="'top:'+lineTopPx">
+
+        <span class="h-[1px] w-[82vw] lg:w-[36vw] bg-orange-400"></span>
+
+      </div>
+      <!-- Hour Now Line -->
+
+    </div>
+    <!-- Friday Tasks By Hour -->
+
+    <!-- Saturday Tasks By Hour -->
+    <div class="w-[14%] relative border-r dark:border-gray-600">
+
+      <!-- Task Per Hour -->
+      <div *ngFor="let hour of times" class="h-[60px] border-b dark:border-gray-600">
+
+        <div class="cursor-pointer h-[30px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+        <div class="cursor-pointer h-[30px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+
+      </div>
+      <!-- Task Per Hour -->
+
+      <!-- Hour Now Line -->
+      <div class="h-[24px] flex items-center absolute w-full z-20" [style]="'top:'+lineTopPx">
+
+        <span class="h-[1px] w-[82vw] lg:w-[36vw] bg-orange-400"></span>
+
+      </div>
+      <!-- Hour Now Line -->
+
+    </div>
+    <!-- Saturday Tasks By Hour -->
+
+    <!-- Sunday Tasks By Hour -->
+    <div class="w-[14%] relative border-r dark:border-gray-600">
+
+      <!-- Task Per Hour -->
+      <div *ngFor="let hour of times" class="h-[60px] border-b dark:border-gray-600">
+
+        <div class="cursor-pointer h-[30px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+        <div class="cursor-pointer h-[30px] hover:bg-gray-100 dark:hover:bg-gray-800"></div>
+
+      </div>
+      <!-- Task Per Hour -->
+
+      <!-- Hour Now Line -->
+      <div class="h-[24px] flex items-center absolute w-full z-20" [style]="'top:'+lineTopPx">
+
+        <span class="h-[1px] w-[82vw] lg:w-[36vw] bg-orange-400"></span>
+
+      </div>
+      <!-- Hour Now Line -->
+
+    </div>
+    <!-- Sunday Tasks By Hour -->
+
+  </section>
+
+
+</section>

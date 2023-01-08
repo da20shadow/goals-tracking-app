@@ -57,6 +57,12 @@ const routes: Routes = [
     canActivate: [isLoggedInGuardFn],
     canLoad: [isLoggedInGuardFn]
   },
+  {
+    path: 'calendar',loadChildren: () =>
+      import('./calendar/calendar.module').then(m => m.CalendarModule),
+    canActivate: [isLoggedInGuardFn],
+    canLoad: [isLoggedInGuardFn]
+  },
   {path: '**', component: NotFoundComponent, pathMatch:'full'},
 ];
 

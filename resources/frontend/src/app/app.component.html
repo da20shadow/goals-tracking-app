@@ -2,7 +2,7 @@
 <main class="mt-16">
   <router-outlet></router-outlet>
 </main>
-<app-footer></app-footer>
+<app-footer *ngIf="!isLogged$"></app-footer>
 
 <app-spinner></app-spinner>
 
