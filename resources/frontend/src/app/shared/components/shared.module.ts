@@ -7,15 +7,14 @@ import {TaskTimePipe} from "../pipes/task-time.pipe";
 @NgModule({
   declarations: [
     PageTitleComponent,
-    TaskTimePipe
-
+    TaskTimePipe,
   ],
   imports: [
     CommonModule,
   ],
   exports: [
     PageTitleComponent,
-    TaskTimePipe
+    TaskTimePipe,
   ],
 })
 export class SharedModule {
