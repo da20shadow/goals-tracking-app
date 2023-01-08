@@ -16,37 +16,34 @@ export class DateTimePickerComponent {
   pickedDate: string = '';
 
   ngAfterViewInit() {
-    let date;
     if (this.defaultDate) {
-      date = new Date(this.defaultDate);
-
-      const day = date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate();
-      const month = date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
-      const year = date.getFullYear();
+      const date = new Date(this.defaultDate);
 
       const hour = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
       const min = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
 
-      this.dateInput.nativeElement.value = `${year}-${month}-${day}`;
+      this.dateInput.nativeElement.value = `${this.dateToString(date)}`;
       this.timeInput.nativeElement.value = `${hour}:${min}`;
     }
   }
 
   editDate(date: string, time: string) {
-    console.log('EditDate')
     if (!date) {
-    console.log('no Date')
-      const today = new Date();
-      const day = today.getDate() < 10 ? '0' + (today.getDate()) : today.getDate();
-      const month = today.getMonth() < 10 ? '0' + (today.getMonth() + 1) : today.getMonth() + 1;
-      const year = today.getFullYear();
-      this.pickedDate = `${year}-${month}-${day} ${time}`;
-      this.dateInput.nativeElement.value = `${year}-${month}-${day}`;
+      const stringDate = this.dateToString(date);
+      this.pickedDate = `${stringDate} ${time}`;
+      this.dateInput.nativeElement.value = `${stringDate}`;
       this.dateValueOutput.emit(this.pickedDate);
       return;
     }
     this.pickedDate = `${date} ${time}`;
     this.dateValueOutput.emit(this.pickedDate);
+  }
+
+  dateToString(date: any){
+    const day = date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate();
+    const month = date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
   }
 
 }
