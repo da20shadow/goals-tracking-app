@@ -19,6 +19,8 @@ export class ViewTaskModalComponent {
 
   task!: Task;
   taskDescription: string = '';
+  taskStartDate: string|null = this.task?.start_date;
+  taskEndDate: string|null = this.task?.end_date;
 
   taskStatuses = Object.values(TaskStatus);
   taskPriority = Object.values(TaskPriority);
@@ -38,7 +40,7 @@ export class ViewTaskModalComponent {
     this.task = modalData.task;
   }
 
-  updateTaskId(id: number, status: TaskStatus | string, type: string, field: string) {
+  updateTaskId(id: number, status: TaskStatus | string, type: string, field: string|null) {
     //TODO:
     console.log('taskId', id)
     console.log('status', status)
@@ -60,7 +62,7 @@ export class ViewTaskModalComponent {
     this.taskService.updateTask(id, changedTask).subscribe({
       next: (response) => {
         const changedTask = response.task;
-        this.store$.dispatch(AgendaAPIActions.updateTaskSuccess({oldTaskState:taskState,changedTask}));
+        this.store$.dispatch(AgendaAPIActions.updateTaskSuccess({oldTaskState: taskState, changedTask}));
         // if (changedTask.priority === TaskPriority.URGENT) {
         //   this.store$.dispatch(TaskAPIActions.updateTaskSuccess({changedTask}))
         // }
@@ -83,7 +85,6 @@ export class ViewTaskModalComponent {
   }
 
   updateTaskDesc(html: any, task: Task) {
-    //TODO: add the rich text editor
     this.updateTaskId(task.id, task.status, 'description', html)
   }
 
@@ -105,11 +106,39 @@ export class ViewTaskModalComponent {
     this.taskDescription = $event;
   }
 
-  updateTaskEndDate(date: string,task: Task) {
-    this.updateTaskId(task.id,task.status,'end_date',date);
+  setStartDate(start_date: string){
+    this.taskStartDate = start_date;
+  }
+  setEndDate(end_date:string){
+    this.taskEndDate = end_date;
   }
 
-  updateTaskStartDate(date: string, task: Task) {
-    this.updateTaskId(task.id,task.status,'start_date',date);
+  updateTaskEndDate() {
+    if (this.taskEndDate && !this.areDatesValid('end_date')) { return; }
+    this.updateTaskId(this.task.id, this.task.status, 'end_date', this.taskEndDate);
+  }
+
+  updateTaskStartDate() {
+    if (this.taskStartDate && !this.areDatesValid('start_date')) { return; }
+    this.updateTaskId(this.task.id, this.task.status, 'start_date', this.taskStartDate);
+  }
+
+  areDatesValid(type: string){
+    if (type === 'end_date' && this.taskEndDate) {
+      const startDate = this.task.start_date ? new Date(this.task.start_date) : new Date();
+      const newEndDate = new Date(this.taskEndDate);
+      if (startDate > newEndDate) {
+        this.notificationService.showErrorNotification('End Date can not be before the start date!');
+        return false;
+      }
+    }else if (type === 'start_date' && this.taskStartDate){
+      const newStartDate = new Date(this.taskStartDate);
+      const endDate = this.task.end_date ? new Date(this.task.end_date) : null;
+      if (endDate && newStartDate > endDate) {
+        this.notificationService.showErrorNotification('End Date can not be before the start date!');
+        return false;
+      }
+    }
+    return true;
   }
 }
