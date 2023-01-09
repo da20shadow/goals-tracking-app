@@ -24,7 +24,7 @@
   <!-- Dark/Light Mode Button -->
   <button (click)="toggleDarkMode()" [ngClass]="classes.icon">
     <span class="sr-only">Dark/Light Mode</span>
-    <mat-icon>{{darkMode ? 'nightlight' : 'light_mode'}}</mat-icon>
+    <mat-icon>{{darkMode ? 'dark_mode' : 'light_mode'}}</mat-icon>
 
   </button>
 
@@ -139,6 +139,11 @@
       <li>
         <h4 class="mx-1 text-sm uppercase font-extrabold text-gray-500">Goals</h4>
         <nav>
+          <a [routerLink]="'goals'"
+             class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
+            <mat-icon [style]="'font-size:21px;'">insights</mat-icon>
+            Achievements
+          </a>
           <a [routerLink]="'goals'"
              class="text-sm flex dark:hover:text-gray-100 m-2 py-2 px-3 block hover:bg-gray-100 active:bg-gray-200 dark:bg-[#0b1727] dark:hover:bg-gray-700 dark:active:bg-gray-800 transition ease-in-out duration-300 rounded-md">
             <mat-icon [style]="'font-size:21px;'">sports_score</mat-icon>
