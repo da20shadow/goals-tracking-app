@@ -157,9 +157,8 @@ export class AgendaComponent {
       const startPx = (startDate.getHours() * 60) + startDate.getMinutes();
       const endDate = new Date(task.end_date);
       const endPx = (endDate.getHours() * 60) + endDate.getMinutes();
-      const height = endPx - startPx;
-      const max = 1440 - endPx
-      return height >= max ? max : height;
+      // const height = 1440 - (endPx + startPx);
+      return (endPx - startPx);
     }
     return null;
   }
