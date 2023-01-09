@@ -21,7 +21,7 @@ export class TaskTimePipe implements PipeTransform {
         if (today.getDate() - 1 === start.getDate()){
           return `Yesterday ${this.getTime(start)} - Today ${this.getTime(end)}`;
         }
-        return `${start.getDate()} ${monthNames[start.getMonth()]} ${this.getTime(start)} - Today ${this.getTime(end)}`;
+        return `${start.getDate()} ${monthNames[start.getMonth()]} ${this.getTime(start)} - ${end.getDate()} ${monthNames[end.getMonth()]} ${this.getTime(end)}`;
       }
 
       if (start.getDate() + 1 === end.getDate()){
