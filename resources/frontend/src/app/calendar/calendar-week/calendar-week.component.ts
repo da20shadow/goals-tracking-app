@@ -63,17 +63,14 @@ export class CalendarWeekComponent {
             this.thirdDay.push(t);
           }else if (this.today.getDate() + 3 === taskDate.getDate() && this.today.getMonth() === taskDate.getMonth()
             && this.today.getFullYear() === taskDate.getFullYear()){
-            this.thirdDay.push(t);
+            this.fourthDay.push(t);
           }else if (this.today.getDate() + 4 === taskDate.getDate() && this.today.getMonth() === taskDate.getMonth()
             && this.today.getFullYear() === taskDate.getFullYear()){
-            this.fourthDay.push(t);
+            this.fifthDay.push(t);
           }else if (this.today.getDate() + 5 === taskDate.getDate() && this.today.getMonth() === taskDate.getMonth()
             && this.today.getFullYear() === taskDate.getFullYear()){
-            this.fifthDay.push(t);
-          }else if (this.today.getDate() + 6 === taskDate.getDate() && this.today.getMonth() === taskDate.getMonth()
-            && this.today.getFullYear() === taskDate.getFullYear()){
             this.sixthDay.push(t);
-          }else if (this.today.getDate() + 7 === taskDate.getDate() && this.today.getMonth() === taskDate.getMonth()
+          }else if (this.today.getDate() + 6 === taskDate.getDate() && this.today.getMonth() === taskDate.getMonth()
             && this.today.getFullYear() === taskDate.getFullYear()){
             this.seventhDay.push(t);
           }
