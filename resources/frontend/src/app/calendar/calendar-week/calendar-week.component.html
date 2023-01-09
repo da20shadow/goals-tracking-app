@@ -6,38 +6,38 @@
     <div class="w-[70px]"></div>
 
     <div class="px-5 w-[14%] border-l dark:border-gray-600">
-      <h4 class="text-sm md:text-lg">Monday</h4>
-      <p class="text-[10px] md:text-sm">2 Jan</p>
+      <h4 class="text-sm md:text-lg">{{days[getDayName(today.getDay())]}}</h4>
+      <p class="text-[10px] md:text-sm">{{today.getDate()}} {{months[today.getMonth()]}}</p>
     </div>
 
     <div class="px-5 w-[14%] border-l dark:border-gray-600">
-      <h4 class="text-sm md:text-lg">Tuesday</h4>
-      <p class="text-[10px] md:text-sm">3 Jan</p>
+      <h4 class="text-sm md:text-lg">{{days[getDayName(today.getDay() + 1)]}}</h4>
+      <p class="text-[10px] md:text-sm">{{getDateAndMonth(today.getDate(),1)}}</p>
     </div>
 
     <div class="px-5 w-[14%] border-l dark:border-gray-600">
-      <h4 class="text-sm md:text-lg">Wednesday</h4>
-      <p class="text-[10px] md:text-sm">4 Jan</p>
+      <h4 class="text-sm md:text-lg">{{days[getDayName(today.getDay() + 2)]}}</h4>
+      <p class="text-[10px] md:text-sm">{{getDateAndMonth(today.getDate(),2)}}</p>
     </div>
 
     <div class="px-5 w-[14%] border-l dark:border-gray-600">
-      <h4 class="text-sm md:text-lg">Thursday</h4>
-      <p class="text-[10px] md:text-sm">5 Jan</p>
+      <h4 class="text-sm md:text-lg">{{days[getDayName(today.getDay() + 3)]}}</h4>
+      <p class="text-[10px] md:text-sm">{{getDateAndMonth(today.getDate(),3)}}</p>
     </div>
 
     <div class="px-5 w-[14%] border-l dark:border-gray-600">
-      <h4 class="text-sm md:text-lg">Friday</h4>
-      <p class="text-[10px] md:text-sm">6 Jan</p>
+      <h4 class="text-sm md:text-lg">{{days[getDayName(today.getDay() + 4)]}}</h4>
+      <p class="text-[10px] md:text-sm">{{getDateAndMonth(today.getDate(),4)}}</p>
     </div>
 
     <div class="px-5 w-[14%] border-l dark:border-gray-600">
-      <h4 class="text-sm md:text-lg">Saturday</h4>
-      <p class="text-[10px] md:text-sm">7 Jan</p>
+      <h4 class="text-sm md:text-lg">{{days[getDayName(today.getDay() + 5)]}}</h4>
+      <p class="text-[10px] md:text-sm">{{getDateAndMonth(today.getDate(),5)}}</p>
     </div>
 
     <div class="px-5 w-[14%] border-l dark:border-gray-600">
-      <h4 class="text-sm md:text-lg">Sunday</h4>
-      <p class="text-[10px] md:text-sm">8 Jan</p>
+      <h4 class="text-sm md:text-lg">{{days[getDayName(today.getDay() + 6)]}}</h4>
+      <p class="text-[10px] md:text-sm">{{getDateAndMonth(today.getDate(), 6)}}</p>
     </div>
 
   </section>
@@ -128,6 +128,27 @@
       </div>
       <!-- Hour Now Line -->
 
+      <!-- Second Day Tasks By Hour -->
+      <div class="absolute z-10 w-[100%] mx-[1px]"
+           *ngFor="let task of secondDay"
+           [style]="'top:'+calculateTopPx(task)+'px;'">
+
+        <ng-container *ngIf="calculateTaskHeight(task)">
+          <p [style]="'height:'+calculateTaskHeight(task)+'px'"
+             class="p-1 text-sm text-ellipsis overflow-hidden ... bg-gray-800 hover:bg-gray-700 border rounded">
+
+              <span class="cursor-pointer hidden md:inline-block"
+                    (click)="openViewTaskModal(task)">{{task.title}}</span>
+            <span class="cursor-pointer inline-block md:hidden"
+                  [routerLink]="['/tasks',task.id]">{{task.title}}</span>
+            <span class="absolute text-[10px] bottom-0 right-1">{{task.start_date | taskTime: task.end_date}}</span>
+
+          </p>
+        </ng-container>
+
+      </div>
+      <!-- Second Day Tasks By Hour -->
+
     </div>
     <!-- Tuesday Tasks By Hour -->
 
@@ -151,6 +172,27 @@
       </div>
       <!-- Hour Now Line -->
 
+      <!-- Third Day Tasks By Hour -->
+      <div class="absolute z-10 w-[100%] mx-[1px]"
+           *ngFor="let task of thirdDay"
+           [style]="'top:'+calculateTopPx(task)+'px;'">
+
+        <ng-container *ngIf="calculateTaskHeight(task)">
+          <p [style]="'height:'+calculateTaskHeight(task)+'px'"
+             class="p-1 text-sm text-ellipsis overflow-hidden ... bg-gray-800 hover:bg-gray-700 border rounded">
+
+              <span class="cursor-pointer hidden md:inline-block"
+                    (click)="openViewTaskModal(task)">{{task.title}}</span>
+            <span class="cursor-pointer inline-block md:hidden"
+                  [routerLink]="['/tasks',task.id]">{{task.title}}</span>
+            <span class="absolute text-[10px] bottom-0 right-1">{{task.start_date | taskTime: task.end_date}}</span>
+
+          </p>
+        </ng-container>
+
+      </div>
+      <!-- Third Day Tasks By Hour -->
+
     </div>
     <!-- Wednesday Tasks By Hour -->
 
@@ -174,6 +216,27 @@
       </div>
       <!-- Hour Now Line -->
 
+      <!-- Third Day Tasks By Hour -->
+      <div class="absolute z-10 w-[100%] mx-[1px]"
+           *ngFor="let task of fourthDay"
+           [style]="'top:'+calculateTopPx(task)+'px;'">
+
+        <ng-container *ngIf="calculateTaskHeight(task)">
+          <p [style]="'height:'+calculateTaskHeight(task)+'px'"
+             class="p-1 text-sm text-ellipsis overflow-hidden ... bg-gray-800 hover:bg-gray-700 border rounded">
+
+              <span class="cursor-pointer hidden md:inline-block"
+                    (click)="openViewTaskModal(task)">{{task.title}}</span>
+            <span class="cursor-pointer inline-block md:hidden"
+                  [routerLink]="['/tasks',task.id]">{{task.title}}</span>
+            <span class="absolute text-[10px] bottom-0 right-1">{{task.start_date | taskTime: task.end_date}}</span>
+
+          </p>
+        </ng-container>
+
+      </div>
+      <!-- Third Day Tasks By Hour -->
+
     </div>
     <!-- Thursday Tasks By Hour -->
 
@@ -197,6 +260,27 @@
       </div>
       <!-- Hour Now Line -->
 
+      <!-- Fourth Day Tasks By Hour -->
+      <div class="absolute z-10 w-[100%] mx-[1px]"
+           *ngFor="let task of fifthDay"
+           [style]="'top:'+calculateTopPx(task)+'px;'">
+
+        <ng-container *ngIf="calculateTaskHeight(task)">
+          <p [style]="'height:'+calculateTaskHeight(task)+'px'"
+             class="p-1 text-sm text-ellipsis overflow-hidden ... bg-gray-800 hover:bg-gray-700 border rounded">
+
+              <span class="cursor-pointer hidden md:inline-block"
+                    (click)="openViewTaskModal(task)">{{task.title}}</span>
+            <span class="cursor-pointer inline-block md:hidden"
+                  [routerLink]="['/tasks',task.id]">{{task.title}}</span>
+            <span class="absolute text-[10px] bottom-0 right-1">{{task.start_date | taskTime: task.end_date}}</span>
+
+          </p>
+        </ng-container>
+
+      </div>
+      <!-- Fourth Day Tasks By Hour -->
+
     </div>
     <!-- Friday Tasks By Hour -->
 
@@ -220,6 +304,27 @@
       </div>
       <!-- Hour Now Line -->
 
+      <!-- Fifth Day Tasks By Hour -->
+      <div class="absolute z-10 w-[100%] mx-[1px]"
+           *ngFor="let task of sixthDay"
+           [style]="'top:'+calculateTopPx(task)+'px;'">
+
+        <ng-container *ngIf="calculateTaskHeight(task)">
+          <p [style]="'height:'+calculateTaskHeight(task)+'px'"
+             class="p-1 text-sm text-ellipsis overflow-hidden ... bg-gray-800 hover:bg-gray-700 border rounded">
+
+              <span class="cursor-pointer hidden md:inline-block"
+                    (click)="openViewTaskModal(task)">{{task.title}}</span>
+            <span class="cursor-pointer inline-block md:hidden"
+                  [routerLink]="['/tasks',task.id]">{{task.title}}</span>
+            <span class="absolute text-[10px] bottom-0 right-1">{{task.start_date | taskTime: task.end_date}}</span>
+
+          </p>
+        </ng-container>
+
+      </div>
+      <!-- Fifth Day Tasks By Hour -->
+
     </div>
     <!-- Saturday Tasks By Hour -->
 
@@ -242,6 +347,27 @@
 
       </div>
       <!-- Hour Now Line -->
+
+      <!-- Sixth Day Tasks By Hour -->
+      <div class="absolute z-10 w-[100%] mx-[1px]"
+           *ngFor="let task of seventhDay"
+           [style]="'top:'+calculateTopPx(task)+'px;'">
+
+        <ng-container *ngIf="calculateTaskHeight(task)">
+          <p [style]="'height:'+calculateTaskHeight(task)+'px'"
+             class="p-1 text-sm text-ellipsis overflow-hidden ... bg-gray-800 hover:bg-gray-700 border rounded">
+
+              <span class="cursor-pointer hidden md:inline-block"
+                    (click)="openViewTaskModal(task)">{{task.title}}</span>
+            <span class="cursor-pointer inline-block md:hidden"
+                  [routerLink]="['/tasks',task.id]">{{task.title}}</span>
+            <span class="absolute text-[10px] bottom-0 right-1">{{task.start_date | taskTime: task.end_date}}</span>
+
+          </p>
+        </ng-container>
+
+      </div>
+      <!-- Sixth Day Tasks By Hour -->
 
     </div>
     <!-- Sunday Tasks By Hour -->
