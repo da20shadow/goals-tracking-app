@@ -1,11 +1,11 @@
 <section class="container-light dark:container-dark w-[96vw] md:w-[85vw]">
 
-  <!-- Status, Priority, Edit button -->
-  <div class="flex justify-between border-b">
+  <!-- Status, Priority, Dates & Edit button -->
+  <div class="flex justify-start border-b">
 
     <!-- Status & Priority -->
       <!-- TODO: add colors for status and priority depending on status and priority type green red orange -->
-    <section class="flex gap-3 items-center">
+    <section class="flex flex-wrap gap-3 items-center">
 
       <!-- TASK PRIORITY TODO: make it possible to change the priority also! -->
       <span #selectorPriority mat-button
@@ -43,7 +43,7 @@
       <div mat-button [matMenuTriggerFor]="statusMenu"
            class="dark:hover:bg-gray-700 pl-3 pr-1 py-1 cursor-pointer border rounded-md">
         <div class="flex items-center">
-          <span #selectorStatus>{{task.status}}</span>
+          <span class="whitespace-nowrap" #selectorStatus>{{task.status}}</span>
           <mat-icon>arrow_right</mat-icon>
         </div>
 
@@ -63,8 +63,9 @@
     <!-- Status & Priority -->
 
     <!--Created,Start and End Dates -->
-    <div class="flex gap-2">
+    <div class="hidden md:flex md:items-center gap-2">
 
+      <!--Created at -->
       <div class="border-r px-2">
 
         <p class="text-[11px] text-center uppercase">Created: </p>
@@ -74,8 +75,10 @@
         </p>
 
       </div>
+      <!--Created at -->
 
-      <div class="relative border-r px-2">
+      <!-- Start Date -->
+      <div class="relative px-2">
 
         <p class="text-[11px] text-center uppercase">Start Date</p>
         <p class="flex text-[11px] whitespace-nowrap py-1 cursor-pointer" (click)="editStartDate=true">
@@ -109,6 +112,9 @@
 <!--        </mat-form-field>-->
 
       </div>
+      <!-- Start Date -->
+
+      <mat-icon>arrow_forward_ios</mat-icon>
 
       <!-- End Date -->
       <div class="relative px-2">
@@ -134,7 +140,7 @@
     <!--Created,Start and End Dates -->
 
     <!-- Edit Goal Icon -->
-    <div class="border-none">
+    <div class="border-none absolute right-1 top-1">
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Task menu">
         <mat-icon>more_vert</mat-icon>
       </button>
@@ -153,7 +159,7 @@
     <!-- Edit Goal Icon -->
 
   </div>
-  <!-- Status, Priority, Edit button -->
+  <!-- Status, Priority, Dates & Edit button -->
 
   <!-- Task Tags -->
   <div class="flex items-center gap-1 text-sm my-3">
