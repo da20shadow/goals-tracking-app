@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CalendarWeekRoutingModule } from './calendar-week-routing.module';
 import { CalendarWeekComponent } from './calendar-week.component';
+import {SharedModule} from "../../shared/components/shared.module";
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { CalendarWeekComponent } from './calendar-week.component';
   ],
   imports: [
     CommonModule,
-    CalendarWeekRoutingModule
+    CalendarWeekRoutingModule,
+    SharedModule
   ]
 })
 export class CalendarWeekModule { }
