@@ -104,8 +104,11 @@ export class CalendarWeekComponent {
   }
 
   getDayName(day: number) {
-    if  (day >= 7){
+    console.log('day',day)
+    if  (day === 7){
       return 0;
+    }else if (day > 7){
+      day -= 7;
     }
     return day;
   }
