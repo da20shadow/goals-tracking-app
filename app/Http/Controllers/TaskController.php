@@ -187,8 +187,8 @@ class TaskController extends Controller
                 ->where(['user_id' => $user_id])
                 ->where('status', '!=', 'Completed')
                 ->whereDate('start_date', '>', $today)
-                ->orderBy('priority', 'desc')
                 ->orderBy('end_date')
+                ->orderBy('priority', 'desc')
                 ->get();
         } catch (QueryException $exception) {
             return response()->json([
