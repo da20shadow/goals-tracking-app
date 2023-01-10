@@ -1,19 +1,22 @@
-<section>
-  <button class="px-2 py-1" routerLink="/calendar/week">
-    <mat-icon>view_week</mat-icon>
-    <mat-icon>calendar_view_week</mat-icon>
-    Calendar Week
-  </button>
-  <button class="px-2 py-1" routerLink="/calendar/week">
-    <mat-icon>view_day</mat-icon>
-    Calendar Day
-  </button>
-  <h1>Here Will be the Month calendar!</h1>
-</section>
+
 
 <section class="p-5">
 
-  <h3>{{currentMonth}}</h3>
+  <section class="flex gap-3 py-2">
+
+    <h3>{{currentMonth}}</h3>
+
+    <button class="flex items-center px-2 py-1 border" routerLink="/calendar/week">
+      <mat-icon>calendar_view_week</mat-icon>
+      Calendar Week
+    </button>
+
+    <button class="flex items-center px-2 py-1 border" routerLink="/calendar/week">
+      <mat-icon>view_day</mat-icon>
+      Calendar Day
+    </button>
+
+  </section>
 
   <ul class="mb-5 grid grid-cols-7">
     <li class="py-3 text-center border">Monday</li>
