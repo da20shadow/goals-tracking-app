@@ -10,3 +10,50 @@
   </button>
   <h1>Here Will be the Month calendar!</h1>
 </section>
+
+<section class="p-5">
+
+  <h3>{{currentMonth}}</h3>
+
+  <ul class="mb-5 grid grid-cols-7">
+    <li class="py-3 text-center border">Monday</li>
+    <li class="py-3 text-center border">Tuesday</li>
+    <li class="py-3 text-center border">Wednesday</li>
+    <li class="py-3 text-center border">Thursday</li>
+    <li class="py-3 text-center border">Friday</li>
+    <li class="py-3 text-center border">Saturday</li>
+    <li class="py-3 text-center border">Sunday</li>
+  </ul>
+
+  <ul class="grid grid-cols-7">
+
+    <li *ngFor="let day of prevMonthLastDays" class="p-1 min-h-[130px] dark:bg-gray-800 border relative">
+
+<!--      <div class="px-2 py-1 mb-3 text-[13px] cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700 border rounded-md">-->
+<!--        <p>Maybe a task title here?</p>-->
+<!--      </div>-->
+
+      <span class="absolute bottom-0 right-1 text-[10px]">{{day}}</span>
+    </li>
+
+    <li *ngFor="let day of monthDays" class="p-1 min-h-[130px] border relative">
+
+      <div class="px-2 py-1 mb-3 text-[13px] cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700 border rounded-md">
+        <p>Maybe a task title here?</p>
+      </div>
+
+      <span class="absolute bottom-0 right-1 text-[10px]">{{day}}</span>
+    </li>
+
+    <li *ngFor="let day of nextMonthFirstDays" class="p-1 min-h-[130px] dark:bg-gray-800 border relative">
+
+<!--      <div class="px-2 py-1 mb-3 text-[13px] cursor-pointer dark:bg-gray-800 dark:hover:bg-gray-700 border rounded-md">-->
+<!--        <p>Maybe a task title here?</p>-->
+<!--      </div>-->
+
+      <span class="absolute bottom-0 right-1 text-[10px]">{{day}}</span>
+    </li>
+
+  </ul>
+
+</section>
