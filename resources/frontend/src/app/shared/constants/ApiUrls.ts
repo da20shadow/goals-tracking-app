@@ -28,6 +28,7 @@ export class ApiUrls {
 
   //Tasks API urls
   static readonly TASKS = `${BASE_URL}/tasks`; //Return Today's tasks
+  static readonly TASKS_BY_MONTH = `${BASE_URL}/tasks/month`;
   static readonly TASKS_ALL = `${BASE_URL}/tasks/all`;
   static readonly TASKS_OVERDUE = `${BASE_URL}/tasks/overdue`;
   static readonly TASKS_NEXT = `${BASE_URL}/tasks/next`;
