@@ -140,9 +140,9 @@
     <!--Created,Start and End Dates -->
 
     <!-- Edit Goal Icon -->
-    <div class="border-none absolute right-1 top-1">
+    <div class="border-none outline-none focus:outline-none">
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Task menu">
-        <mat-icon>more_vert</mat-icon>
+        <mat-icon>more_horiz</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item>
@@ -157,6 +157,10 @@
 
     </div>
     <!-- Edit Goal Icon -->
+
+    <span class="absolute top-2 right-2 cursor-pointer" mat-dialog-close>
+      <mat-icon>cancel</mat-icon>
+    </span>
 
   </div>
   <!-- Status, Priority, Dates & Edit button -->
