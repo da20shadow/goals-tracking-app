@@ -7,7 +7,7 @@ import { TargetDetailsComponent } from './target-details/target-details.componen
 import {FormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
-import {SharedModule} from "../shared/components/shared.module";
+import {SharedModule} from "../shared/shared.module";
 import {TasksListModule} from "../shared/components/tasks-list/tasks-list.module";
 
 

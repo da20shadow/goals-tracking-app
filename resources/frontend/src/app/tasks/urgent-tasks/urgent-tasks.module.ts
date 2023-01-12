@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { UrgentTasksRoutingModule } from './urgent-tasks-routing.module';
 import { UrgentTasksComponent } from './urgent-tasks.component';
 import {TasksListModule} from "../../shared/components/tasks-list/tasks-list.module";
-import {SharedModule} from "../../shared/components/shared.module";
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({

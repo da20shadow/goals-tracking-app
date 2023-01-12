@@ -11,7 +11,7 @@ import {AddGoalModalComponent } from './components/add-goal-modal/add-goal-modal
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {TargetsListComponent } from './components/targets-list/targets-list.component';
-import {SharedModule} from "../shared/components/shared.module";
+import {SharedModule} from "../shared/shared.module";
 import {CircleProgressModule} from "../shared/components/progress-bars/circle-progress/circle-progress.module";
 import {RichTextEditorModule} from "../shared/components/rich-text-editor/rich-text-editor.module";
 

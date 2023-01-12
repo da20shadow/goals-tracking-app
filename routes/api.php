@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']],function () {
 
     /** ---------TASKS--------- */
     Route::get('tasks',[TaskController::class,'index']);
+    Route::get('tasks/month',[TaskController::class,'getTasksByMonth']);
     Route::get('tasks/all',[TaskController::class,'getAll']);
     Route::get('tasks/urgent',[TaskController::class,'getUrgentTasks']);
     Route::get('tasks/important',[TaskController::class,'getImportantTasks']);

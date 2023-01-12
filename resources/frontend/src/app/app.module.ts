@@ -75,8 +75,8 @@ import {MatListModule} from "@angular/material/list";
     },
     {provide: APP_BASE_HREF, useValue: '/'}
   ],
-  exports: [
-  ],
+    exports: [
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
