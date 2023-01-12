@@ -84,6 +84,42 @@ class TaskController extends Controller
         return response()->json($tasksList);
     }
 
+    public function getTasksByMonth(Request $request): JsonResponse
+    {
+        $year = $request->get('year');
+        $month = $request->get('month');
+
+        $user_id = auth()->user()->getAuthIdentifier();
+
+        try {
+            $tasksList = DB::select(DB::raw("
+            SELECT *
+            FROM tasks
+            WHERE (user_id = $user_id
+                       AND status != 'Completed'
+                       AND YEAR(start_date) = $year
+                       AND MONTH(start_date) = $month)
+	            OR (user_id = $user_id
+	                    AND status != 'Completed'
+	                    AND YEAR(end_date) = $year
+	                    AND MONTH(end_date) = $month)
+            ORDER BY start_date, priority DESC;
+            "));
+        } catch (QueryException $exception) {
+            return response()->json([
+                'message' => 'An Error Occur! Please, try again!',
+                'error' => $exception->getMessage(),
+            ], 400);
+        }
+
+        if (count($tasksList) < 1) {
+            return response()->json([
+                'message' => 'No Tasks Yet!'
+            ], 204);
+        }
+        return response()->json($tasksList);
+    }
+
     public function getUrgentTasks(): JsonResponse
     {
         $user_id = auth()->user()->getAuthIdentifier();
