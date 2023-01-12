@@ -57,4 +57,8 @@ export class TaskService {
   getAll() {
     return this.http.get<Task[]>(ApiUrls.TASKS_ALL);
   }
+
+  getTasksByMonth(year: number,month: number) {
+    return this.http.get<Task[]>(`${ApiUrls.TASKS_BY_MONTH}?year=${year}&month=${month}`)
+  }
 }
