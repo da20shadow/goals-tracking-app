@@ -39,53 +39,64 @@
       <section class="my-5 flex gap-3 items-center">
 
         <!-- TASK PRIORITY TODO: make it possible to change the priority also! -->
-        <span #selectorPriority mat-button
-              class="dark:hover:text-gray-700">
+        <span mat-button [matMenuTriggerFor]="priorityMenu"
+              class="dark:hover:text-gray-700 cursor-pointer">
 
           <ng-container [ngSwitch]="task.priority">
-              <mat-icon [style]="'color:darkred; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
-                        *ngSwitchCase="TaskPriorityNames.URGENT">flag</mat-icon>
-              <mat-icon [style]="'color:darkorange; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
-                        *ngSwitchCase="TaskPriorityNames.HIGH">flag</mat-icon>
-              <mat-icon [style]="'color: lightblue; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
-                        *ngSwitchCase="TaskPriorityNames.LOW">flag</mat-icon>
-              <mat-icon [style]="'color: darkgray; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
-                        *ngSwitchCase="TaskPriorityNames.NO_PRIORITY">flag</mat-icon>
+              <mat-icon
+                [style]="'color:darkred; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
+                *ngSwitchCase="TaskPriorityNames.URGENT">flag</mat-icon>
+              <mat-icon
+                [style]="'color:darkorange; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
+                *ngSwitchCase="TaskPriorityNames.HIGH">flag</mat-icon>
+              <mat-icon
+                [style]="'color: lightblue; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
+                *ngSwitchCase="TaskPriorityNames.LOW">flag</mat-icon>
+              <mat-icon
+                [style]="'color: darkgray; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
+                *ngSwitchCase="TaskPriorityNames.NO_PRIORITY">flag</mat-icon>
             </ng-container>
 
-          <!--        <mat-menu class="example-mat-menu" #priorityMenu="matMenu" xPosition="after">-->
-          <!--          <button (click)="updateTaskId(task.id,task.status,'priority',priority);-->
-          <!--                  selectorPriority.innerText = priority"-->
-          <!--                  *ngFor="let priority of taskPriority" mat-menu-item>-->
+                  <mat-menu class="dark:bg-gray-800" #priorityMenu="matMenu" xPosition="after">
+                    <button (click)="updateTaskId(task.id,task.status,'priority',priority);"
+                            *ngFor="let priority of taskPriority" mat-menu-item>
 
-          <!--            <ng-container [ngSwitch]="priority">-->
-          <!--             <span class="text-rose-500" *ngSwitchCase="TaskPriorityNames.URGENT"><mat-icon style="color:darkred">flag_circle</mat-icon>{{priority}}</span>-->
-          <!--             <span class="text-orange-500" *ngSwitchCase="TaskPriorityNames.HIGH"><mat-icon style="color:darkorange">flag_circle</mat-icon>{{priority}}</span>-->
-          <!--             <span class="text-blue-500" *ngSwitchCase="TaskPriorityNames.LOW"><mat-icon style="color: darkblue">flag_circle</mat-icon>{{priority}}</span>-->
-          <!--             <span class="text-gray-500" *ngSwitchCase="TaskPriorityNames.NO_PRIORITY"><mat-icon style="color: darkgray" >flag_circle</mat-icon>{{priority}}</span>-->
-          <!--            </ng-container>-->
+                      <ng-container [ngSwitch]="priority">
+                       <span class="text-rose-500" *ngSwitchCase="TaskPriorityNames.URGENT"><mat-icon
+                         style="color:darkred">flag_circle</mat-icon>
+                         {{priority}}</span>
+                       <span class="text-orange-500" *ngSwitchCase="TaskPriorityNames.HIGH"><mat-icon
+                         style="color:darkorange">flag_circle</mat-icon>
+                         {{priority}}</span>
+                       <span class="text-blue-500" *ngSwitchCase="TaskPriorityNames.LOW"><mat-icon
+                         style="color: darkblue">flag_circle</mat-icon>
+                         {{priority}}</span>
+                       <span class="text-gray-500" *ngSwitchCase="TaskPriorityNames.NO_PRIORITY"><mat-icon
+                         style="color: darkgray">flag_circle</mat-icon>
+                         {{priority}}</span>
+                      </ng-container>
 
-          <!--          </button>-->
-          <!--        </mat-menu>-->
+                    </button>
+                  </mat-menu>
         </span>
         <!-- TASK PRIORITY -->
 
         <!-- TASK STATUS -->
-       <div mat-button [matMenuTriggerFor]="statusMenu"
-                class="dark:hover:bg-gray-700 pl-3 pr-1 py-1 cursor-pointer border rounded-md">
+        <div mat-button [matMenuTriggerFor]="statusMenu"
+             class="dark:hover:bg-gray-700 pl-3 pr-1 py-1 cursor-pointer border rounded-md">
           <div class="flex items-center">
             <span #selectorStatus>{{task.status}}</span>
             <mat-icon>arrow_right</mat-icon>
           </div>
 
-        <mat-menu class="example-mat-menu dark:example-mat-menu-dark" #statusMenu="matMenu" xPosition="after">
+          <mat-menu class="dark:bg-gray-800" #statusMenu="matMenu" xPosition="after">
 
-          <button (click)="updateTaskId(task.id,task.status,'status',status);
+            <button (click)="updateTaskId(task.id,task.status,'status',status);
                 selectorStatus.innerText = status"
-                  *ngFor="let status of taskStatuses" mat-menu-item>
-            {{status}}
-          </button>
-        </mat-menu>
+                    *ngFor="let status of taskStatuses" mat-menu-item>
+              {{status}}
+            </button>
+          </mat-menu>
 
         </div>
         <!-- TASK STATUS -->
@@ -239,9 +250,12 @@
   <!-- Targets -->
 
   <div class="py-3">
-    Subtasks <mat-icon>schema</mat-icon>
-    Subtasks <mat-icon>tenancy</mat-icon>
-    Subtasks <mat-icon>mediation</mat-icon>
+    Subtasks
+    <mat-icon>schema</mat-icon>
+    Subtasks
+    <mat-icon>tenancy</mat-icon>
+    Subtasks
+    <mat-icon>mediation</mat-icon>
   </div>
 
 </ng-container>
