@@ -4,38 +4,48 @@
   <div class="flex justify-start border-b">
 
     <!-- Status & Priority -->
-      <!-- TODO: add colors for status and priority depending on status and priority type green red orange -->
+    <!-- TODO: add colors for status and priority depending on status and priority type green red orange -->
     <section class="flex flex-wrap gap-3 items-center">
 
       <!-- TASK PRIORITY TODO: make it possible to change the priority also! -->
-      <span #selectorPriority mat-button
-            class="dark:hover:text-gray-700">
+      <span mat-button [matMenuTriggerFor]="priorityMenu"
+            class="dark:hover:text-gray-700 cursor-pointer">
 
           <ng-container [ngSwitch]="task.priority">
-              <mat-icon [style]="'color:darkred; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
-                        *ngSwitchCase="TaskPriorityNames.URGENT">flag</mat-icon>
-              <mat-icon [style]="'color:darkorange; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
-                        *ngSwitchCase="TaskPriorityNames.HIGH">flag</mat-icon>
-              <mat-icon [style]="'color: lightblue; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
-                        *ngSwitchCase="TaskPriorityNames.LOW">flag</mat-icon>
-              <mat-icon [style]="'color: darkgray; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
-                        *ngSwitchCase="TaskPriorityNames.NO_PRIORITY">flag</mat-icon>
+              <mat-icon
+                [style]="'color:darkred; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
+                *ngSwitchCase="TaskPriorityNames.URGENT">flag</mat-icon>
+              <mat-icon
+                [style]="'color:darkorange; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
+                *ngSwitchCase="TaskPriorityNames.HIGH">flag</mat-icon>
+              <mat-icon
+                [style]="'color: lightblue; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
+                *ngSwitchCase="TaskPriorityNames.LOW">flag</mat-icon>
+              <mat-icon
+                [style]="'color: darkgray; padding: 3px 0 5px 3px; font-size:25px; height:33px; width:33px; border:1px solid; border-radius:50%;'"
+                *ngSwitchCase="TaskPriorityNames.NO_PRIORITY">flag</mat-icon>
             </ng-container>
 
-        <!--        <mat-menu class="example-mat-menu" #priorityMenu="matMenu" xPosition="after">-->
-        <!--          <button (click)="updateTaskId(task.id,task.status,'priority',priority);-->
-        <!--                  selectorPriority.innerText = priority"-->
-        <!--                  *ngFor="let priority of taskPriority" mat-menu-item>-->
+            <mat-menu class="dark:bg-gray-800" #priorityMenu="matMenu" xPosition="after">
+              <button (click)="updateTaskId(task.id,task.status,'priority',priority);"
+                      *ngFor="let priority of taskPriority" mat-menu-item>
+                <ng-container [ngSwitch]="priority">
+                  <span class="text-rose-500" *ngSwitchCase="TaskPriorityNames.URGENT"><mat-icon
+                    style="color:darkred">flag_circle</mat-icon>
+                    {{priority}}</span>
+                  <span class="text-orange-500" *ngSwitchCase="TaskPriorityNames.HIGH"><mat-icon
+                    style="color:darkorange">flag_circle</mat-icon>
+                    {{priority}}</span>
+                  <span class="text-blue-500" *ngSwitchCase="TaskPriorityNames.LOW"><mat-icon
+                    style="color: darkblue">flag_circle</mat-icon>
+                    {{priority}}</span>
+                  <span class="text-gray-500" *ngSwitchCase="TaskPriorityNames.NO_PRIORITY"><mat-icon
+                    style="color: darkgray">flag_circle</mat-icon>
+                    {{priority}}</span>
+                </ng-container>
 
-        <!--            <ng-container [ngSwitch]="priority">-->
-        <!--             <span class="text-rose-500" *ngSwitchCase="TaskPriorityNames.URGENT"><mat-icon style="color:darkred">flag_circle</mat-icon>{{priority}}</span>-->
-        <!--             <span class="text-orange-500" *ngSwitchCase="TaskPriorityNames.HIGH"><mat-icon style="color:darkorange">flag_circle</mat-icon>{{priority}}</span>-->
-        <!--             <span class="text-blue-500" *ngSwitchCase="TaskPriorityNames.LOW"><mat-icon style="color: darkblue">flag_circle</mat-icon>{{priority}}</span>-->
-        <!--             <span class="text-gray-500" *ngSwitchCase="TaskPriorityNames.NO_PRIORITY"><mat-icon style="color: darkgray" >flag_circle</mat-icon>{{priority}}</span>-->
-        <!--            </ng-container>-->
-
-        <!--          </button>-->
-        <!--        </mat-menu>-->
+              </button>
+            </mat-menu>
         </span>
       <!-- TASK PRIORITY -->
 
@@ -47,12 +57,12 @@
           <mat-icon>arrow_right</mat-icon>
         </div>
 
-        <mat-menu class="example-mat-menu dark:example-mat-menu-dark" #statusMenu="matMenu" xPosition="after">
+        <mat-menu class="dark:bg-gray-800" #statusMenu="matMenu" xPosition="after">
 
           <button (click)="updateTaskId(task.id,task.status,'status',status);
                 selectorStatus.innerText = status"
                   *ngFor="let status of taskStatuses" mat-menu-item>
-            {{status}}
+            <span class="dark:text-gray-400">{{status}}</span>
           </button>
         </mat-menu>
 
@@ -94,22 +104,23 @@
           <app-date-time-picker [defaultDate]="task.start_date"
                                 (dateValueOutput)="setStartDate($event)"></app-date-time-picker>
           <button class="text-sm px-2 py-1 border rounded-lg"
-                  (click)="updateTaskStartDate();editStartDate=false">Close</button>
+                  (click)="updateTaskStartDate();editStartDate=false">Close
+          </button>
         </div>
 
-<!--        <mat-form-field (change)="updateTaskDates(task)" appearance="fill">-->
-<!--          <mat-label>Enter a date range</mat-label>-->
-<!--          <mat-date-range-input [formGroup]="range" [rangePicker]="picker">-->
-<!--            <input matStartDate formControlName="start_date" placeholder="Start date">-->
-<!--            <input matEndDate formControlName="end_date" placeholder="End date">-->
-<!--          </mat-date-range-input>-->
-<!--          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>-->
-<!--          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>-->
-<!--          <mat-date-range-picker #picker></mat-date-range-picker>-->
+        <!--        <mat-form-field (change)="updateTaskDates(task)" appearance="fill">-->
+        <!--          <mat-label>Enter a date range</mat-label>-->
+        <!--          <mat-date-range-input [formGroup]="range" [rangePicker]="picker">-->
+        <!--            <input matStartDate formControlName="start_date" placeholder="Start date">-->
+        <!--            <input matEndDate formControlName="end_date" placeholder="End date">-->
+        <!--          </mat-date-range-input>-->
+        <!--          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>-->
+        <!--          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>-->
+        <!--          <mat-date-range-picker #picker></mat-date-range-picker>-->
 
-<!--          <mat-error *ngIf="range.controls.start_date.hasError('matStartDateInvalid')">Invalid start date</mat-error>-->
-<!--          <mat-error *ngIf="range.controls.end_date.hasError('matEndDateInvalid')">Invalid end date</mat-error>-->
-<!--        </mat-form-field>-->
+        <!--          <mat-error *ngIf="range.controls.start_date.hasError('matStartDateInvalid')">Invalid start date</mat-error>-->
+        <!--          <mat-error *ngIf="range.controls.end_date.hasError('matEndDateInvalid')">Invalid end date</mat-error>-->
+        <!--        </mat-form-field>-->
 
       </div>
       <!-- Start Date -->
@@ -130,7 +141,8 @@
           <app-date-time-picker [defaultDate]="task.end_date"
                                 (dateValueOutput)="setEndDate($event)"></app-date-time-picker>
           <button class="text-sm px-2 py-1 border rounded-lg"
-                  (click)="updateTaskEndDate();editEndDate=false">Close</button>
+                  (click)="updateTaskEndDate();editEndDate=false">Close
+          </button>
         </div>
 
       </div>
@@ -177,14 +189,14 @@
   <!-- Task Tags -->
 
   <!-- Task Title -->
-<!--  <h1 class="dark:c-text-dark my-5 md:mt-0 text-[25px] md:text-3xl tracking-tight">-->
-<!--    <span class="dark:text-orange-200 font-bold">✔ </span>-->
-<!--    <span #title class="px-2"-->
-<!--          [contentEditable]="editTitle"-->
-<!--          [innerText]="task.title"-->
-<!--          (click)="editTitle=true"-->
-<!--          (focusout)="updateTaskId(task.id,task.status,'title',title.innerText);editTitle=false"></span>-->
-<!--  </h1>-->
+  <!--  <h1 class="dark:c-text-dark my-5 md:mt-0 text-[25px] md:text-3xl tracking-tight">-->
+  <!--    <span class="dark:text-orange-200 font-bold">✔ </span>-->
+  <!--    <span #title class="px-2"-->
+  <!--          [contentEditable]="editTitle"-->
+  <!--          [innerText]="task.title"-->
+  <!--          (click)="editTitle=true"-->
+  <!--          (focusout)="updateTaskId(task.id,task.status,'title',title.innerText);editTitle=false"></span>-->
+  <!--  </h1>-->
   <h1 class="dark:c-text-dark my-5 md:mt-0 text-[25px] md:text-3xl tracking-tight">
     <span *ngIf="!editTitle" class="dark:text-orange-200 font-bold">✔ </span>
     <span *ngIf="!editTitle"
@@ -199,7 +211,8 @@
 
   <!-- HTML Description -->
   <h3 class="flex text-xl font-bold mt-3">
-    <mat-icon>description</mat-icon> Task Description
+    <mat-icon>description</mat-icon>
+    Task Description
   </h3>
   <div *ngIf="!editDescription" class="border p-3 mb-5 dark:focus:bg-gray-800"
        [innerHTML]="task.description"
@@ -211,22 +224,42 @@
     ></app-rich-text-editor>
     <button class="px-3 py-1 my-5 mr-1 border hover:bg-gray-100 dark:hover:bg-gray-700 dark:active:bg-gray-800"
             (click)="updateTaskId(task.id,task.status,'description',taskDescription);
-            editDescription=false">Save</button>
+            editDescription=false">Save
+    </button>
     <button class="px-3 py-1 my-5 border hover:bg-gray-100 dark:hover:bg-gray-700 dark:active:bg-gray-800"
-      (click)="editDescription=false">Cancel</button>
+            (click)="editDescription=false">Cancel
+    </button>
   </ng-container>
   <!-- HTML Description -->
 
   <!-- Checklist -->
   <section>
     <mat-icon>tenancy</mat-icon>
-    <div class="flex gap-1"><mat-icon style="transform: rotate(180deg);">schema</mat-icon>Subtasks</div>
+    <div class="flex gap-1">
+      <mat-icon style="transform: rotate(180deg);">schema</mat-icon>
+      Subtasks
+    </div>
     <ul>
-      <li><mat-checkbox [color]="'darkgreen'"></mat-checkbox>To Implement Sub Tasks</li>
-      <li><mat-checkbox [color]="'darkgreen'"></mat-checkbox>To Add progress bar for each Task!!!</li>
-      <li><mat-checkbox [color]="'darkgreen'"></mat-checkbox>Task Progress to depend on subtasks</li>
-      <li><mat-checkbox [color]="'darkgreen'"></mat-checkbox>If subtasks are completed task is completed automatically!</li>
-      <li><mat-checkbox [color]="'darkgreen'"></mat-checkbox>If Change Task status to completed all subtasks will be checked automatically maybe?!</li>
+      <li>
+        <mat-checkbox [color]="'darkgreen'"></mat-checkbox>
+        To Implement Sub Tasks
+      </li>
+      <li>
+        <mat-checkbox [color]="'darkgreen'"></mat-checkbox>
+        To Add progress bar for each Task!!!
+      </li>
+      <li>
+        <mat-checkbox [color]="'darkgreen'"></mat-checkbox>
+        Task Progress to depend on subtasks
+      </li>
+      <li>
+        <mat-checkbox [color]="'darkgreen'"></mat-checkbox>
+        If subtasks are completed task is completed automatically!
+      </li>
+      <li>
+        <mat-checkbox [color]="'darkgreen'"></mat-checkbox>
+        If Change Task status to completed all subtasks will be checked automatically maybe?!
+      </li>
     </ul>
   </section>
   <!-- Checklist -->
