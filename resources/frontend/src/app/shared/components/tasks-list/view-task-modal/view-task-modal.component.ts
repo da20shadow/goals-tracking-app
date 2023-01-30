@@ -128,7 +128,7 @@ export class ViewTaskModalComponent {
       const startDate = this.task.start_date ? new Date(this.task.start_date) : new Date();
       const newEndDate = new Date(this.taskEndDate);
       if (startDate > newEndDate) {
-        this.notificationService.showErrorNotification('End Date can not be before the start date!');
+        this.notificationService.showErrorNotification('End Date can not be before the start or today date!');
         return false;
       }
     }else if (type === 'start_date' && this.taskStartDate){
