@@ -4,6 +4,7 @@ import {Task} from "../../../core/models";
 import {ViewTaskModalComponent} from "../../../shared/components/tasks-list/view-task-modal/view-task-modal.component";
 import {ModalService} from "../../../core/services/modal.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {AddTaskModalComponent} from "../../../shared/components/tasks-list/add-task-modal/add-task-modal.component";
 
 @Component({
   selector: 'app-calendar',
@@ -122,7 +123,8 @@ export class CalendarComponent {
     this.nextMonthFirstDays = [];
   }
 
-  addNewTask() {
-    alert('Add New Task clicked!')
+  addNewTask(day: number) {
+    const boxDate = new Date(this.currentYear, this.currentMonth, day);
+    this.modalService.openFormModal(AddTaskModalComponent,{boxDate});
   }
 }

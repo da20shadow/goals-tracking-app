@@ -78,7 +78,7 @@
       </div>
       <input #showAddTaskButton type="hidden" value="false">
       <span *ngIf="showAddTaskButton.value === 'true'"
-            (click)="addNewTask()"
+            (click)="addNewTask(day)"
             class="absolute bottom-0 left-1 flex items-center cursor-pointer">
         <mat-icon style="font-size: 21px;">add_box</mat-icon>
       </span>
