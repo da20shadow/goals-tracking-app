@@ -59,8 +59,9 @@
     <input [ngClass]="classes.input"
            type="date"
            name="start_date"
+           #startDateInput
            #start_date="ngModel"
-           ngModel>
+           ngModel />
   </div>
   <!-- Task Start Date Input -->
   <!-- Task End Date Input -->
@@ -70,7 +71,7 @@
            type="date"
            name="end_date"
            #end_date="ngModel"
-           ngModel>
+           ngModel />
   </div>
   <!-- Task End Date Input -->
 </div>
