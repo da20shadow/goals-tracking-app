@@ -4,10 +4,6 @@ import {Task, TaskPriority, TaskStatus} from 'src/app/core/models';
 import {TaskService} from "../../../../tasks/services/task.service";
 import {NotificationService} from "../../../../core/services/notification.service";
 import {Store} from "@ngrx/store";
-import {TaskPageActions} from "../../../../Store/task-store/task-page.actions";
-import {TaskAPIActions} from "../../../../Store/task-store/task-api.actions";
-import {FormControl, FormGroup} from "@angular/forms";
-import {Operations} from "../../../enums/Operations";
 import {AgendaAPIActions} from "../../../../Store/agenda-store/agenda-api.actions";
 
 @Component({
